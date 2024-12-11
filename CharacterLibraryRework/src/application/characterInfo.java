@@ -297,7 +297,7 @@ public class characterInfo extends appMethods{
 	        );
 	    }
 
-	    // Optional: Add an action to perform when typing is complete
+	    // Optional: Add an action to perform when typing is complete. This is nothing special it was just used for testing.
 	    currentTypingTimeline.setOnFinished(event -> System.out.println("Typing animation completed!"));
 	    currentTypingTimeline.play();
 	}
