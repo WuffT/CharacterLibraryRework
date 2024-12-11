@@ -1,0 +1,8 @@
+Age: ?
+Gender: Male
+Specimen: Parakeet
+Weight: 80 pounds
+Height: 5 ft 8 in
+Mutation Classification: Level 1
+
+Description: [REDACTED INFO]

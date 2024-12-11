@@ -1,0 +1,329 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.button.add {
+	 -fx-background-color:#437d50;
+	 -fx-text-fill: white; 
+	 -fx-min-width: 250; /* Set preferred width */
+    -fx-pref-height: 50; /* Set preferred height */
+     -fx-font-size: 18px;
+      -fx-background-radius: 10;
+      	  -fx-effect: dropshadow(gaussian, rgba(46, 97, 57, 1), 2, 3.54, 1.54, 5);
+}
+
+.button.add:hover {
+    -fx-background-color: #5a8a65; /* Change background color on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 5); /* Darker shadow effect on hover */
+    -fx-cursor: hand; /* Change cursor to indicate interactivity */
+}
+
+.button.close {
+	 -fx-background-color: #2c3e50;
+	 -fx-text-fill: white; 
+	 -fx-min-width: 250; /* Set preferred width */
+    -fx-pref-height: 50; /* Set preferred height */
+     -fx-font-size: 18px;
+      -fx-background-radius: 10;
+	    -fx-effect: dropshadow(gaussian, rgba(25, 35, 46, 1), 2, 3.54, 1.54, 5);
+}
+
+.button.orange {
+	-fx-background-color: #ff8959;
+	-fx-text-fill: white;
+	-fx-min-width: 250; /* Set preferred width */
+    -fx-pref-height: 50; /* Set preferred height */
+     -fx-font-size: 18px;
+      -fx-background-radius: 2;
+       	  -fx-effect: dropshadow(gaussian, rgba(139, 58, 35, 1), 2, 3.54, 1.54, 5);
+}
+.button.orange:hover {
+    -fx-background-color: #ffaa88; /* Change background color on hover */
+    -fx-effect: dropshadow(gaussian, rgba(255, 172, 133, 0.5), 5, 0, 0, 5); /* Darker shadow effect on hover */
+    -fx-cursor: hand; /* Change cursor to indicate interactivity */
+}
+
+.button.close:hover {
+    -fx-background-color: #4e5a67; /* Lighter orange on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 5); /* Shadow effect */
+    -fx-cursor: hand; /* Change cursor to indicate interactivity */
+}
+
+.button.pink {
+	 -fx-background-color:#cb5090;
+	 -fx-text-fill: white; 
+	 -fx-pref-width: 170; /* Set preferred width */
+    -fx-pref-height: 50; /* Set preferred height */
+     -fx-font-size: 15px;
+        -fx-wrap-text: true;   
+          -fx-alignment: center;         
+      -fx-background-radius: 2;
+       -fx-effect: dropshadow(gaussian, rgba(112, 46, 81, 1), 2, 3.54, 1.54, 5);
+}
+.button.pink:hover {
+    -fx-background-color: #dc82b2; /* Change background color on hover */
+    -fx-effect: dropshadow(gaussian, rgba(220, 130, 178, 0.5), 5, 0, 0, 5); /* Darker shadow effect on hover */
+    -fx-cursor: hand; /* Change cursor to indicate interactivity */
+}
+
+.button-Confirm {
+	 -fx-background-color:#437d50;
+	 -fx-text-fill: white; 
+	 -fx-pref-width: 80; /* Set preferred width */
+    -fx-pref-height: 40; /* Set preferred height */
+     -fx-font-size: 15px;
+      -fx-background-radius: 10;
+     -fx-effect: dropshadow(gaussian, rgba(46, 97, 57, 1), 2, 3.54, 1.54, 5);
+}
+
+
+
+.label.menuLabel {
+    -fx-background-color:#cb5090;
+	 -fx-text-fill: white; 
+	 -fx-pref-width: 150; /* Set preferred width */
+    -fx-pref-height: 50; /* Set preferred height */
+     -fx-font-size: 15px;
+        -fx-wrap-text: true;   
+          -fx-alignment: center;         
+      -fx-background-radius: 2;
+       -fx-effect: dropshadow(gaussian, rgba(112, 46, 81, 1), 2, 3.54, 1.54, 5);
+}
+
+
+.label.loading {
+  
+	 -fx-text-fill: white; 
+	 -fx-pref-width: 800; /* Set preferred width */
+    -fx-pref-height: 50; /* Set preferred height */
+     -fx-font-size: 18px;
+        -fx-wrap-text: true;   
+          -fx-alignment: center;         
+      -fx-background-radius: 2;
+   
+}
+
+.text-field {
+ 
+    -fx-font-size: 20px; /* Font size */
+    -fx-border-color: #4f95b8; /* Optional: cyan-colored border */
+    -fx-border-width: 4px; /* Border width */
+    -fx-text-fill: black; /* Text color inside the TextArea */
+   
+}
+
+.text-area {
+  
+    -fx-font-size: 20px; /* Font size */
+    -fx-border-color: #4f95b8; /* Optional: cyan-colored border */
+    -fx-border-width: 4px; /* Border width */
+    -fx-text-fill: black; /* Text color inside the TextArea */
+    -fx-scroll-bar-width: 10px; /* Optional: width of the scrollbar */
+}
+
+/* Style for the slider */
+.slider {
+    -fx-pref-width: 200px; /* Length of the slider */
+    -fx-pref-height: 50px; /* Overall height */
+}
+
+/* Larger Track */
+.custom-slider .track {
+    -fx-background-color: linear-gradient(to right, #ffffff, #fffff0); /* Gradient from orange to red */
+    -fx-background-radius: 5;
+    -fx-padding: 0.5em; /* Increase padding for a thicker track */
+    -fx-pref-height: 10px; /* Adjust track height */
+     -fx-effect: dropshadow(gaussian, rgba(139, 58, 35, 1), 2, 3.54, 1.54, 5);
+}
+
+/* Larger Thumb (slider handle) */
+.custom-slider .thumb {
+    -fx-background-color: #ffa500; /* Orange */
+    -fx-background-radius: 50%; /* Circular thumb */
+    -fx-border-color: #000000; /* Red border */
+	-fx-border-radius: 5;
+	-fx-border-width: 2px; /* Thicker border */
+    -fx-pref-width: 22px; /* Larger thumb width */
+    -fx-pref-height: 22px; /* Larger thumb height */
+}
+
+.custom-slider .thumb:hover {
+    -fx-background-color: #ffd700; /* Gold */
+    -fx-cursor: hand;
+}
+
+
+
+.custom-slider .label {
+    -fx-text-fill: white; /* Changes the text color to white */
+    -fx-font-size: 14px; /* Optional: Adjust font size */
+    -fx-font-weight: bold; /* Optional: Makes the text bold */
+}
+ 
+
+.image-view-border {
+    -fx-border-color: #4f95b8;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px; /* Optional for rounded corners */
+}
+.text-area .scroll-bar {
+    -fx-background-color: transparent; /* Optional: make scrollbar background transparent */
+}
+
+.text-area .scroll-bar .increment-button, 
+.text-area .scroll-bar .decrement-button {
+    -fx-background-color: transparent; /* Optional: remove buttons on the scrollbar */
+}
+
+
+.scroll-bar{
+-fx-background: transparent;
+ -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #cecece;
+    -fx-pref-width: 20px;
+}
+.scroll-bar:vertical {
+    -fx-background-color: #cecece;
+    -fx-pref-width: 20px;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #cecece;
+}
+
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .track {
+    -fx-background-color: white; /* Optional, set a light color for the track */
+}
+
+.main-panel {
+    -fx-background-color: #57c05d; /* Example color */
+}
+
+.input-field {
+    -fx-background-color: #EAEAEA; /* Change the input area color */
+     -fx-font-size: 20px;
+    -fx-pref-height: 40px; /* Set preferred height */
+    
+     -fx-effect: dropshadow(gaussian, rgba(200, 200, 200, 1), 2, 3.54, 3.54, 5);
+}
+
+/* Hover effect for Input Fields */
+.input-field:hover {
+    -fx-background-color: #D1D1D1; /* Slightly darker color on hover */
+    -fx-effect: dropshadow(gaussian, rgba(150, 150, 150, 1), 3, 2, 0, 3); /* Shadow effect on hover */
+}
+
+
+
+.label-background {
+    -fx-background-color: #437d50; /* Set background color */
+    -fx-padding: 10; /* Add padding around the label */
+   
+    -fx-background-radius: 5; /* This makes it look more rounded */
+ 	-fx-text-fill: white; 
+ 	
+ 	   	  -fx-effect: dropshadow(gaussian, rgba(46, 97, 57, 1), 2, 3.54, 3.54, 5);
+}
+
+.inputlabel-background {
+    -fx-background-color: #437d50; /* Set background color */
+    -fx-padding: 5; /* Add padding around the label */
+     -fx-pref-width: 250px;
+    -fx-background-radius: 5; /* This makes it look more rounded */
+ 	-fx-text-fill: white; 
+ 	-fx-alignment: center;  
+ 	 
+ 	   	  -fx-effect: dropshadow(gaussian, rgba(46, 97, 57, 1), 2, 3.54, 3.54, 5);
+
+}
+
+
+.vbox-background {
+    -fx-background-color: #F7F7F7;
+    -fx-padding: 10;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+    -fx-background-radius: 1;
+    -fx-border-radius: 1;
+    /* Drop shadow effect rgba(18, 57, 42, 1)*/
+     
+ 	   	   -fx-effect: dropshadow(gaussian, rgba(206,206, 206, 1), 2, 3.54, 3.54, 5);
+    
+}
+
+.combo-box {
+    -fx-background-color: #f0f0f0;
+    -fx-font-size: 18px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 2;
+}
+
+.combo-box .list-cell {
+    -fx-font-size: 18px;
+    -fx-text-fill: #333333;
+}
+
+.combo-box .button {
+    -fx-background-color: #cccccc;
+    -fx-text-fill: #000000;
+}
+
+
+.success-label {
+    -fx-background-color: #57c05d;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 5);
+}
+
+/* progressBars.css */
+
+/* Set a minimum height and width for the progress bars */
+.progress-bar {
+    -fx-pref-height: 30px;
+    -fx-pref-width: 300px;
+    -fx-min-height: 30px;  /* Minimum height */
+    -fx-min-width: 300px;  /* Minimum width */
+    
+    -fx-background-radius: 10px;
+    -fx-accent: #5cdc63;
+     
+}
+
+
+.progress-bar-health {
+    -fx-accent: #5cdc63; /* Green for health */
+}
+
+.progress-bar-strength {
+    -fx-accent: #dc5c65; /* Red for strength */
+}
+
+.progress-bar-speed {
+    -fx-accent: #fffb8d; /* Yellow for speed */
+}
+
+.progress-bar-defense {
+    -fx-accent: #60a3f5; /* Blue for defense */
+}
+.tooltip {
+    -fx-font-size: 18px;  /* Adjust size as needed */
+    -fx-background-color: rgba(0, 0, 0, 0.8);  /* Optional: make the background slightly darker */
+    -fx-text-fill: white;  /* Optional: change text color */
+    -fx-padding: 10px;  /* Optional: add padding */
+}
+
+
+
+.root-panel {
+    -fx-background-color: #F2F2F2; 
+}
+
+
+
+
+
+
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
