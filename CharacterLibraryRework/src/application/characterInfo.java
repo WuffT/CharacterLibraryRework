@@ -153,14 +153,18 @@ public class characterInfo extends appMethods{
 	    }
 	}
 
-	// Helper method to parse a double and provide a default value in case of error
-	private static double parseDoubleWithDefault(String value) {
-	    try {
-	        return value.isEmpty() ? 0.0 : Double.parseDouble(value);
-	    } catch (NumberFormatException e) {
-	        return 0.0; // Return default value if invalid or empty
-	    }
-	}
+//Helper method to parse a double and provide a default value in case of error
+private static double parseDoubleWithDefault(String value) {
+  try {
+      // Replace comma with period to handle different locales
+      value = value.replace(",", ".");
+      
+      return value.isEmpty() ? 0.0 : Double.parseDouble(value);
+  } catch (NumberFormatException e) {
+      return 0.0; // Return default value if invalid or empty
+  }
+}
+
 
 	// Helper method to get a BufferedReader for the file or resource
 	private static BufferedReader getBufferedReader(String filePath) throws IOException {
@@ -226,7 +230,7 @@ public class characterInfo extends appMethods{
 	    applyTypingEffect(infoTextArea, description, Duration.millis(5));
 	}
 
-	// Helper method to animate the progress bars
+	// method to animate the progress bars
 	private static void animateProgressBar(ProgressBar progressBar, double targetValue) {
 	    // Store the current value of the progress bar
 	    double startValue = progressBar.getProgress();
