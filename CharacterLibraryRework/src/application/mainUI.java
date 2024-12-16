@@ -317,7 +317,8 @@ public class mainUI extends Application {
         System.out.println("Application starting...");
         try {
         	  Thread.sleep(2000);
-        	 characterInfo.initializeCharacterData();
+        	  characterInfo.loadCharactersFromCSV("/characterCSV/characterData.csv");
+
             launch(args);
         } catch (Exception e) {
             e.printStackTrace();

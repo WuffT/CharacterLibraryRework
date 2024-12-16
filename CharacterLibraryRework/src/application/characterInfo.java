@@ -1,7 +1,13 @@
 package application;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,149 +95,111 @@ public class characterInfo extends appMethods{
      }
  }
  
-//THIS METHOD INITIALIZES THE CHARACTER DETAILS BY TAKING THEIR NAME, STATS AND DESCRIPTION INTO A DATA MAP/TABLE
+
+ public static void loadCharactersFromCSV(String filePath) {
+	    try (BufferedReader reader = getBufferedReader(filePath)) {
+	        String line;
+	        boolean isFirstLine = true; // Skip header row
+
+	        while ((line = reader.readLine()) != null) {
+	            if (isFirstLine) {
+	                isFirstLine = false;
+	                continue; // Skip the header
+	            }
+
+	            try {
+	                // Split the line by commas
+	                String[] values = line.split(",");
+
+	                // Ensure the correct number of columns are present
+	                if (values.length < 8) {
+	                    System.err.println("Invalid line: Not enough data (missing columns) -> " + line);
+	                    continue; // Skip this line
+	                }
+
+	                // Extract data from each column, with default values if not valid
+	                String name = values[0].trim();
+	                double health = parseDoubleWithDefault(values[1]);
+	                double strength = parseDoubleWithDefault(values[2]);
+	                double speed = parseDoubleWithDefault(values[3]);
+	                double defense = parseDoubleWithDefault(values[4]);
+	                String descriptionPath = values[5].trim();
+	                String imagePath = values[6].trim();
+	                String renderPath = values.length > 7 ? values[7].trim() : "/CharacterRenders/NoRender.png";  // Default render path
+
+	                // Handle missing paths by setting default values
+	                descriptionPath = descriptionPath.isEmpty() ? "/characterDescriptions/WIPCharacter.txt" : descriptionPath;
+	                imagePath = imagePath.isEmpty() ? "/icons/WIPIcon.png" : imagePath;
+	                renderPath = renderPath.isEmpty() ? "/CharacterRenders/NoRender.png" : renderPath;
+
+	                // Create a new characterInfo object
+	                characterInfo character = new characterInfo(name, health, strength, speed, defense,
+	                                                            descriptionPath, imagePath, renderPath);
+
+	                // Add character to the characterMap
+	                characterMap.put(name, character);
+
+	            } catch (NumberFormatException e) {
+	                System.err.println("Error parsing numeric values in line: " + line);
+	                e.printStackTrace();
+	            } catch (Exception e) {
+	                System.err.println("Error processing line: " + line);
+	                e.printStackTrace();
+	            }
+	        }
+	    } catch (IOException e) {
+	        System.err.println("Error reading the file: " + filePath);
+	        e.printStackTrace();
+	    }
+	}
+
+	// Helper method to parse a double and provide a default value in case of error
+	private static double parseDoubleWithDefault(String value) {
+	    try {
+	        return value.isEmpty() ? 0.0 : Double.parseDouble(value);
+	    } catch (NumberFormatException e) {
+	        return 0.0; // Return default value if invalid or empty
+	    }
+	}
+
+	// Helper method to get a BufferedReader for the file or resource
+	private static BufferedReader getBufferedReader(String filePath) throws IOException {
+	    InputStream inputStream;
+
+	    // Check if the path is a classpath resource (starts with "/")
+	    if (filePath.startsWith("/")) {
+	        // Loading resource from the classpath (like in a JAR)
+	        inputStream = characterInfo.class.getResourceAsStream(filePath);
+	    } else {
+	        // Loading from the file system
+	        inputStream = new FileInputStream(filePath);
+	    }
+
+	    // If the resource/inputStream is null, print error and return
+	    if (inputStream == null) {
+	        throw new FileNotFoundException("File not found: " + filePath);
+	    }
+
+	    return new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+	}
+
  
- /* Code Example. This goes inside the initiliazeCharacterData method
+//We do not use the method anymore to initialize character data now. Instead all character data is loaded through a new CSV format.
+	//In this case the data is now inside of a comma seperated values file which will have each character have its data inside of a table and other things like that.
  
- characterMap.put("Character Name", new characterInfo(
+ /* As a legacy example this is how the data is handled. AGAIN CHARACTER DATA IS NOW HANDLED IN A NEW CSV FILE.
         "Character Name",
         0.55,  // Health
         0.88,  // Strength
         0.35,  // Speed
-        0.20,  // Defense
-        //all values above are from 0-1 || Example: 0.55 is really just 55% while 1 is 100%
+        0.20,  // Defense    //all values above are from 0-1 || Example: 0.55 is really just 55% while 1 is 100%
         "/characterDescriptions/character.txt",
         "/icons/charactericon.png",
         "/CharacterRenders/characterrender.png"
-    ));
 
 */
  
- public static void initializeCharacterData() {
-	    characterMap.put("Wolftical Triglowsticus", new characterInfo(
-	        "WolfTical Triglowsticus",
-	        0.80,  // Health
-	        0.40,  // Strength
-	        0.61,  // Speed
-	        0.80,  // Defense
-	        "/characterDescriptions/WuffT.txt",
-            "/icons/wuffpix.png",
-            "/CharacterRenders/WolfTicalT.png"
-	    ));
-
-	    characterMap.put("Viraxe Eleviac", new characterInfo(
-	        "Viraxe Eleviac",
-	        0.75,  // Health
-	        0.65,  // Strength
-	        0.70,  // Speed
-	        0.60,  // Defense
-	        "/characterDescriptions/ViraxeEleviac.txt",
-	        "/icons/birtpix.png",
-            "/CharacterRenders/ViraxeE.png"
-	    ));
-	    
-	    characterMap.put("Wren Ryzen", new characterInfo(
-		        "Wren Ryzen",
-		        0.55,  // Health
-		        0.88,  // Strength
-		        0.35,  // Speed
-		        0.20,  // Defense
-		        "/characterDescriptions/WrenRyzen.txt",
-		        "/icons/wrenpix.png",
-	            "/CharacterRenders/WrenR.png"
-		    ));
-	  
-	    characterMap.put("Doxyn Larchiux", new characterInfo(
-		        "Doxyn Larchiux",
-		        0.45,  // Health
-		        0.56,  // Strength
-		        1,  // Speed
-		        0.50,  // Defense
-		        "/characterDescriptions/DoxynLarchiux.txt",
-		        "/icons/doxpix.png",
-	            "/CharacterRenders/NoRender.png"
-		    ));
-	    
-	    characterMap.put("Archie Larchiux", new characterInfo(
-		        "Archie Larchiux",
-		        0.63,  // Health
-		        0.20,  // Strength
-		        0.72,  // Speed
-		        0.05,  // Defense
-		        "/characterDescriptions/ArchieLarchiux.txt",
-		        "/icons/archiepix.png",
-	            "/CharacterRenders/NoRender.png"
-		    ));
-
-	    characterMap.put("Drex Dixton", new characterInfo(
-		        "Drex Dixton",
-		        1,  // Health
-		        0.89,  // Strength
-		        0.20,  // Speed
-		        1,  // Defense
-		        "/characterDescriptions/DrexDixton.txt",
-		        "/icons/drexpix.png",
-	            "/CharacterRenders/NoRender.png"
-		    ));
-	    
-	    characterMap.put("Drax Dixton", new characterInfo(
-		        "Drax Dixton",
-		        1,  // Health
-		        0.20,  // Strength
-		        0.90,  // Speed
-		        1,  // Defense
-		        "/characterDescriptions/DraxDixton.txt",
-		        "/icons/draxpix.png",
-	            "/CharacterRenders/NoRender.png"
-		    ));
-	    
-	    characterMap.put("Dr. Stenfort", new characterInfo(
-		        "Dr. Stenfort",
-		        0.99,  // Health
-		        0.99,  // Strength
-		        0.60,  // Speed
-		        0.05,  // Defense
-		        "/characterDescriptions/BillStenfort.txt",
-		        "/icons/stepix.png",
-	            "/CharacterRenders/NoRender.png"
-		    ));
-	    
-	    characterMap.put("Zalfor Tylox", new characterInfo(
-	            "Zalfor Tylox",
-	            0.95,  // Health
-	            0.85,  // Strength
-	            0.36,  // Speed
-	            0.27,  // Defense
-	            "/characterDescriptions/WIPCharacter.txt",
-	            "/icons/zalpix.png",
-	            "/CharacterRenders/NoRender.png"
-	        ));
-	    
-	    characterMap.put("Teforel Vaxin", new characterInfo(
-	            "Teforel Vaxin",
-	            0.85,  // Health
-	            0.35,  // Strength
-	            0.58,  // Speed
-	            0.60,  // Defense
-	            "/characterDescriptions/WIPCharacter.txt",
-	            "/icons/tefpix.png",
-	            "/CharacterRenders/NoRender.png"
-	        ));
-	    
-	    
-	    characterMap.put("Incident K-5520", new characterInfo(
-	            "Incident K-5520",
-	            0.75,  // Health
-	            1,  // Strength
-	            0.44,  // Speed
-	            0.35,  // Defense
-	            "/incidentDescriptions/INC_K5520.txt",
-	            "/icons/keetpix.png",
-	            "/incidentRenders/INC_K5520.png"
-	        ));
-	    
-	    
-	}
+ 
  public static void setCharacter(String name, double health, double strength, double speed, double defense, String description, String imagePath, String renderPath) {
 	    System.out.println("Setting character: " + name);
 	    System.out.println("Using image path: " + imagePath);
