@@ -128,62 +128,8 @@ public class appMethods extends customWindows {
 	        defenseBar.setTooltip(defenseTooltip);
     }
     
-    public static void updateCharacterButtons(ComboBox<String> characterComboBox, VBox buttonContainer, Button characterRenderButton) {
-        // Clear the existing buttons
-        buttonContainer.getChildren().clear();
+   
 
-        // Define a map with character categories and their respective characters
-        Map<String, List<String>> characterCategories = new HashMap<>();
-        characterCategories.put("The Heroes", Arrays.asList("Wolftical Triglowsticus", "Viraxe Eleviac", "Wren Ryzen", "Doxyn Larchiux", "Archie Larchiux","Drex Dixton", "Drax Dixton"));
-        characterCategories.put("The Antagonists", Arrays.asList("Dr. Stenfort", "Zalfor Tylox", "Teforel Vaxin"));
-        // Define specific names for incidents
-        List<String> incidentCharacters = Arrays.asList(
-            "Incident K-5520", //set 1
-            "Incident L-152012",
-            "Incident P-51420",
-            "Incident C-11514",
-            "Incident N-1115", //set 2
-            "Incident U-3114",
-            "Incident Z-1184",
-            "Incident P-201518",
-            "Incident H-1125", //set 3
-            "Incident T-9512",
-            "Incident G-12518",
-            "Incident L-51514",
-            "Incident B-91212", //FIRST LEVEL 5 INCIDENT
-            "Incident D-91415", //set 4
-            "Incident M-15208",
-            "Incident E-512",
-            "Incident C-202512",
-            "Incident P-8914", //set 5
-            "Incident R-18520",
-            "Incident R-20125",
-            "Incident H-5516",
-            "Incident E-31115", //set 6
-            "Incident S-12217",
-            "Incident I-4518",
-            "Incident A-71514",
-            "Incident I-14715",// SECOND LEVEL 5 INCIDENT
-            "Incident F-9198", //set 7
-            "Incident B-55",
-            "Incident G-21914",
-            "Incident G-18125");
-        characterCategories.put("The Incidents", incidentCharacters);
-        characterCategories.put("Miscellaneous", Arrays.asList("UNSPECIFIED", "UNSPECIFIED", "UNSPECIFIED"));
-        // Get the selected character category from the ComboBox
-        String selectedCharacter = characterComboBox.getValue();
-
-        // Add buttons based on selection
-        if (selectedCharacter != null && characterCategories.containsKey(selectedCharacter)) {
-            // Get the list of characters for the selected category
-            List<String> characters = characterCategories.get(selectedCharacter);
-
-            // Loop through the character list and create a button for each one
-            for (String character : characters) {
-                buttonContainer.getChildren().add(createCharacterButton(character, characterRenderButton));
-            }
-        }
-    }
 
     public static void updateCharacterRenderButton(Button characterRenderButton, String selectedCharacter) {
         // Retrieve the character from the map to check for the render availability

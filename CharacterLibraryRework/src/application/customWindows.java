@@ -71,8 +71,8 @@ public class customWindows extends mainUI{
             helpTextArea.setText("Update Changes and Notes as of " + applastUpdate + "\r\n"
                     + "Version " + appVersion + " REWORKED:\r\n"
                     + "- Application is in its reworking stage and early development\r\n"
-                    + "- Loading screen adjusted.\r\n"
-                    + "- Incident updates");
+                    + "- New Character Data Loading Feature using a CSV file.\r\n"
+                    + "- Better categorizing");
         });
 
         // Button for "App Information"

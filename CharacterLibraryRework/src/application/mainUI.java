@@ -24,8 +24,8 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 3.1;
-	   static String applastUpdate = "12/2/2024";
+	   static double appVersion = 3.3;
+	   static String applastUpdate = "12/16/2024";
 	   
 	   
 	   static ProgressBar healthBar;
@@ -77,13 +77,15 @@ public class mainUI extends Application {
 	        charScrollPane.setFitToWidth(true); // Ensures the VBox is resized to fit the ScrollPane width
 	        charScrollPane.setFitToHeight(false); // Ensures the ScrollPane adjusts to the VBox's height
 	        ComboBox<String> characterComboBox = new ComboBox<>();
-	        characterComboBox.getItems().addAll("-Click Me-", "The Heroes", "The Antagonists", "The Incidents", "Miscellaneous");
+	        characterComboBox.getItems().add("-Click Me-"); // Default option
+
+	        // Load categories dynamically
+	        characterComboBox.getItems().addAll(characterInfo.getCharacterCategories().keySet());
+
 	        characterComboBox.setOnAction(e -> {
 	            appMethods.playButtonSFX();
-	            appMethods.updateCharacterButtons(characterComboBox, buttonContainer, characterRenderButton);// Update buttons when selection changes
-	          //  appMethods.animateVBoxHeight(buttonContainer, charScrollPane);
+	            characterInfo.updateCharacterButtons(characterComboBox, buttonContainer, characterRenderButton);
 	        });
-	        
 	        characterComboBox.setValue("-Click Me-");
 	        
 	        Button helpButton = new Button("Help");

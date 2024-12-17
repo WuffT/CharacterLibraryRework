@@ -17,9 +17,12 @@ import java.util.stream.Collectors;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 
@@ -96,63 +99,99 @@ public class characterInfo extends appMethods{
  }
  
 
+ public static Map<String, List<String>> characterCategories = new HashMap<>();
+
+ 
+ //THIS is the method that allows the whole file with character data to be loaded and set.
  public static void loadCharactersFromCSV(String filePath) {
-	    try (BufferedReader reader = getBufferedReader(filePath)) {
-	        String line;
-	        boolean isFirstLine = true; // Skip header row
+     try (BufferedReader reader = getBufferedReader(filePath)) {
+         String line;
+         boolean isFirstLine = true; // Skip header row
 
-	        while ((line = reader.readLine()) != null) {
-	            if (isFirstLine) {
-	                isFirstLine = false;
-	                continue; // Skip the header
-	            }
+         while ((line = reader.readLine()) != null) {
+             if (isFirstLine) {
+                 isFirstLine = false;
+                 continue; // Skip the header
+             }
 
-	            try {
-	                // Split the line by commas
-	                String[] values = line.split(",");
+             try {
+                 // Split the line by commas
+                 String[] values = line.split(",");
 
-	                // Ensure the correct number of columns are present
-	                if (values.length < 8) {
-	                    System.err.println("Invalid line: Not enough data (missing columns) -> " + line);
-	                    continue; // Skip this line
-	                }
+                 // Ensure at least 9 columns: Category + Name + 7 data fields
+                 if (values.length < 6) {
+                     System.err.println("Invalid line: Not enough data -> " + line);
+                     continue; // Skip this line
+                 }
 
-	                // Extract data from each column, with default values if not valid
-	                String name = values[0].trim();
-	                double health = parseDoubleWithDefault(values[1]);
-	                double strength = parseDoubleWithDefault(values[2]);
-	                double speed = parseDoubleWithDefault(values[3]);
-	                double defense = parseDoubleWithDefault(values[4]);
-	                String descriptionPath = values[5].trim();
-	                String imagePath = values[6].trim();
-	                String renderPath = values.length > 7 ? values[7].trim() : "/CharacterRenders/NoRender.png";  // Default render path
+                 // Extract data
+                 String category = values[0].trim(); // First column is category
+                 String name = values[1].trim();    // Second column is name
+                 double health = parseDoubleWithDefault(values[2]);
+                 double strength = parseDoubleWithDefault(values[3]);
+                 double speed = parseDoubleWithDefault(values[4]);
+                 double defense = parseDoubleWithDefault(values[5]);
+                 
+                 
+                 // Handle paths with fallbacks if empty
+                 String descriptionPath = (values.length > 6 && !values[6].trim().isEmpty()) 
+                         ? values[6].trim() 
+                         : "/characterDescriptions/WIPCharacter.txt"; // Default path if empty
 
-	                // Handle missing paths by setting default values
-	                descriptionPath = descriptionPath.isEmpty() ? "/characterDescriptions/WIPCharacter.txt" : descriptionPath;
-	                imagePath = imagePath.isEmpty() ? "/icons/WIPIcon.png" : imagePath;
-	                renderPath = renderPath.isEmpty() ? "/CharacterRenders/NoRender.png" : renderPath;
+                 String imagePath = (values.length > 7 && !values[7].trim().isEmpty()) 
+                         ? values[7].trim() 
+                         : "/icons/WIPIcon.png"; // Default path if empty
 
-	                // Create a new characterInfo object
-	                characterInfo character = new characterInfo(name, health, strength, speed, defense,
-	                                                            descriptionPath, imagePath, renderPath);
+                 String renderPath = (values.length > 8 && !values[8].trim().isEmpty()) 
+                         ? values[8].trim() 
+                         : "/CharacterRenders/NoRender.png"; // Default path if empty
 
-	                // Add character to the characterMap
-	                characterMap.put(name, character);
 
-	            } catch (NumberFormatException e) {
-	                System.err.println("Error parsing numeric values in line: " + line);
-	                e.printStackTrace();
-	            } catch (Exception e) {
-	                System.err.println("Error processing line: " + line);
-	                e.printStackTrace();
-	            }
-	        }
-	    } catch (IOException e) {
-	        System.err.println("Error reading the file: " + filePath);
-	        e.printStackTrace();
-	    }
-	}
+                 // Create a new characterInfo object
+                 characterInfo character = new characterInfo(name, health, strength, speed, defense,
+                                                             descriptionPath, imagePath, renderPath);
 
+                 // Add character to characterMap
+                 characterMap.put(name, character);
+
+                 // Add character to its category
+                 characterCategories.computeIfAbsent(category, k -> new ArrayList<>()).add(name);
+
+             } catch (NumberFormatException e) {
+                 System.err.println("Error parsing numeric values in line: " + line);
+                 e.printStackTrace();
+             } catch (Exception e) {
+                 System.err.println("Error processing line: " + line);
+                 e.printStackTrace();
+             }
+         }
+     } catch (IOException e) {
+         System.err.println("Error reading the file: " + filePath);
+         e.printStackTrace();
+     }
+ }
+
+ // Helper method to get character categories map
+ public static Map<String, List<String>> getCharacterCategories() {
+     return characterCategories;
+ }
+ 
+ public static void updateCharacterButtons(ComboBox<String> characterComboBox, VBox buttonContainer, Button characterRenderButton) {
+     buttonContainer.getChildren().clear();
+
+     // Get the selected category
+     String selectedCategory = characterComboBox.getValue();
+
+     // Retrieve characters dynamically
+     if (selectedCategory != null && characterCategories.containsKey(selectedCategory)) {
+         List<String> characters = characterCategories.get(selectedCategory);
+         for (String character : characters) {
+             buttonContainer.getChildren().add(createCharacterButton(character, characterRenderButton));
+         }
+     }
+ }
+ 
+ 
 //Helper method to parse a double and provide a default value in case of error
 private static double parseDoubleWithDefault(String value) {
   try {
