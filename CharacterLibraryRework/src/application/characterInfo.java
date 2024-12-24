@@ -1,6 +1,7 @@
 package application;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,19 +9,32 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -101,7 +115,6 @@ public class characterInfo extends appMethods{
 
  public static Map<String, List<String>> characterCategories = new HashMap<>();
 
- 
  //THIS is the method that allows the whole file with character data to be loaded and set.
  public static void loadCharactersFromCSV(String filePath) {
      try (BufferedReader reader = getBufferedReader(filePath)) {
@@ -170,6 +183,140 @@ public class characterInfo extends appMethods{
          e.printStackTrace();
      }
  }
+ 
+ 
+ public static void loadAndEditCSVFile(File selectedFile) {
+	    if (selectedFile != null) {
+	        try {
+	            // Clear existing character categories and UI components before loading new data
+	            characterCategories.clear(); // Clear the old categories
+	            buttonContainer.getChildren().clear(); // Clear any existing buttons
+
+	            // Load characters from the selected CSV file
+	            List<String> lines = Files.readAllLines(selectedFile.toPath());
+
+	            // Create an ObservableList to store the CSV rows (this will be used for your TableView)
+	            ObservableList<ObservableList<String>> newTableData = FXCollections.observableArrayList();
+	            boolean missingPaths = false; // Flag to track if there are missing paths
+	            Map<String, List<ObservableList<String>>> newCategories = new HashMap<>(); // Map to store categories
+
+	            // Parse CSV lines into rows and columns
+	            for (String line : lines) {
+	                String[] values = line.split(","); // Assuming CSV is comma-separated
+
+	                // Skip empty lines
+	                if (line.trim().isEmpty()) continue;
+
+	                // Ensure the CSV row has at least 6 columns before adding description, image, and render
+	                if (values.length < 6) {
+	                    continue; // Skip rows with insufficient data (we expect at least 6 columns for health, strength, speed, etc.)
+	                }
+
+	                // Check if there are missing paths for description, image, and render
+	                String descriptionPath = values.length > 6 && !values[6].trim().isEmpty()
+	                        ? values[6].trim() : "/characterDescriptions/WIPCharacter.txt"; // Default path if empty
+	                String imagePath = values.length > 7 && !values[7].trim().isEmpty()
+	                        ? values[7].trim() : "/icons/WIPIcon.png"; // Default path if empty
+	                String renderPath = values.length > 8 && !values[8].trim().isEmpty()
+	                        ? values[8].trim() : "/CharacterRenders/NoRender.png"; // Default path if empty
+
+	                // Check if any of the paths are missing
+	                if (descriptionPath.equals("/characterDescriptions/WIPCharacter.txt") ||
+	                    imagePath.equals("/icons/WIPIcon.png") ||
+	                    renderPath.equals("/CharacterRenders/NoRender.png")) {
+	                    missingPaths = true; // Set flag if any default paths are used
+	                }
+
+	                // Add the description, image, and render paths explicitly to the row if missing
+	                while (values.length < 9) {
+	                    values = Arrays.copyOf(values, values.length + 1);
+	                }
+	                values[6] = descriptionPath;
+	                values[7] = imagePath;
+	                values[8] = renderPath;
+
+	                // Create a row with values
+	                ObservableList<String> row = FXCollections.observableArrayList(values);
+
+	                // Add row data to the ObservableList (new table data)
+	                newTableData.add(row);
+
+	                // Update the categories map based on the first column (Category)
+	                String category = values[0].trim(); // First column is the category
+	                newCategories.putIfAbsent(category, new ArrayList<>());
+	                newCategories.get(category).add(row); // Add row to the appropriate category list
+	            }
+
+	            // Clear existing TableView before loading new data
+	            TableView<ObservableList<String>> newTableView = new TableView<>();
+
+	            // Create columns based on the number of columns in the CSV file
+	            for (int i = 0; i < newTableData.get(0).size(); i++) {
+	                TableColumn<ObservableList<String>, String> column = new TableColumn<>("Column " + (i + 1));
+	                int colIndex = i;
+	                column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(colIndex)));
+
+	                // Make the column editable
+	                column.setCellFactory(TextFieldTableCell.forTableColumn());
+	                column.setOnEditCommit(event -> {
+	                    ObservableList<String> row = event.getRowValue();
+	                    row.set(colIndex, event.getNewValue());
+	                });
+	                newTableView.getColumns().add(column);
+	            }
+
+	            // Set the new table data
+	            newTableView.setItems(newTableData);
+	            newTableView.setEditable(true);
+
+	            // Create a dialog to display the TableView to the user
+	            VBox vbox = new VBox(newTableView);
+	            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+	            alert.setTitle("Edit CSV File");
+	            alert.setHeaderText("Edit the loaded CSV content in the table below.");
+	            alert.getDialogPane().setContent(vbox);
+
+	            // If any paths are missing, show a warning
+	            if (missingPaths) {
+	                alert.setHeaderText("Warning: Some paths are missing, default paths will be used for missing description, image, and render paths. Leave these alone if you dont have any paths  this will be updated soon.");
+	            }
+
+	            // Add confirm and cancel buttons
+	            ButtonType confirmButton = new ButtonType("Confirm", ButtonData.OK_DONE);
+	            ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+	            alert.getButtonTypes().setAll(confirmButton, cancelButton);
+
+	            Optional<ButtonType> result = alert.showAndWait();
+
+	            if (result.isPresent() && result.get() == confirmButton) {
+	                // If confirmed, save the edited content back to the file
+	                StringBuilder updatedCsv = new StringBuilder();
+	                for (ObservableList<String> row : newTableData) {
+	                    updatedCsv.append(String.join(",", row)).append("\n");
+	                }
+	                Files.write(Paths.get(selectedFile.toURI()), updatedCsv.toString().getBytes());
+
+	                // After saving, trigger the loadCharactersFromCSV method to reload the data
+	                characterInfo.loadCharactersFromCSV(selectedFile.getAbsolutePath()); // Load the updated data
+
+	                // After the CSV is loaded, refresh the ComboBox and character buttons
+	                refreshUI();  // Call this method to refresh the ComboBox and button containers
+
+	                System.out.println("CSV file updated and UI refreshed successfully!");
+	            }
+
+	        } catch (IOException e) {
+	            System.err.println("Error reading or saving the file.");
+	            e.printStackTrace();
+	        }
+	    }
+	}
+
+
+ 
+ 
+ 
+ 
 
  // Helper method to get character categories map
  public static Map<String, List<String>> getCharacterCategories() {
@@ -190,10 +337,23 @@ public class characterInfo extends appMethods{
          }
      }
  }
- 
+ public static void refreshUI() {
+	    // Clear and refresh the ComboBox items (categories)
+	    characterComboBox.getItems().clear();
+	    characterComboBox.getItems().addAll(characterCategories.keySet());
+
+	    // Set the default category (first one, if any)
+	    if (!characterComboBox.getItems().isEmpty()) {
+	        characterComboBox.setValue(characterComboBox.getItems().get(0)); // Default to the first category
+	    }
+
+	    // Refresh the character buttons for the selected category
+	    updateCharacterButtons(characterComboBox, buttonContainer, characterRenderButton);
+	}
+
  
 //Helper method to parse a double and provide a default value in case of error
-private static double parseDoubleWithDefault(String value) {
+public static double parseDoubleWithDefault(String value) {
   try {
       // Replace comma with period to handle different locales
       value = value.replace(",", ".");

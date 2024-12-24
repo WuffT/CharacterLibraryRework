@@ -2,10 +2,14 @@ package application;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,8 +28,8 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 3.3;
-	   static String applastUpdate = "12/16/2024";
+	   static double appVersion = 3.4;
+	   static String applastUpdate = "12/23/2024";
 	   
 	   
 	   static ProgressBar healthBar;
@@ -39,9 +43,11 @@ public class mainUI extends Application {
 	   static Image iconImage;
 	   static  ImageView iconImageView;
 	   static Button characterRenderButton;
-	   
+	   static Button loadCSVFile;
 	   static Slider volumeSlider;
+	   static   ComboBox<String> characterComboBox;
 	   
+	   static VBox buttonContainer;
 	   @Override
 	public void start(Stage primaryStage) {
 		  
@@ -65,7 +71,7 @@ public class mainUI extends Application {
 	                           "-fx-border-width: 5; " +                   // Border width
 	                           "-fx-border-color: #000000; ");           // Border color (Black)
 
-	        VBox buttonContainer = new VBox(10); // Create a VBox to hold the dynamic buttons
+	        buttonContainer = new VBox(10); // Create a VBox to hold the dynamic buttons
 	        buttonContainer.setStyle("-fx-background-color: #f4f4f4;"); // Optional styling for the VBox
 	        buttonContainer.setPadding(new Insets(10));
 	     
@@ -76,7 +82,7 @@ public class mainUI extends Application {
 	        ScrollPane charScrollPane = new ScrollPane(buttonContainer);
 	        charScrollPane.setFitToWidth(true); // Ensures the VBox is resized to fit the ScrollPane width
 	        charScrollPane.setFitToHeight(false); // Ensures the ScrollPane adjusts to the VBox's height
-	        ComboBox<String> characterComboBox = new ComboBox<>();
+	        characterComboBox = new ComboBox<>();
 	        characterComboBox.getItems().add("-Click Me-"); // Default option
 
 	        // Load categories dynamically
@@ -107,14 +113,49 @@ public class mainUI extends Application {
 
 	        characterRenderButton.getStyleClass().add("pink");
 	        characterRenderButton.setMaxWidth(Double.MAX_VALUE); // Ensure the button stretches horizontally
+	        
+	        loadCSVFile = new Button("Load New");
+	        loadCSVFile.getStyleClass().add("pink");
+	        loadCSVFile.setMaxWidth(Double.MAX_VALUE);
+	        loadCSVFile.setOnAction(e -> {
+	            // Play the button sound effect
+	            appMethods.playButtonSFX();
 
+	            // Open a FileChooser to select a new CSV file
+	            FileChooser fileChooser = new FileChooser();
+	            fileChooser.setTitle("Select New Character CSV File");
+	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+	            
+	            // Show the FileChooser dialog and get the selected file
+	            File selectedFile = fileChooser.showOpenDialog(null); // Replace `null` with your primary stage if available
+
+	            // Check if a file was selected (user didn't cancel the dialog)
+	            if (selectedFile != null) {
+	                // Call the method to load and edit the CSV file (custom method to handle file editing)
+	                characterInfo.loadAndEditCSVFile(selectedFile);
+
+	             
+
+	  
+
+	                // Optionally, provide feedback to the user (e.g., display success message)
+	                System.out.println("CSV file selected: " + selectedFile.getAbsolutePath());
+	            } else {
+	                // If no file was selected, you can provide feedback or just do nothing
+	                System.out.println("No file selected");
+	            }
+	        });
+
+
+
+	        
 	        // VBox for dynamic buttons
 	        VBox dynamicButtonsBox = new VBox(10);
 	        ScrollPane scrollPaneForButtons = new ScrollPane(dynamicButtonsBox);
 	        scrollPaneForButtons.setFitToWidth(true); // Ensure scrollable content fits the width
 	        
 	        // Add buttons to the left panel
-	        leftPanel.getChildren().addAll(characterComboBox, charScrollPane, characterRenderButton, helpButton);
+	        leftPanel.getChildren().addAll(characterComboBox, charScrollPane, characterRenderButton, helpButton, loadCSVFile);
 	        root.setLeft(leftPanel);
 
 	        // Center Panel (Cyan) - Main Content Display
