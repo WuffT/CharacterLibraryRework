@@ -1,6 +1,9 @@
 package application;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -15,17 +18,135 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 public class customWindows extends mainUI{
 
+	public static void showOptions() {
+	    // Create a new stage for the Options window
+	    Stage popupStage = new Stage();
+	    popupStage.setTitle("Options");
+	    popupStage.initModality(Modality.APPLICATION_MODAL);  // Make the popup modal
 
+	    // Title label
+	    Label titleLabel = new Label("Options and Features");
+	    titleLabel.getStyleClass().add("menuLabel");
+	    titleLabel.setAlignment(Pos.CENTER);
+
+	    // Create layout
+	    VBox layout = new VBox(15);
+	    layout.setAlignment(Pos.CENTER);
+	    layout.setPadding(new Insets(20));
+	    layout.setStyle(("-fx-background-image: url('imageSamples/BorderPink.png'); " +
+	            "-fx-background-repeat: no-repeat; " +
+	            "-fx-background-size: 100% 100%; " +
+	            "-fx-border-width: 5; " +                   // Border width
+	            "-fx-border-color: #000000; "));
+
+	    // Button for "Manage" (for loading and editing)
+	    Button manageButton = new Button("Manage");
+	    manageButton.getStyleClass().add("pink");
+	    manageButton.setOnAction(e -> {
+	        // Play the button sound effect
+	        appMethods.playButtonSFX();
+	        // Open a FileChooser to select a new CSV file
+	        FileChooser fileChooser = new FileChooser();
+	        fileChooser.setTitle("Select New Character CSV File");
+	        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV File", "*.csv"));
+	        
+	        // Show the FileChooser dialog and get the selected file
+	        File selectedFile = fileChooser.showOpenDialog(null); // Replace `null` with your primary stage if available
+
+	        // Check if a file was selected (user didn't cancel the dialog)
+	        if (selectedFile != null) {
+	            // Call the method to load and edit the CSV file (custom method to handle file editing)
+	            characterInfo.loadAndEditCSVFile(selectedFile);
+
+	            // Optionally, provide feedback to the user (e.g., display success message)
+	            System.out.println("CSV file selected: " + selectedFile.getAbsolutePath());
+	        } else {
+	            // If no file was selected, you can provide feedback or just do nothing
+	            System.out.println("No file selected");
+	        }
+	    });
+
+	    // Text Area (Initially empty, hidden)
+	    TextArea infoTextArea = new TextArea();
+	    infoTextArea.getStyleClass().add("vbox-background");
+	    infoTextArea.setWrapText(true);
+	    infoTextArea.setEditable(true); // Initially editable, but hidden
+	    infoTextArea.setMaxWidth(Double.MAX_VALUE);
+	    infoTextArea.setMaxHeight(Double.MAX_VALUE);
+	    infoTextArea.setVisible(false); // Initially hidden
+
+	    // Button for "Create Text File"
+	    Button createTextFileButton = new Button("Create Text File");
+	    createTextFileButton.getStyleClass().add("pink");
+	    createTextFileButton.setOnAction(e -> {
+	        appMethods.playButtonSFX();
+	        infoTextArea.setVisible(true); // Make the text area visible when this button is clicked
+	        infoTextArea.setPromptText("Type character info here to save it as a text file.");	    });
+
+	    // Button to save the content as a .txt file
+	    Button saveButton = new Button("Save Text File");
+	    saveButton.getStyleClass().add("pink");
+	    saveButton.setOnAction(saveEvent -> {
+	        String content = infoTextArea.getText();
+	        if (!content.isEmpty()) {
+	            // Save the text to a file
+	            FileChooser fileChooser = new FileChooser();
+	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+	            File file = fileChooser.showSaveDialog(popupStage);
+
+	            if (file != null) {
+	                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+	                    writer.write(content);
+	                    System.out.println("File saved: " + file.getAbsolutePath());
+	                } catch (IOException ioException) {
+	                    System.err.println("Error saving file: " + ioException.getMessage());
+	                }
+	            }
+	        } else {
+	            infoTextArea.setText("Please enter some text to save.");
+	        }
+	    });
+
+	    // Close button to close the options window
+	    Button closeButton = new Button("Close");
+	    closeButton.getStyleClass().add("close");
+	    closeButton.setOnAction(e -> {
+	        appMethods.playButtonSFX();
+	        popupStage.close();
+	    });
+
+	    // Organize the buttons in a VBox
+	    VBox buttonBox = new VBox(10);
+	    buttonBox.setAlignment(Pos.CENTER);
+	    buttonBox.getChildren().addAll(manageButton, createTextFileButton, saveButton);
+
+	    // Add the text area and button box to the layout
+	    layout.getChildren().addAll(titleLabel, buttonBox,infoTextArea,  closeButton);
+
+	    // Create the scene for the popup
+	    Scene scene = new Scene(layout, 600, 800); // Adjust size as needed
+	    scene.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
+
+	    titleLabel.prefWidthProperty().bind(layout.widthProperty());
+	    infoTextArea.prefWidthProperty().bind(scene.widthProperty().multiply(0.8));
+	    infoTextArea.prefHeightProperty().bind(scene.heightProperty().multiply(0.5));
+	    popupStage.setScene(scene);
+	    popupStage.showAndWait(); // Show the popup and wait for it to be closed
+	}
+	
     public static void showHelp() {
         // Create a new stage for the Help window
         Stage popupStage = new Stage();
@@ -163,6 +284,10 @@ public class customWindows extends mainUI{
             System.out.println("Character not found: " + characterName);
         }
     }
+    
+    
+
+   
 
 
     public static Task<Void> simulateLoading(VBox loadingScreen, Stage stage) {

@@ -4,13 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -26,8 +33,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
@@ -37,6 +46,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 
@@ -184,23 +194,34 @@ public class characterInfo extends appMethods{
      }
  }
  
- 
+
+
+
+
  public static void loadAndEditCSVFile(File selectedFile) {
 	    if (selectedFile != null) {
 	        try {
-	            // Clear existing character categories and UI components before loading new data
-	            characterCategories.clear(); // Clear the old categories
-	            buttonContainer.getChildren().clear(); // Clear any existing buttons
+	           
 
 	            // Load characters from the selected CSV file
 	            List<String> lines = Files.readAllLines(selectedFile.toPath());
+
+	            // Ensure the file is not empty
+	            if (lines.isEmpty()) {
+	                System.err.println("The CSV file is empty.");
+	                return;
+	            }
+
+	            // Extract the first row for column headers
+	            String[] headers = lines.get(0).split(",");
+	            lines.remove(0); // Remove the header row from the data
 
 	            // Create an ObservableList to store the CSV rows (this will be used for your TableView)
 	            ObservableList<ObservableList<String>> newTableData = FXCollections.observableArrayList();
 	            boolean missingPaths = false; // Flag to track if there are missing paths
 	            Map<String, List<ObservableList<String>>> newCategories = new HashMap<>(); // Map to store categories
 
-	            // Parse CSV lines into rows and columns
+	            // Parse remaining CSV lines into rows and columns
 	            for (String line : lines) {
 	                String[] values = line.split(","); // Assuming CSV is comma-separated
 
@@ -250,9 +271,9 @@ public class characterInfo extends appMethods{
 	            // Clear existing TableView before loading new data
 	            TableView<ObservableList<String>> newTableView = new TableView<>();
 
-	            // Create columns based on the number of columns in the CSV file
-	            for (int i = 0; i < newTableData.get(0).size(); i++) {
-	                TableColumn<ObservableList<String>, String> column = new TableColumn<>("Column " + (i + 1));
+	            // Create columns based on the headers
+	            for (int i = 0; i < headers.length; i++) {
+	                TableColumn<ObservableList<String>, String> column = new TableColumn<>(headers[i]); // Use header as column name
 	                int colIndex = i;
 	                column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(colIndex)));
 
@@ -278,7 +299,7 @@ public class characterInfo extends appMethods{
 
 	            // If any paths are missing, show a warning
 	            if (missingPaths) {
-	                alert.setHeaderText("Warning: Some paths are missing, default paths will be used for missing description, image, and render paths. Leave these alone if you dont have any paths  this will be updated soon.");
+	                alert.setHeaderText("Warning: Some paths are missing, default paths will be used for missing description, image, and render paths. Leave these alone if you don't have any paths. This will be updated soon.");
 	            }
 
 	            // Add confirm and cancel buttons
@@ -289,8 +310,12 @@ public class characterInfo extends appMethods{
 	            Optional<ButtonType> result = alert.showAndWait();
 
 	            if (result.isPresent() && result.get() == confirmButton) {
+	            	 // Clear existing character categories and UI components before loading new data
+		            characterCategories.clear(); // Clear the old categories
+		            buttonContainer.getChildren().clear(); // Clear any existing buttons
 	                // If confirmed, save the edited content back to the file
 	                StringBuilder updatedCsv = new StringBuilder();
+	                updatedCsv.append(String.join(",", headers)).append("\n"); // Re-add the headers
 	                for (ObservableList<String> row : newTableData) {
 	                    updatedCsv.append(String.join(",", row)).append("\n");
 	                }
@@ -312,9 +337,6 @@ public class characterInfo extends appMethods{
 	    }
 	}
 
-
- 
- 
  
  
 
@@ -426,7 +448,7 @@ public static double parseDoubleWithDefault(String value) {
 
 	    // Setting other character info
 	    nameTextField.setText(name);
-	    applyTypingEffect(infoTextArea, description, Duration.millis(5));
+	    applyTypingEffect(infoTextArea, description, Duration.millis(2));
 	}
 
 	// method to animate the progress bars

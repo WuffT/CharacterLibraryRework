@@ -43,7 +43,8 @@ public class mainUI extends Application {
 	   static Image iconImage;
 	   static  ImageView iconImageView;
 	   static Button characterRenderButton;
-	   static Button loadCSVFile;
+	 
+	   static Button resetDefault;
 	   static Slider volumeSlider;
 	   static   ComboBox<String> characterComboBox;
 	   
@@ -114,38 +115,20 @@ public class mainUI extends Application {
 	        characterRenderButton.getStyleClass().add("pink");
 	        characterRenderButton.setMaxWidth(Double.MAX_VALUE); // Ensure the button stretches horizontally
 	        
-	        loadCSVFile = new Button("Load New");
-	        loadCSVFile.getStyleClass().add("pink");
-	        loadCSVFile.setMaxWidth(Double.MAX_VALUE);
-	        loadCSVFile.setOnAction(e -> {
-	            // Play the button sound effect
-	            appMethods.playButtonSFX();
 
-	            // Open a FileChooser to select a new CSV file
-	            FileChooser fileChooser = new FileChooser();
-	            fileChooser.setTitle("Select New Character CSV File");
-	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
-	            
-	            // Show the FileChooser dialog and get the selected file
-	            File selectedFile = fileChooser.showOpenDialog(null); // Replace `null` with your primary stage if available
+	        resetDefault = new Button("Reset Default");
+	        resetDefault.getStyleClass().add("pink");
+	        resetDefault.setMaxWidth(Double.MAX_VALUE);
+	        resetDefault.setOnAction(e -> { appMethods.playButtonSFX(); characterInfo.characterCategories.clear();  buttonContainer.getChildren().clear(); characterInfo.loadCharactersFromCSV("/characterCSV/characterData.csv"); characterInfo.refreshUI();});
+	         
+	      
 
-	            // Check if a file was selected (user didn't cancel the dialog)
-	            if (selectedFile != null) {
-	                // Call the method to load and edit the CSV file (custom method to handle file editing)
-	                characterInfo.loadAndEditCSVFile(selectedFile);
-
-	             
-
-	  
-
-	                // Optionally, provide feedback to the user (e.g., display success message)
-	                System.out.println("CSV file selected: " + selectedFile.getAbsolutePath());
-	            } else {
-	                // If no file was selected, you can provide feedback or just do nothing
-	                System.out.println("No file selected");
-	            }
-	        });
-
+	        Button options = new Button("Options/Extras");
+	        options.getStyleClass().add("pink");
+	        options.setMaxWidth(Double.MAX_VALUE);
+	        options.setOnAction(e -> { appMethods.playButtonSFX(); customWindows.showOptions();});
+	         
+	      
 
 
 	        
@@ -155,7 +138,7 @@ public class mainUI extends Application {
 	        scrollPaneForButtons.setFitToWidth(true); // Ensure scrollable content fits the width
 	        
 	        // Add buttons to the left panel
-	        leftPanel.getChildren().addAll(characterComboBox, charScrollPane, characterRenderButton, helpButton, loadCSVFile);
+	        leftPanel.getChildren().addAll(characterComboBox, charScrollPane, characterRenderButton, helpButton,resetDefault,options);
 	        root.setLeft(leftPanel);
 
 	        // Center Panel (Cyan) - Main Content Display
