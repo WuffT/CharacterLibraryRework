@@ -5,9 +5,17 @@ Weight: 126 pounds
 Height: 6 ft
 Role: Guard, Hero
 
-Description: Wren used to work for Dr. Stenfort which wasn’t exactly the best job. He did quit though especially after an accident that happened while handling chemicals that were intended to be given for the incidents. This accident resulted in the chemicals spilling onto his skin which caused the bone to be exposed. The process was rather painless which is surprising.
+Description:
+Wren worked at the laboratory under Dr. Stenfort, handling a variety of chemicals and substances at that time. His life took a fateful turn during one such experiment when a chemical spill exposed his skin to a hazardous substance, briefly revealing his bone. The exposure was unexpectedly painless, but the incident was enough to make Wren realize that working under Dr. Stenfort was no longer the best option. Tired of being treated as a mere test subject and fed up with the dangerous, toxic environment, he chose to leave Stenfort's service behind.
+
+Wren, although intimidating with his appearance is not a threat. He is a survivor who has endured much and is grateful to still stand strong. His loyalty to the rebellion is unwavering, and while he occasionally wonders about others in the cove, such as Archie, WuffT, and Viraxe, his focus remains clear—helping to stop Dr. Stenfort and the horrors of his experiments. For Wren, it’s not about what’s broken but about the strength found in moving forward, finding purpose, and embracing the family he’s built in the cove.
 
 Log History:
+
+- Incident with Chemicals: Wren was exposed to hazardous chemicals that caused his bone to be briefly visible.
+- Quit Stenfort’s Lab: After the incident, Wren left Dr. Stenfort’s laboratory due to unsafe working conditions and being treated as a test subject.
+- Joined the Cove: Wren found refuge in the cove, where he began training with fellow heroes of the cove.
+- Growth and Resilience: Wren continues to focus on moving forward despite his past trauma, looking to grow as a leader and contribute to the rebellion's cause.
 
 
 

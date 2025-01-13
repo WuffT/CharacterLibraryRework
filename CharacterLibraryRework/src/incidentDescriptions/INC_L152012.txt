@@ -1,0 +1,10 @@
+Age: ?
+Gender: Male
+Specimen: Axolotl
+Weight: 135 pounds
+Height: 7 ft 1 in (Increases over time if not maintained)
+Mutation Classification: Level 2
+
+Description: Incident L-152012 is an Axolotl, Incident L-152012 is a peculiar entity that is relatively easy to contain under specific conditions. It constantly secretes a viscous, goo-like substance, which has the unique property of being both hazardous and highly versatile. The chamber designed for its containment features a specialized floor that channels the leaked goo into a recycling system. This system processes the substance into various useful materials, such as glue, making the byproduct of Incident L-152012 surprisingly beneficial.
+
+The entity's growth is directly tied to its interaction with the leaked goo. If it manages to reclaim and re-absorb the substance it will allow it to grow in size. Although not much it still poses a significant threat to containment if left un-monitored. However, as long as the goo is efficiently redirected and processed through its designated chamber, Incident L-152012 remains stable and manageable.

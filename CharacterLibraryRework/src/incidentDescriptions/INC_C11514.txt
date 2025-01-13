@@ -1,0 +1,10 @@
+Age: ?
+Gender: Male
+Specimen: Chicken
+Weight: 60 pounds
+Height: 5 ft 2 in
+Mutation Classification: Level 4
+
+Description: Incident C-11514, also known as Incident Chicken, is a fast and agile avian creature. Although it cannot fly well, it has the ability to glide rapidly over obstacles, using its speed to evade or close the distance quickly when necessary.
+
+Incident Chicken is notably fragile, much like real birds, and strong impacts or blunt forces can easily damage its wings or body, making it highly vulnerable to injury. While it has the potential to become aggressive, it typically maintains a neutral demeanor unless disturbed. When left undisturbed, it tends to keep to itself, using its agility to navigate its environment. Its unpredictability and fragile nature make it a challenge to contain and study, though it is generally harmless unless provoked.

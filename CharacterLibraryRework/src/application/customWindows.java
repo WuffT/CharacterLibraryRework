@@ -1,10 +1,14 @@
 package application;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -193,7 +197,7 @@ public class customWindows extends mainUI{
                     + "Version " + appVersion + " REWORKED:\r\n"
                     + "- Application is in its reworking stage and early development\r\n"
                     + "- New Character Data Loading and editing Feature using a CSV file.\r\n"
-                    + "- Better categorizing, editing images and descriptions coming soon.");
+                    + "- Custom characters can be made now, Tutorial on it coming soon");
         });
 
         // Button for "App Information"
@@ -289,93 +293,99 @@ public class customWindows extends mainUI{
 
    
 
-
     public static Task<Void> simulateLoading(VBox loadingScreen, Stage stage) {
+        // Set up the loading screen
         loadingScreen.setVisible(true);
         loadingScreen.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
-        // Add a ProgressBar
-        ProgressBar progressBar = new ProgressBar(0); // Initial progress is 0
-        Label loadingLabel = new Label(""); // Initial loading text
+
+        ProgressBar progressBar = new ProgressBar(0);
+        Label loadingLabel = new Label("");
         loadingLabel.getStyleClass().add("loading");
-        loadingScreen.getChildren().addAll(progressBar, loadingLabel); // Add to the loading screen
-        
-        // Create the "Enter The Database" button, initially hidden
+        loadingScreen.getChildren().addAll(progressBar, loadingLabel);
+
         Button enterDatabaseButton = new Button("Enter The Database");
-        enterDatabaseButton.setVisible(false); // Initially hidden
+        enterDatabaseButton.setVisible(false);
         enterDatabaseButton.getStyleClass().add("close");
-        
-        // Add action to the button when clicked
         enterDatabaseButton.setOnAction(event -> {
-            // Start fade-out when button is clicked
-        	appMethods.playButtonSFX();
+            appMethods.playButtonSFX();
             FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), loadingScreen);
             fadeOut.setFromValue(1.0);
             fadeOut.setToValue(0.0);
-            fadeOut.setOnFinished(e -> loadingScreen.setVisible(false)); // Hide after fade
-            fadeOut.play(); // Start the fade-out animation
+            fadeOut.setOnFinished(e -> loadingScreen.setVisible(false));
+            fadeOut.play();
             appMethods.playSelectedAudio("ThematicHeroes");
         });
-
-        // Add the button to the loading screen
         loadingScreen.getChildren().add(enterDatabaseButton);
 
         Button skipButton = new Button("Skip");
-        skipButton.setVisible(true); // Show the Skip button during loading
+        skipButton.setVisible(true);
         skipButton.getStyleClass().add("close");
         loadingScreen.getChildren().add(skipButton);
-        
+
+        // Define the loading task
         Task<Void> loadingTask = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 appMethods.playSelectedAudio("loadingBeep");
 
-                // Total number of items to "load"
-                int totalItems = 78;
+                // Count the number of rows (excluding the header) in the CSV file
+                int totalItems = 0;
+                try (BufferedReader br = new BufferedReader(
+                        new InputStreamReader(mainUI.class.getResourceAsStream("/characterCSV/characterData.csv")))) {
+                    String line;
+                    boolean isFirstLine = true;
+                    while ((line = br.readLine()) != null) {
+                        if (isFirstLine) {
+                            isFirstLine = false; // Skip the header row
+                            continue;
+                        }
+                        totalItems++;
+                    }
+                }
 
-                for (int i = 1; i <= totalItems; i++) {
+                for (int i = 0; i < totalItems; i++) {
                     if (isCancelled()) break;
 
-                    // Simulate loading each item with a delay
-                    updateMessage("Loading.. " + i + "/" + totalItems);
-                    Thread.sleep(150); // Simulate the loading time for each item
-                    updateProgress(i, totalItems); // Update progress
+                    // Update progress as numbers only
+                    updateMessage("Loading Characters: " + (i + 1) + "/" + totalItems);
+                    updateProgress(i + 1, totalItems);
+
+                    // Simulate a delay for each item
+                    Thread.sleep(300);
                 }
-                // Hide the skip button and show the "Enter The Database" button
+
+                // Update after loading completes
                 skipButton.setVisible(false);
-                // After the task is complete, update the label to show success message
                 updateMessage("Loading Success!");
                 Thread.sleep(1000);
-
-               
                 enterDatabaseButton.setVisible(true);
 
                 return null;
             }
         };
 
-        // Bind the ProgressBar's progress property to the Task's progress
+        // Bind progress and message properties
         progressBar.progressProperty().bind(loadingTask.progressProperty());
-        // Bind the Label's text to the Task's message property
         loadingLabel.textProperty().bind(loadingTask.messageProperty());
-     
-        // Skip button functionality: Cancel the loading task
+
+        // Define the skip button behavior
         skipButton.setOnAction(event -> {
-            loadingTask.cancel(); // Cancel the task
-            // Start fade-out when button is clicked
-        	appMethods.playButtonSFX();
+            loadingTask.cancel();
+            appMethods.playButtonSFX();
             FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), loadingScreen);
             fadeOut.setFromValue(1.0);
             fadeOut.setToValue(0.0);
-            fadeOut.setOnFinished(e -> loadingScreen.setVisible(false)); // Hide after fade
-            fadeOut.play(); // Start the fade-out animation
+            fadeOut.setOnFinished(e -> loadingScreen.setVisible(false));
+            fadeOut.play();
             appMethods.playSelectedAudio("ThematicHeroes");
-   
         });
-        
-        // Start the Task in a separate thread
+
+        // Start the loading task in a new thread
         new Thread(loadingTask).start();
-        
-        return loadingTask; // Return the task so it can be canceled later
+
+        return loadingTask;
     }
+
+
     
 }

@@ -28,8 +28,8 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 3.4;
-	   static String applastUpdate = "12/23/2024";
+	   static double appVersion = 3.5;
+	   static String applastUpdate = "1/13/2025";
 	   
 	   
 	   static ProgressBar healthBar;
@@ -54,7 +54,7 @@ public class mainUI extends Application {
 		  
 		   
 	  
-	        primaryStage.setTitle("Character Info Library");
+	        primaryStage.setTitle("Character Info Library V" + appVersion + " BETA");
 	        Image appIcon = new Image(getClass().getResource("/icons/appIcon.png").toExternalForm());
 	      
 
@@ -344,7 +344,17 @@ public class mainUI extends Application {
         try {
         	  Thread.sleep(2000);
         	  characterInfo.loadCharactersFromCSV("/characterCSV/characterData.csv");
-
+        	  characterFileManager.copyResourcesFromJarToCharacterDirectory();
+        	   // Start the file watching in a separate thread
+              Thread fileWatchThread = new Thread(() -> {
+                  characterFileManager.watchForFileChanges();
+              });
+              fileWatchThread.setDaemon(true); // Allow thread to exit when the app closes
+              fileWatchThread.start();
+              
+              // Continue with your GUI setup
+           
+              
             launch(args);
         } catch (Exception e) {
             e.printStackTrace();

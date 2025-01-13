@@ -1,0 +1,10 @@
+Age: ?
+Gender: Male
+Specimen: Sea Serpent
+Weight: 95 pounds
+Height: 6 ft 5 in
+Mutation Classification: Level 3
+
+Description: Incident P-51420 is an aquatic serpent-like creature with balanced physical attributes, making it both highly reliable and formidable. Despite its Level 3 Mutation Classification, much about this entity remains shrouded in mystery. Incident P-51420 is known for its moody demeanor, often remaining silent and serious in its behavior. It is housed in a large, specially designed fish tank that serves as its containment room. Here, it spends most of its time swimming undisturbed, seemingly preferring solitude.
+
+Recent studies have revealed that Incident P-51420 possesses exceptional night vision, which not only allows it to see in complete darkness but also gives it remarkable underwater visibility. This ability makes it highly adept at navigating and hunting in low-light aquatic environments. Its behavior, abilities, and potential risks are still under investigation, as its true nature has yet to be fully understood.
