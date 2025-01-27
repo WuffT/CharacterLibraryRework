@@ -1,3 +1,4 @@
+Alias Name: Axy
 Age: ?
 Gender: Male
 Specimen: Axolotl

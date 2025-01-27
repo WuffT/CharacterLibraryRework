@@ -32,6 +32,8 @@ import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -45,8 +47,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
@@ -196,7 +202,15 @@ public class characterInfo extends appMethods{
  
 
 
+ // Custom Base paths for different file types
+ final static String BASE_DESCRIPTION_PATH = "/customCharacterDirectory/customCharacterDescription/"; 
+ final static String BASE_ICON_PATH = "/customCharacterDirectory/customCharacterIcon/";
+ final static String BASE_RENDER_PATH = "/customCharacterDirectory/customCharacterRender/";
 
+ // Custom Base paths for different file types
+ final static String NO_DESCRIPTION_PATH = "/characterDescriptions/WIPCharacter.txt"; 
+ final static String NO_ICON_PATH = "/icons/WIPIcon.png";
+ final static String NO_RENDER_PATH = "/CharacterRenders/NoRender.png";
 
  public static void loadAndEditCSVFile(File selectedFile) {
 	    if (selectedFile != null) {
@@ -233,20 +247,27 @@ public class characterInfo extends appMethods{
 	                    continue; // Skip rows with insufficient data (we expect at least 6 columns for health, strength, speed, etc.)
 	                }
 
-	                // Check if there are missing paths for description, image, and render
+	                
+	                
+	             // Handling description path (strip base path for display)
 	                String descriptionPath = values.length > 6 && !values[6].trim().isEmpty()
-	                        ? values[6].trim() : "/characterDescriptions/WIPCharacter.txt"; // Default path if empty
-	                String imagePath = values.length > 7 && !values[7].trim().isEmpty()
-	                        ? values[7].trim() : "/icons/WIPIcon.png"; // Default path if empty
-	                String renderPath = values.length > 8 && !values[8].trim().isEmpty()
-	                        ? values[8].trim() : "/CharacterRenders/NoRender.png"; // Default path if empty
+	                        ? values[6].replace(BASE_DESCRIPTION_PATH, "").trim() // Strip the base path for UI display
+	                        : ""; // Leave empty if no value
 
-	                // Check if any of the paths are missing
-	                if (descriptionPath.equals("/characterDescriptions/WIPCharacter.txt") ||
-	                    imagePath.equals("/icons/WIPIcon.png") ||
-	                    renderPath.equals("/CharacterRenders/NoRender.png")) {
-	                    missingPaths = true; // Set flag if any default paths are used
-	                }
+	                // Handling icon path (strip base path for display)
+	                String imagePath = values.length > 7 && !values[7].trim().isEmpty()
+	                        ? values[7].replace(BASE_ICON_PATH, "").trim() // Strip the base path for UI display
+	                        : ""; // Leave empty if no value
+
+	                // Handling render path (strip base path for display)
+	                String renderPath = values.length > 8 && !values[8].trim().isEmpty()
+	                        ? values[8].replace(BASE_RENDER_PATH, "").trim() // Strip the base path for UI display
+	                        : ""; // Leave empty if no value
+
+
+	                
+	                
+	              
 
 	                // Add the description, image, and render paths explicitly to the row if missing
 	                while (values.length < 9) {
@@ -294,7 +315,7 @@ public class characterInfo extends appMethods{
 	            VBox vbox = new VBox(newTableView);
 	            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 	            alert.setTitle("Edit CSV File");
-	            alert.setHeaderText("Edit the loaded CSV content in the table below.");
+	            alert.setHeaderText("Edit the loaded CSV content in the table below. Stat values go from 0 to 100. EX:40 = 40% of the bar is filled or 100 = 100% of the bar is filled");
 	            alert.getDialogPane().setContent(vbox);
 
 	            // If any paths are missing, show a warning
@@ -306,14 +327,33 @@ public class characterInfo extends appMethods{
 	            ButtonType confirmButton = new ButtonType("Confirm", ButtonData.OK_DONE);
 	            ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 	            alert.getButtonTypes().setAll(confirmButton, cancelButton);
-
+	         // Resize the dialog
+	            alert.getDialogPane().setMinWidth(600); // Set minimum width
+	            alert.getDialogPane().setMinHeight(400); // Set minimum height
+	            alert.getDialogPane().setPrefWidth(800); // Set preferred width
+	            alert.getDialogPane().setPrefHeight(600); // Set preferred height
 	            Optional<ButtonType> result = alert.showAndWait();
 
 	            if (result.isPresent() && result.get() == confirmButton) {
 	            	 // Clear existing character categories and UI components before loading new data
 		            characterCategories.clear(); // Clear the old categories
 		            buttonContainer.getChildren().clear(); // Clear any existing buttons
-	                // If confirmed, save the edited content back to the file
+	                
+		         // On Confirm, rebuild paths before saving
+		            for (ObservableList<String> row : newTableData) {
+		                // Append base paths to each column that contains a file name
+		                String descriptionPath = BASE_DESCRIPTION_PATH + row.get(6).trim();
+		                String imagePath = BASE_ICON_PATH + row.get(7).trim();
+		                String renderPath = BASE_RENDER_PATH + row.get(8).trim();
+
+		                // Update the row with full paths for saving
+		                row.set(6, descriptionPath);
+		                row.set(7, imagePath);
+		                row.set(8, renderPath);
+		            }
+		            
+		            
+		            // If confirmed, save the edited content back to the file
 	                StringBuilder updatedCsv = new StringBuilder();
 	                updatedCsv.append(String.join(",", headers)).append("\n"); // Re-add the headers
 	                for (ObservableList<String> row : newTableData) {
@@ -337,7 +377,6 @@ public class characterInfo extends appMethods{
 	    }
 	}
 
- 
  
 
  // Helper method to get character categories map
@@ -409,21 +448,6 @@ public static double parseDoubleWithDefault(String value) {
 	}
 
  
-//We do not use the method anymore to initialize character data now. Instead all character data is loaded through a new CSV format.
-	//In this case the data is now inside of a comma seperated values file which will have each character have its data inside of a table and other things like that.
- 
- /* As a legacy example this is how the data is handled. AGAIN CHARACTER DATA IS NOW HANDLED IN A NEW CSV FILE.
-        "Character Name",
-        0.55,  // Health
-        0.88,  // Strength
-        0.35,  // Speed
-        0.20,  // Defense    //all values above are from 0-1 || Example: 0.55 is really just 55% while 1 is 100%
-        "/characterDescriptions/character.txt",
-        "/icons/charactericon.png",
-        "/CharacterRenders/characterrender.png"
-
-*/
- 
  
  public static void setCharacter(String name, double health, double strength, double speed, double defense, String description, String imagePath, String renderPath) {
 	    System.out.println("Setting character: " + name);
@@ -441,14 +465,14 @@ public static double parseDoubleWithDefault(String value) {
 	    }
 
 	    // Animate the progress bars
-	    animateProgressBar(healthBar, health);
-	    animateProgressBar(strengthBar, strength);
-	    animateProgressBar(speedBar, speed);
-	    animateProgressBar(defenseBar, defense);
+	    animateProgressBar(healthBar, health/100);
+	    animateProgressBar(strengthBar, strength/100);
+	    animateProgressBar(speedBar, speed/100);
+	    animateProgressBar(defenseBar, defense/100);
 
 	    // Setting other character info
 	    nameTextField.setText(name);
-	    applyTypingEffect(infoTextArea, description, Duration.millis(2));
+	    applyTypingEffect(infoTextArea, description, Duration.millis(1));
 	}
 
 	// method to animate the progress bars
@@ -470,28 +494,42 @@ public static double parseDoubleWithDefault(String value) {
 	}
 	
 	
-	// Typing effect method
 	private static void applyTypingEffect(TextArea textArea, String fullText, Duration typingSpeed) {
 	    if (currentTypingTimeline != null) {
 	        currentTypingTimeline.stop();
 	    }
-		
+
 	    textArea.clear(); // Clear the text area before typing starts
 	    StringBuilder displayedText = new StringBuilder();
 
 	    currentTypingTimeline = new Timeline();
-	    for (int i = 0; i < fullText.length(); i++) {
+	    int batchSize = 20; // Number of characters to show at once per update
+	    for (int i = 0; i < fullText.length(); i += batchSize) {
+	        int end = Math.min(i + batchSize, fullText.length());
+	        String textBatch = fullText.substring(i, end);
+	        
 	        int index = i; // Use an effectively final variable for lambda
 	        currentTypingTimeline.getKeyFrames().add(
 	            new KeyFrame(typingSpeed.multiply(index), event -> {
-	                displayedText.append(fullText.charAt(index)); // Add the next character
+	                displayedText.append(textBatch); // Add the next batch of characters
 	                textArea.setText(displayedText.toString());
 	            })
 	        );
 	    }
 
-	    // Optional: Add an action to perform when typing is complete. This is nothing special it was just used for testing.
+	    // Action when typing is completed
 	    currentTypingTimeline.setOnFinished(event -> System.out.println("Typing animation completed!"));
+
+	    // Add event listener to skip the typing effect on click
+	    EventHandler<MouseEvent> skipTypingEffectHandler = event -> {
+	        if (event.getButton() == MouseButton.PRIMARY) { // Left click
+	            currentTypingTimeline.stop();
+	            textArea.setText(fullText); // Set the full text immediately
+	        }
+	    };
+
+	    textArea.setOnMouseClicked(skipTypingEffectHandler);
+
 	    currentTypingTimeline.play();
 	}
 

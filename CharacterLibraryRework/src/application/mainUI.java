@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import java.io.File;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,6 +22,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 
 
@@ -28,8 +30,8 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 3.5;
-	   static String applastUpdate = "1/13/2025";
+	   static double appVersion = 4.0;
+	   static String applastUpdate = "1/27/2025";
 	   
 	   
 	   static ProgressBar healthBar;
@@ -44,16 +46,17 @@ public class mainUI extends Application {
 	   static  ImageView iconImageView;
 	   static Button characterRenderButton;
 	 
-	   static Button resetDefault;
+	  
 	   static Slider volumeSlider;
 	   static   ComboBox<String> characterComboBox;
 	   
 	   static VBox buttonContainer;
+	   
+	   static StackPane screenOverlay;
 	   @Override
 	public void start(Stage primaryStage) {
 		  
 		   
-	  
 	        primaryStage.setTitle("Character Info Library V" + appVersion + " BETA");
 	        Image appIcon = new Image(getClass().getResource("/icons/appIcon.png").toExternalForm());
 	      
@@ -94,12 +97,9 @@ public class mainUI extends Application {
 	            characterInfo.updateCharacterButtons(characterComboBox, buttonContainer, characterRenderButton);
 	        });
 	        characterComboBox.setValue("-Click Me-");
-	        
-	        Button helpButton = new Button("Help");
-	        helpButton.getStyleClass().add("pink");
-	        helpButton.setMaxWidth(Double.MAX_VALUE); // Ensure the button stretches horizontally
-	        helpButton.setOnAction(e -> { appMethods.playButtonSFX(); customWindows.showHelp(); });
+	      
 
+	        Tooltip renderTip = new Tooltip("Shows a full image of a character");
 	        characterRenderButton = new Button("Character Render");
 	        characterRenderButton.setOnAction(e -> {
 	            appMethods.playButtonSFX();  // Play the button sound effect
@@ -114,19 +114,14 @@ public class mainUI extends Application {
 
 	        characterRenderButton.getStyleClass().add("pink");
 	        characterRenderButton.setMaxWidth(Double.MAX_VALUE); // Ensure the button stretches horizontally
-	        
+	        characterRenderButton.setTooltip(renderTip);
 
-	        resetDefault = new Button("Reset Default");
-	        resetDefault.getStyleClass().add("pink");
-	        resetDefault.setMaxWidth(Double.MAX_VALUE);
-	        resetDefault.setOnAction(e -> { appMethods.playButtonSFX(); characterInfo.characterCategories.clear();  buttonContainer.getChildren().clear(); characterInfo.loadCharactersFromCSV("/characterCSV/characterData.csv"); characterInfo.refreshUI();});
-	         
 	      
 
 	        Button options = new Button("Options/Extras");
 	        options.getStyleClass().add("pink");
 	        options.setMaxWidth(Double.MAX_VALUE);
-	        options.setOnAction(e -> { appMethods.playButtonSFX(); customWindows.showOptions();});
+	        options.setOnAction(e -> { appMethods.playButtonSFX(); customWindows.showOptions(primaryStage, screenOverlay);});
 	         
 	      
 
@@ -138,7 +133,7 @@ public class mainUI extends Application {
 	        scrollPaneForButtons.setFitToWidth(true); // Ensure scrollable content fits the width
 	        
 	        // Add buttons to the left panel
-	        leftPanel.getChildren().addAll(characterComboBox, charScrollPane, characterRenderButton, helpButton,resetDefault,options);
+	        leftPanel.getChildren().addAll(characterComboBox, charScrollPane, characterRenderButton,options);
 	        root.setLeft(leftPanel);
 
 	        // Center Panel (Cyan) - Main Content Display
@@ -185,7 +180,7 @@ public class mainUI extends Application {
 	    
 	        
 	     // Create VBox for the progress bars stacked vertically
-	        VBox progressBarContainer = new VBox(0);
+	        VBox progressBarContainer = new VBox(5);
 
 	        // Create the ProgressBars
 	        healthBar = new ProgressBar(1);  // 100% progress (Full health)
@@ -202,32 +197,62 @@ public class mainUI extends Application {
 
 	        // Create ImageView for the icons, using getResource() to access images in the imageSamples directory
 	        ImageView healthIcon = new ImageView(new Image(getClass().getResource("/imageSamples/HPIcon.png").toExternalForm()));
-	        healthIcon.setFitWidth(25);  // Set size for the icon
-	        healthIcon.setFitHeight(25);
-
+	        healthIcon.setFitWidth(40);  // Set size for the icon
+	        healthIcon.setFitHeight(40);
+	     
 	        ImageView strengthIcon = new ImageView(new Image(getClass().getResource("/imageSamples/PWIcon.png").toExternalForm()));
-	        strengthIcon.setFitWidth(25);
-	        strengthIcon.setFitHeight(25);
+	        strengthIcon.setFitWidth(40);
+	        strengthIcon.setFitHeight(40);
 
 	        ImageView speedIcon = new ImageView(new Image(getClass().getResource("/imageSamples/SPIcon.png").toExternalForm()));
-	        speedIcon.setFitWidth(25);
-	        speedIcon.setFitHeight(25);
+	        speedIcon.setFitWidth(40);
+	        speedIcon.setFitHeight(40);
 
 	        ImageView defenseIcon = new ImageView(new Image(getClass().getResource("/imageSamples/DFIcon.png").toExternalForm()));
-	        defenseIcon.setFitWidth(25);
-	        defenseIcon.setFitHeight(25);
+	        defenseIcon.setFitWidth(40);
+	        defenseIcon.setFitHeight(40);
 
-	        // Creating HBoxes to combine each icon with its corresponding progress bar
-	        HBox healthHBox = new HBox(5, healthIcon, healthBar);
-	        HBox strengthHBox = new HBox(5, strengthIcon, strengthBar);
-	        HBox speedHBox = new HBox(5, speedIcon, speedBar);
-	        HBox defenseHBox = new HBox(5, defenseIcon, defenseBar);
+	     // Create Labels for the dynamic values
+	        Label healthValueLabel = new Label();
+	        healthValueLabel.textProperty().bind(Bindings.format("Max Health: %.0f", healthBar.progressProperty().multiply(1000)));
+
+	        Label strengthValueLabel = new Label();
+	        strengthValueLabel.textProperty().bind(Bindings.format("Power: %.0f Damage", strengthBar.progressProperty().multiply(250)));
+
+	        Label speedValueLabel = new Label();
+	        speedValueLabel.textProperty().bind(Bindings.format("Speed: %.0f%% Movement Speed", speedBar.progressProperty().multiply(100)));
+
+	        Label defenseValueLabel = new Label();
+	        defenseValueLabel.textProperty().bind(Bindings.format("Defense: %.0f%% Damage Reduction", defenseBar.progressProperty().multiply(30)));
+	    
+	        // Style the labels for consistent alignment (optional)
+	      
+	        healthValueLabel.getStyleClass().add("barLabel");
+	   
+	        strengthValueLabel.getStyleClass().add("barLabel");
+	       
+	        speedValueLabel.getStyleClass().add("barLabel");
+	     
+	        defenseValueLabel.getStyleClass().add("barLabel");
+	        // Creating HBoxes to combine the dynamic value label, icon, and progress bar
+	        HBox healthHBox = new HBox(5, healthValueLabel, healthIcon, healthBar);
+	        healthHBox.getStyleClass().add("hbox-customIcon");
+	        HBox strengthHBox = new HBox(5, strengthValueLabel, strengthIcon, strengthBar);
+	        strengthHBox.getStyleClass().add("hbox-customIcon");
+	        HBox speedHBox = new HBox(5, speedValueLabel, speedIcon, speedBar);
+	        speedHBox.getStyleClass().add("hbox-customIcon");
+	        HBox defenseHBox = new HBox(5, defenseValueLabel, defenseIcon, defenseBar);
+	        defenseHBox.getStyleClass().add("hbox-customIcon");
+
+	        // Align the HBoxes
 	        healthHBox.setAlignment(Pos.CENTER_LEFT);
 	        strengthHBox.setAlignment(Pos.CENTER_LEFT);
 	        speedHBox.setAlignment(Pos.CENTER_LEFT);
 	        defenseHBox.setAlignment(Pos.CENTER_LEFT);
+
 	        // Add the HBoxes to the progressBarContainer
 	        progressBarContainer.getChildren().addAll(healthHBox, strengthHBox, speedHBox, defenseHBox);
+
 
 	        // Setting the tooltips/hints of the status bars
 	        appMethods.setToolTips();
@@ -264,7 +289,7 @@ public class mainUI extends Application {
 
 	        Button playAudioButton = new Button("Play Audio");
 	        playAudioButton.getStyleClass().add("orange");
-	        Button resetAudioButton = new Button("Reset Audio");
+	        Button resetAudioButton = new Button("Stop Audio");
 	        resetAudioButton.getStyleClass().add("orange");
 	        ComboBox<String> audioComboBox = new ComboBox<>();
 	        audioComboBox.getStyleClass().add("combo-box");
@@ -321,11 +346,11 @@ public class mainUI extends Application {
 	        loadingScreen.setVisible(false); // Initially hidden
 
 	        // Wrap the BorderPane in a StackPane to overlay the loading screen
-	        StackPane stackPane = new StackPane();
-	        stackPane.getChildren().addAll(scrollPane, loadingScreen);
+	        screenOverlay = new StackPane();
+	        screenOverlay.getChildren().addAll(scrollPane, loadingScreen);
 	        
 	        // Set the scene with the ScrollPane
-	        primaryStage.setScene(new Scene(stackPane, 1200, 900));
+	        primaryStage.setScene(new Scene(screenOverlay, 1200, 900));
 
 	        // Show the stage
 	        primaryStage.show();
@@ -352,8 +377,6 @@ public class mainUI extends Application {
               fileWatchThread.setDaemon(true); // Allow thread to exit when the app closes
               fileWatchThread.start();
               
-              // Continue with your GUI setup
-           
               
             launch(args);
         } catch (Exception e) {

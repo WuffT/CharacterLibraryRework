@@ -1,3 +1,4 @@
+Alias Name: Flint
 Age: ?
 Gender: Male
 Specimen: Parakeet

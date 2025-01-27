@@ -130,17 +130,17 @@ public class appMethods extends customWindows {
 
 	        // Strength Tooltip - Power: value * 250 Damage Points ||| MAX DISPLAY VALUE IS 250
 	        Tooltip strengthTooltip = new Tooltip();
-	        strengthTooltip.textProperty().bind(Bindings.format("Power: %.0f Damage Points", strengthBar.progressProperty().multiply(250)));
+	        strengthTooltip.textProperty().bind(Bindings.format("Power: %.0f", strengthBar.progressProperty().multiply(250)));
 	        strengthBar.setTooltip(strengthTooltip);
 
 	        // Speed Tooltip - Speed: value * 100% movement speed ||| MAX DISPLAY VALUE IS 100%
 	        Tooltip speedTooltip = new Tooltip();
-	        speedTooltip.textProperty().bind(Bindings.format("Speed: %.0f%% movement speed", speedBar.progressProperty().multiply(100)));
+	        speedTooltip.textProperty().bind(Bindings.format("Speed: %.0f%%", speedBar.progressProperty().multiply(100)));
 	        speedBar.setTooltip(speedTooltip);
 
 	        // Defense Tooltip - Defense: value * 30% Resistant To Damage ||| MAX DISPLAY VALUE IS 30%
 	        Tooltip defenseTooltip = new Tooltip();
-	        defenseTooltip.textProperty().bind(Bindings.format("Defense: %.0f%% Resistant To Damage", defenseBar.progressProperty().multiply(30)));
+	        defenseTooltip.textProperty().bind(Bindings.format("Defense: %.0f%%", defenseBar.progressProperty().multiply(30)));
 	        defenseBar.setTooltip(defenseTooltip);
     }
     

@@ -1,3 +1,4 @@
+Alias Name: Farlow
 Age: ?
 Gender: Male
 Specimen: Chicken

@@ -6,7 +6,7 @@
 	 -fx-min-width: 250; /* Set preferred width */
     -fx-pref-height: 50; /* Set preferred height */
      -fx-font-size: 18px;
-      -fx-background-radius: 10;
+      -fx-background-radius: 2;
       	  -fx-effect: dropshadow(gaussian, rgba(46, 97, 57, 1), 2, 3.54, 1.54, 5);
 }
 
@@ -15,6 +15,17 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 5); /* Darker shadow effect on hover */
     -fx-cursor: hand; /* Change cursor to indicate interactivity */
 }
+.table-view {
+    -fx-font-size: 20px; /* Adjust as needed */
+ 	-fx-min-height: 500px;
+ 	 -fx-border-color: black;
+    -fx-border-width: 3;
+ 	
+}
+    
+    
+
+
 
 .button.close {
 	 -fx-background-color: #2c3e50;
@@ -23,7 +34,7 @@
     -fx-pref-height: 50; /* Set preferred height */
      -fx-font-size: 18px;
       -fx-font-weight: bold; /* Make the text bold */
-      -fx-background-radius: 10;
+      -fx-background-radius: 2;
 	    -fx-effect: dropshadow(gaussian, rgba(25, 35, 46, 1), 2, 3.54, 1.54, 5);
 }
 
@@ -78,6 +89,28 @@
      -fx-effect: dropshadow(gaussian, rgba(46, 97, 57, 1), 2, 3.54, 1.54, 5);
 }
 
+.label.barLabel { 
+  
+    -fx-text-fill: white; 
+    -fx-pref-width: 250; /* Set preferred width */
+    -fx-min-width:250;
+    -fx-pref-height: 40; /* Set preferred height */
+    -fx-font-size: 15px;
+    -fx-wrap-text: true;   
+    -fx-alignment: center;         
+  
+    -fx-font-weight: bold; /* Make the text bold */
+}
+
+.hbox-customIcon {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 3; /* Padding inside the HBox */
+  	-fx-spacing: 6;
+    -fx-background-radius: 2;
+    -fx-effect: dropshadow(gaussian, rgba(25, 35, 46, 1), 2, 3.54, 1.54, 5);
+    
+}
+
 
 
 .label.menuLabel {
@@ -90,6 +123,7 @@
           -fx-alignment: center;         
       -fx-background-radius: 2;
        -fx-effect: dropshadow(gaussian, rgba(112, 46, 81, 1), 2, 3.54, 1.54, 5);
+   -fx-font-weight: bold; /* Make the text bold */
 }
 
 
@@ -116,7 +150,7 @@
 
 .text-area {
   
-    -fx-font-size: 20px; /* Font size */
+    -fx-font-size: 22px; /* Font size */
     -fx-border-color: #4f95b8; /* Optional: cyan-colored border */
     -fx-border-width: 4px; /* Border width */
     -fx-text-fill: black; /* Text color inside the TextArea */
@@ -286,8 +320,8 @@
 
 /* Set a minimum height and width for the progress bars */
 .progress-bar {
-    -fx-pref-height: 30px;
-    -fx-pref-width: 300px;
+    -fx-pref-height: 35px;
+    -fx-pref-width: 400px;
     -fx-min-height: 30px;  /* Minimum height */
     -fx-min-width: 300px;  /* Minimum width */
     
@@ -322,7 +356,7 @@
 
 
 .root-panel {
-    -fx-background-color: #F2F2F2; 
+    -fx-background-color: transparent;
 }
 
 

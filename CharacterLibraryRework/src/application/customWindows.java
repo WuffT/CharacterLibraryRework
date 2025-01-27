@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,10 +8,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import javafx.animation.FadeTransition;
@@ -18,14 +21,20 @@ import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -34,220 +43,174 @@ import javafx.stage.Window;
 import javafx.util.Duration;
 
 public class customWindows extends mainUI{
+	public static void showOptions(Stage primaryStage, StackPane rootPane) {
+	    // Main layout for the options overlay (using VBox)
+	    VBox optionsLayout = new VBox(15); // Use VBox for vertical stacking of elements
+	    optionsLayout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);"); // Semi-transparent background
+	    optionsLayout.prefWidthProperty().bind(rootPane.widthProperty());
+	    optionsLayout.prefHeightProperty().bind(rootPane.heightProperty());
 
-	public static void showOptions() {
-	    // Create a new stage for the Options window
-	    Stage popupStage = new Stage();
-	    popupStage.setTitle("Options");
-	    popupStage.initModality(Modality.APPLICATION_MODAL);  // Make the popup modal
+	    // Title Bar with category buttons
+	    HBox titleBar = new HBox(10); // Horizontal box for title and close button
+	    titleBar.setAlignment(Pos.CENTER); // Center the title bar content
+	    titleBar.setStyle("-fx-padding: 10; -fx-background-color: rgba(0, 0, 0, 0.7);"); // Title bar background
 
-	    // Title label
-	    Label titleLabel = new Label("Options and Features");
-	    titleLabel.getStyleClass().add("menuLabel");
-	    titleLabel.setAlignment(Pos.CENTER);
+	    // Label for displaying content
+	    Label helpLabel = new Label("Select a topic from the buttons above.");
+	    helpLabel.setWrapText(true); // Allow text wrapping
+	    helpLabel.setAlignment(Pos.TOP_LEFT); // Align text to the top-left corner
+	    helpLabel.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10; -fx-alignment: center; -fx-background-color: black; -fx-background-radius: 15px;");
 
-	    // Create layout
-	    VBox layout = new VBox(15);
-	    layout.setAlignment(Pos.CENTER);
-	    layout.setPadding(new Insets(20));
-	    layout.setStyle(("-fx-background-image: url('imageSamples/BorderPink.png'); " +
-	            "-fx-background-repeat: no-repeat; " +
-	            "-fx-background-size: 100% 100%; " +
-	            "-fx-border-width: 5; " +                   // Border width
-	            "-fx-border-color: #000000; "));
+	    helpLabel.setMaxWidth(Double.MAX_VALUE); // Stretch to the width of the container
+	    helpLabel.setMaxHeight(200); // Set a fixed maximum height for the Label
 
-	    // Button for "Manage" (for loading and editing)
-	    Button manageButton = new Button("Manage");
-	    manageButton.getStyleClass().add("pink");
-	    manageButton.setOnAction(e -> {
-	        // Play the button sound effect
-	        appMethods.playButtonSFX();
-	        // Open a FileChooser to select a new CSV file
-	        FileChooser fileChooser = new FileChooser();
-	        fileChooser.setTitle("Select New Character CSV File");
-	        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV File", "*.csv"));
-	        
-	        // Show the FileChooser dialog and get the selected file
-	        File selectedFile = fileChooser.showOpenDialog(null); // Replace `null` with your primary stage if available
+	    // Option Category Button
+	    Button optionCategory = new Button("Options and Features");
+	    optionCategory.getStyleClass().add("close");
+	    optionCategory.setOnAction(e -> {
+	        appMethods.playButtonSFX(); // Play button sound
+	        // Add category-specific buttons
+	        optionsLayout.getChildren().clear();
+	        optionsLayout.getChildren().add(titleBar); // Re-add title bar
 
-	        // Check if a file was selected (user didn't cancel the dialog)
-	        if (selectedFile != null) {
-	            // Call the method to load and edit the CSV file (custom method to handle file editing)
-	            characterInfo.loadAndEditCSVFile(selectedFile);
+	        VBox optionsButtons = new VBox(10); // VBox to hold buttons vertically
+	        optionsButtons.setAlignment(Pos.CENTER); // Center the buttons within the VBox
 
-	            // Optionally, provide feedback to the user (e.g., display success message)
-	            System.out.println("CSV file selected: " + selectedFile.getAbsolutePath());
-	        } else {
-	            // If no file was selected, you can provide feedback or just do nothing
-	            System.out.println("No file selected");
-	        }
-	    });
-
-	    // Text Area (Initially empty, hidden)
-	    TextArea infoTextArea = new TextArea();
-	    infoTextArea.getStyleClass().add("vbox-background");
-	    infoTextArea.setWrapText(true);
-	    infoTextArea.setEditable(true); // Initially editable, but hidden
-	    infoTextArea.setMaxWidth(Double.MAX_VALUE);
-	    infoTextArea.setMaxHeight(Double.MAX_VALUE);
-	    infoTextArea.setVisible(false); // Initially hidden
-
-	    // Button for "Create Text File"
-	    Button createTextFileButton = new Button("Create Text File");
-	    createTextFileButton.getStyleClass().add("pink");
-	    createTextFileButton.setOnAction(e -> {
-	        appMethods.playButtonSFX();
-	        infoTextArea.setVisible(true); // Make the text area visible when this button is clicked
-	        infoTextArea.setPromptText("Type character info here to save it as a text file.");	    });
-
-	    // Button to save the content as a .txt file
-	    Button saveButton = new Button("Save Text File");
-	    saveButton.getStyleClass().add("pink");
-	    saveButton.setOnAction(saveEvent -> {
-	        String content = infoTextArea.getText();
-	        if (!content.isEmpty()) {
-	            // Save the text to a file
+	        Button manageButton = new Button("Import CSV Data");
+	        manageButton.getStyleClass().add("pink");
+	        manageButton.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5)); // 50% of the rootPane's width
+	        manageButton.setOnAction(e1 -> {
+	            appMethods.playButtonSFX(); // Play sound effect
 	            FileChooser fileChooser = new FileChooser();
-	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-	            File file = fileChooser.showSaveDialog(popupStage);
-
-	            if (file != null) {
-	                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-	                    writer.write(content);
-	                    System.out.println("File saved: " + file.getAbsolutePath());
-	                } catch (IOException ioException) {
-	                    System.err.println("Error saving file: " + ioException.getMessage());
-	                }
+	            fileChooser.setTitle("Select New Character CSV File");
+	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV File", "*.csv"));
+	            File selectedFile = fileChooser.showOpenDialog(rootPane.getScene().getWindow());
+	            if (selectedFile != null) {
+	                characterInfo.loadAndEditCSVFile(selectedFile);
+	                System.out.println("CSV file selected: " + selectedFile.getAbsolutePath());
+	            } else {
+	                System.out.println("No file selected");
 	            }
-	        } else {
-	            infoTextArea.setText("Please enter some text to save.");
-	        }
+	        });
+	        Button templateLink = new Button("Download CSV Template");
+	        templateLink.getStyleClass().add("pink");
+	        templateLink.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5)); // 50% of the rootPane's width
+	        templateLink.setOnAction(e2 -> {
+	            appMethods.playButtonSFX(); // Play the sound effect
+
+	            // Show a confirmation alert
+	            Alert alert = new Alert(AlertType.CONFIRMATION);
+	            alert.setTitle("Redirect Warning");
+	            alert.setHeaderText("You are about to leave the application");
+	            alert.setContentText("This will redirect you to a website to download the CSV template. Do you want to continue?");
+	            
+	            Optional<ButtonType> result = alert.showAndWait();
+	            if (result.isPresent() && result.get() == ButtonType.OK) {
+	                // Open the Google Sheets link in the default web browser
+	                try {
+	                    URI uri = new URI("https://docs.google.com/spreadsheets/d/1jdrQYk9TVaHQLFxEZyOv-7rGCXCYYlfTxMTyVLkGY6o/edit?usp=sharing");
+	                    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+	                        Desktop.getDesktop().browse(uri);
+	                    } else {
+	                        System.out.println("Desktop browsing is not supported on this system.");
+	                    }
+	                } catch (Exception ex) {
+	                    ex.printStackTrace();
+	                }
+	            } else {
+	                // User clicked "No" or closed the dialog
+	                System.out.println("Redirection canceled by the user.");
+	            }
+	        });
+	        
+	        Button resetDefault = new Button("Reset Default");
+	        resetDefault.getStyleClass().add("pink");
+	        resetDefault.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5)); // 50% of the rootPane's width
+	        resetDefault.setOnAction(e2 -> {
+	            appMethods.playButtonSFX();
+	            characterInfo.characterCategories.clear();
+	            buttonContainer.getChildren().clear();
+	            characterInfo.loadCharactersFromCSV("/characterCSV/characterData.csv");
+	            characterInfo.refreshUI();
+	        });
+
+	        optionsButtons.getChildren().addAll(manageButton,templateLink, resetDefault);
+
+	        optionsLayout.getChildren().add(optionsButtons);
 	    });
 
-	    // Close button to close the options window
+	    // Help Category Button
+	    Button helpCategory = new Button("Help");
+	    helpCategory.getStyleClass().add("close");
+	    helpCategory.setOnAction(e -> {
+	        appMethods.playButtonSFX(); // Play button sound
+	        optionsLayout.getChildren().clear();
+	        optionsLayout.getChildren().add(titleBar); // Re-add title bar
+	        optionsLayout.getChildren().add(helpLabel); // Add the Label for help content
+
+	        VBox helpButtons = new VBox(10); // VBox to hold buttons vertically
+	        helpButtons.setAlignment(Pos.CENTER); // Center the buttons within the VBox
+
+	        Button howToButton = new Button("How to use");
+	        howToButton.getStyleClass().add("pink");
+	        howToButton.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5));
+	        howToButton.setOnAction(e1 -> {
+	            appMethods.playButtonSFX();
+	            helpLabel.setText("Navigate each character with the top left bar. When each one is clicked, it will display information of said character.");
+	        });
+
+	        Button updateNotesButton = new Button("Update Notes");
+	        updateNotesButton.getStyleClass().add("pink");
+	        updateNotesButton.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5));
+	        updateNotesButton.setOnAction(e2 -> {
+	            appMethods.playButtonSFX();
+	            helpLabel.setText("Update Changes and Notes as of " + applastUpdate + "\n"
+	                    + "Version " + appVersion + " REWORKED:\n"
+	                    + "- Application is in its testing phase of development\n"
+	                    + "- Small improvements made to the UI.\n"
+	                    + "- Custom characters can be made now, Tutorial on it coming soon");
+	        });
+
+	        Button appInfoButton = new Button("App Information");
+	        appInfoButton.getStyleClass().add("pink");
+	        appInfoButton.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5));
+	        appInfoButton.setOnAction(e3 -> {
+	            appMethods.playButtonSFX();
+	            helpLabel.setText("CHARACTER INFO LIBRARY\n"
+	                    + "About: The application showcases a variety of characters by description, statistics, and full image references.\n"
+	                    + "Developed By: WolfTical\n"
+	                    + "Current App Version: " + appVersion + " REWORKED\n"
+	                    + "Copyright © 2023 Owned by WolfTical and MegaNekaii. All Rights Reserved.");
+	        });
+
+	        helpButtons.getChildren().addAll(howToButton, updateNotesButton, appInfoButton);
+
+	        // Create a new VBox to stack buttons and the label
+	        VBox helpSection = new VBox(15);
+	        helpSection.setAlignment(Pos.TOP_CENTER); // Align to the top center
+	      
+	        helpSection.getChildren().addAll(helpButtons, helpLabel); // Add buttons and label to the section
+
+	        optionsLayout.getChildren().add(helpSection);
+	    });
+
+	    // Close Button
 	    Button closeButton = new Button("Close");
 	    closeButton.getStyleClass().add("close");
 	    closeButton.setOnAction(e -> {
-	        appMethods.playButtonSFX();
-	        popupStage.close();
+	        appMethods.playButtonSFX(); // Play close button sound
+	        rootPane.getChildren().remove(optionsLayout); // Remove the overlay
 	    });
 
-	    // Organize the buttons in a VBox
-	    VBox buttonBox = new VBox(10);
-	    buttonBox.setAlignment(Pos.CENTER);
-	    buttonBox.getChildren().addAll(manageButton, createTextFileButton, saveButton);
+	    titleBar.getChildren().addAll(optionCategory, helpCategory, closeButton);
 
-	    // Add the text area and button box to the layout
-	    layout.getChildren().addAll(titleLabel, buttonBox,infoTextArea,  closeButton);
+	    optionsLayout.getChildren().add(titleBar);
 
-	    // Create the scene for the popup
-	    Scene scene = new Scene(layout, 600, 800); // Adjust size as needed
-	    scene.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
+	    rootPane.getChildren().add(optionsLayout);
 
-	    titleLabel.prefWidthProperty().bind(layout.widthProperty());
-	    infoTextArea.prefWidthProperty().bind(scene.widthProperty().multiply(0.8));
-	    infoTextArea.prefHeightProperty().bind(scene.heightProperty().multiply(0.5));
-	    popupStage.setScene(scene);
-	    popupStage.showAndWait(); // Show the popup and wait for it to be closed
+	    optionsLayout.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
 	}
-	
-    public static void showHelp() {
-        // Create a new stage for the Help window
-        Stage popupStage = new Stage();
-        popupStage.setTitle("Help");
-        popupStage.initModality(Modality.APPLICATION_MODAL);  // Make the popup modal
 
-   
-      
-
-        // Title label
-        Label titleLabel = new Label("Help and Instructions");
-        titleLabel.getStyleClass().add("menuLabel");
-        titleLabel.setAlignment(Pos.CENTER);
-
-        
-        
-     // Text Area that displays the text 
-        TextArea helpTextArea = new TextArea("Select a topic from the buttons below.");
-        helpTextArea.getStyleClass().add("vbox-background");
-        helpTextArea.setWrapText(true);
-        helpTextArea.setEditable(false);
-
-        // Allow the TextArea to scale with the window size
-        VBox.setVgrow(helpTextArea, Priority.ALWAYS);
-        helpTextArea.setMaxWidth(Double.MAX_VALUE);
-        helpTextArea.setMaxHeight(Double.MAX_VALUE);
-
-     
-
-
-        // Button for "how to use"
-        Button inputHelpButton = new Button("How to use");
-        inputHelpButton.getStyleClass().add("pink");
-        
-        inputHelpButton.setOnAction(e -> {appMethods.playButtonSFX();
-            helpTextArea.setText("Navigate each character with the top left bar, when each one is clicked it will display information of said character");
-        });
-
-        Button updateNotesButton = new Button("Update Notes");
-        updateNotesButton.getStyleClass().add("pink");
-        updateNotesButton.setOnAction(e -> {
-            appMethods.playButtonSFX();
-            helpTextArea.setText("Update Changes and Notes as of " + applastUpdate + "\r\n"
-                    + "Version " + appVersion + " REWORKED:\r\n"
-                    + "- Application is in its reworking stage and early development\r\n"
-                    + "- New Character Data Loading and editing Feature using a CSV file.\r\n"
-                    + "- Custom characters can be made now, Tutorial on it coming soon");
-        });
-
-        // Button for "App Information"
-        Button appInfoButton = new Button("App Information");
-        appInfoButton.getStyleClass().add("pink");
-        
-        appInfoButton.setOnAction(e -> {appMethods.playButtonSFX();
-            helpTextArea.setText("CHARACTER INFO LIBRARY\n"
-                    + "About: The application showcases a variety of characters by description, statistics, and full image references.\n"
-                    + "Developed By: WolfTical\n"
-                    + "Current App Version: " + appVersion + " REWORKED\n"
-                    + "Copyright © 2023 Owned by WolfTical and MegaNekaii. All Rights Reserved.");
-        });
-
-       
-
-        // Close button to close the help window
-        Button closeButton = new Button("Close");
-        closeButton.getStyleClass().add("close");
-        
-        closeButton.setOnAction(e -> {appMethods.playButtonSFX(); popupStage.close();});
-
-        // Organize the buttons in a VBox
-        VBox buttonBox = new VBox(10);
-        buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.getChildren().addAll(inputHelpButton, updateNotesButton, appInfoButton);
-
-        // Main layout containing the icon, title, buttons, and help content
-        VBox layout = new VBox(15);
-        layout.getChildren().addAll(titleLabel, buttonBox, helpTextArea, closeButton);
-        layout.setAlignment(Pos.CENTER);
-        layout.setPadding(new Insets(20));
-        layout.setStyle(("-fx-background-image: url('imageSamples/BorderPink.png'); " +
-                "-fx-background-repeat: no-repeat; " +
-                "-fx-background-size: 100% 100%; " +
-                "-fx-border-width: 5; " +                   // Border width
-                "-fx-border-color: #000000; "));
-
-        // Create the scene for the popup
-        Scene scene = new Scene(layout, 600, 800); // Adjust size as needed
-        scene.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
-        
-        
-        titleLabel.prefWidthProperty().bind(layout.widthProperty());
-        helpTextArea.prefWidthProperty().bind(scene.widthProperty().multiply(0.8));
-        helpTextArea.prefHeightProperty().bind(scene.heightProperty().multiply(0.5));
-        popupStage.setScene(scene);
-        popupStage.showAndWait(); // Show the popup and wait for it to be closed
-    }
-    
     
     public static void showCharacterRender(String characterName) {
         characterInfo character = characterInfo.characterMap.get(characterName);
