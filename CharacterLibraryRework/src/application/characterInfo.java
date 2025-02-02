@@ -426,6 +426,26 @@ public static double parseDoubleWithDefault(String value) {
 }
 
 
+public static void filterCharacterButtons(ComboBox<String> characterComboBox, VBox buttonContainer, Button characterRenderButton, String query) {
+    buttonContainer.getChildren().clear();
+
+    String selectedCategory = characterComboBox.getValue();
+    if (selectedCategory != null && characterCategories.containsKey(selectedCategory)) {
+        List<String> characters = characterCategories.get(selectedCategory);
+        
+        // Filter characters based on search query (ignoring case)
+        List<String> filteredCharacters = characters.stream()
+            .filter(character -> character.toLowerCase().contains(query.toLowerCase()))
+            .collect(Collectors.toList());
+
+        // Create buttons only for filtered characters
+        for (String character : filteredCharacters) {
+            buttonContainer.getChildren().add(createCharacterButton(character, characterRenderButton));
+        }
+    }
+}
+
+
 	// Helper method to get a BufferedReader for the file or resource
 	private static BufferedReader getBufferedReader(String filePath) throws IOException {
 	    InputStream inputStream;

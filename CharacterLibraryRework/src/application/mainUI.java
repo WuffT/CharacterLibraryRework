@@ -81,7 +81,16 @@ public class mainUI extends Application {
 	     
 	        buttonContainer.setSpacing(10);
 	        buttonContainer.setAlignment(Pos.CENTER);
-	        
+	     // Create the search bar
+	        TextField searchBar = new TextField();
+	        searchBar.setPromptText("Search characters...");
+	        searchBar.setMinHeight(30);
+	        searchBar.setMaxWidth(200); // Adjust width if necessary
+
+	        // Listener to filter character buttons as the user types
+	        searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+	            characterInfo.filterCharacterButtons(characterComboBox, buttonContainer, characterRenderButton, newValue);
+	        });
 	        
 	        ScrollPane charScrollPane = new ScrollPane(buttonContainer);
 	        charScrollPane.setFitToWidth(true); // Ensures the VBox is resized to fit the ScrollPane width
@@ -133,7 +142,7 @@ public class mainUI extends Application {
 	        scrollPaneForButtons.setFitToWidth(true); // Ensure scrollable content fits the width
 	        
 	        // Add buttons to the left panel
-	        leftPanel.getChildren().addAll(characterComboBox, charScrollPane, characterRenderButton,options);
+	        leftPanel.getChildren().addAll(searchBar, characterComboBox, charScrollPane, characterRenderButton,options);
 	        root.setLeft(leftPanel);
 
 	        // Center Panel (Cyan) - Main Content Display
