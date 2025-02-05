@@ -33,6 +33,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -40,6 +42,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -50,6 +53,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -212,64 +216,30 @@ public class characterInfo extends appMethods{
  final static String NO_ICON_PATH = "/icons/WIPIcon.png";
  final static String NO_RENDER_PATH = "/CharacterRenders/NoRender.png";
 
- public static void loadAndEditCSVFile(File selectedFile) {
+ public static void loadAndEditCSVFile(File selectedFile, StackPane rootPane) {
 	    if (selectedFile != null) {
 	        try {
-	           
-
-	            // Load characters from the selected CSV file
 	            List<String> lines = Files.readAllLines(selectedFile.toPath());
 
-	            // Ensure the file is not empty
 	            if (lines.isEmpty()) {
 	                System.err.println("The CSV file is empty.");
 	                return;
 	            }
 
-	            // Extract the first row for column headers
 	            String[] headers = lines.get(0).split(",");
-	            lines.remove(0); // Remove the header row from the data
+	            lines.remove(0);
 
-	            // Create an ObservableList to store the CSV rows (this will be used for your TableView)
 	            ObservableList<ObservableList<String>> newTableData = FXCollections.observableArrayList();
-	            boolean missingPaths = false; // Flag to track if there are missing paths
-	            Map<String, List<ObservableList<String>>> newCategories = new HashMap<>(); // Map to store categories
+	            Map<String, List<ObservableList<String>>> newCategories = new HashMap<>();
 
-	            // Parse remaining CSV lines into rows and columns
 	            for (String line : lines) {
-	                String[] values = line.split(","); // Assuming CSV is comma-separated
+	                String[] values = line.split(",");
+	                if (line.trim().isEmpty() || values.length < 6) continue;
 
-	                // Skip empty lines
-	                if (line.trim().isEmpty()) continue;
+	                String descriptionPath = values.length > 6 ? values[6].replace(BASE_DESCRIPTION_PATH, "").trim() : "";
+	                String imagePath = values.length > 7 ? values[7].replace(BASE_ICON_PATH, "").trim() : "";
+	                String renderPath = values.length > 8 ? values[8].replace(BASE_RENDER_PATH, "").trim() : "";
 
-	                // Ensure the CSV row has at least 6 columns before adding description, image, and render
-	                if (values.length < 6) {
-	                    continue; // Skip rows with insufficient data (we expect at least 6 columns for health, strength, speed, etc.)
-	                }
-
-	                
-	                
-	             // Handling description path (strip base path for display)
-	                String descriptionPath = values.length > 6 && !values[6].trim().isEmpty()
-	                        ? values[6].replace(BASE_DESCRIPTION_PATH, "").trim() // Strip the base path for UI display
-	                        : ""; // Leave empty if no value
-
-	                // Handling icon path (strip base path for display)
-	                String imagePath = values.length > 7 && !values[7].trim().isEmpty()
-	                        ? values[7].replace(BASE_ICON_PATH, "").trim() // Strip the base path for UI display
-	                        : ""; // Leave empty if no value
-
-	                // Handling render path (strip base path for display)
-	                String renderPath = values.length > 8 && !values[8].trim().isEmpty()
-	                        ? values[8].replace(BASE_RENDER_PATH, "").trim() // Strip the base path for UI display
-	                        : ""; // Leave empty if no value
-
-
-	                
-	                
-	              
-
-	                // Add the description, image, and render paths explicitly to the row if missing
 	                while (values.length < 9) {
 	                    values = Arrays.copyOf(values, values.length + 1);
 	                }
@@ -277,101 +247,99 @@ public class characterInfo extends appMethods{
 	                values[7] = imagePath;
 	                values[8] = renderPath;
 
-	                // Create a row with values
 	                ObservableList<String> row = FXCollections.observableArrayList(values);
-
-	                // Add row data to the ObservableList (new table data)
 	                newTableData.add(row);
 
-	                // Update the categories map based on the first column (Category)
-	                String category = values[0].trim(); // First column is the category
+	                String category = values[0].trim();
 	                newCategories.putIfAbsent(category, new ArrayList<>());
-	                newCategories.get(category).add(row); // Add row to the appropriate category list
+	                newCategories.get(category).add(row);
 	            }
 
-	            // Clear existing TableView before loading new data
 	            TableView<ObservableList<String>> newTableView = new TableView<>();
-
-	            // Create columns based on the headers
 	            for (int i = 0; i < headers.length; i++) {
-	                TableColumn<ObservableList<String>, String> column = new TableColumn<>(headers[i]); // Use header as column name
+	                TableColumn<ObservableList<String>, String> column = new TableColumn<>(headers[i]);
 	                int colIndex = i;
 	                column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(colIndex)));
-
-	                // Make the column editable
 	                column.setCellFactory(TextFieldTableCell.forTableColumn());
-	                column.setOnEditCommit(event -> {
-	                    ObservableList<String> row = event.getRowValue();
-	                    row.set(colIndex, event.getNewValue());
-	                });
+	                column.setOnEditCommit(event -> event.getRowValue().set(colIndex, event.getNewValue()));
 	                newTableView.getColumns().add(column);
+	                
 	            }
 
-	            // Set the new table data
 	            newTableView.setItems(newTableData);
 	            newTableView.setEditable(true);
+	          
+	         // Create the label with the instructions
+	            Label instructionLabel = new Label("CSV loaded! Please edit the table as needed.\n"
+	                    + "Double-click on any column to edit and press Enter to confirm your changes.\n"
+	                    + "When you're ready, press the 'Confirm' button to save your customizations.\n"
+	                    + "NOTE: Ensure that your custom character files are correctly placed in their respective folders.\n"
+	                    + "Make sure the file name matches what you type in the columns. If your description file is named 'mycharacter.txt' then type that");
 
-	            // Create a dialog to display the TableView to the user
-	            VBox vbox = new VBox(newTableView);
-	            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-	            alert.setTitle("Edit CSV File");
-	            alert.setHeaderText("Edit the loaded CSV content in the table below. Stat values go from 0 to 100. EX:40 = 40% of the bar is filled or 100 = 100% of the bar is filled");
-	            alert.getDialogPane().setContent(vbox);
+	            
+	            
+	            instructionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10; -fx-alignment: center; -fx-background-color: black;");
+	            instructionLabel.setMaxWidth(Double.MAX_VALUE); // Stretch to the width of the container
+	            instructionLabel.setMaxHeight(200); // Set a fixed maximum height for the Label
+	            
+	            // Confirmation & Cancel Buttons
+	            Button confirmButton = new Button("Confirm");
+	            Button cancelButton = new Button("Cancel");
 
-	            // If any paths are missing, show a warning
-	            if (missingPaths) {
-	                alert.setHeaderText("Warning: Some paths are missing, default paths will be used for missing description, image, and render paths. Leave these alone if you don't have any paths. This will be updated soon.");
-	            }
-
-	            // Add confirm and cancel buttons
-	            ButtonType confirmButton = new ButtonType("Confirm", ButtonData.OK_DONE);
-	            ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-	            alert.getButtonTypes().setAll(confirmButton, cancelButton);
-	         // Resize the dialog
-	            alert.getDialogPane().setMinWidth(600); // Set minimum width
-	            alert.getDialogPane().setMinHeight(400); // Set minimum height
-	            alert.getDialogPane().setPrefWidth(800); // Set preferred width
-	            alert.getDialogPane().setPrefHeight(600); // Set preferred height
-	            Optional<ButtonType> result = alert.showAndWait();
-
-	            if (result.isPresent() && result.get() == confirmButton) {
-	            	 // Clear existing character categories and UI components before loading new data
+	            confirmButton.setOnAction(e -> {
+	            	appMethods.playButtonSFX();
+	           	 // Clear existing character categories and UI components before loading new data
 		            characterCategories.clear(); // Clear the old categories
 		            buttonContainer.getChildren().clear(); // Clear any existing buttons
 	                
-		         // On Confirm, rebuild paths before saving
-		            for (ObservableList<String> row : newTableData) {
-		                // Append base paths to each column that contains a file name
-		                String descriptionPath = BASE_DESCRIPTION_PATH + row.get(6).trim();
-		                String imagePath = BASE_ICON_PATH + row.get(7).trim();
-		                String renderPath = BASE_RENDER_PATH + row.get(8).trim();
+	                for (ObservableList<String> row : newTableData) {
+	                    row.set(6, BASE_DESCRIPTION_PATH + row.get(6).trim());
+	                    row.set(7, BASE_ICON_PATH + row.get(7).trim());
+	                    row.set(8, BASE_RENDER_PATH + row.get(8).trim());
+	                }
 
-		                // Update the row with full paths for saving
-		                row.set(6, descriptionPath);
-		                row.set(7, imagePath);
-		                row.set(8, renderPath);
-		            }
-		            
-		            
-		            // If confirmed, save the edited content back to the file
 	                StringBuilder updatedCsv = new StringBuilder();
-	                updatedCsv.append(String.join(",", headers)).append("\n"); // Re-add the headers
+	                updatedCsv.append(String.join(",", headers)).append("\n");
 	                for (ObservableList<String> row : newTableData) {
 	                    updatedCsv.append(String.join(",", row)).append("\n");
 	                }
-	                Files.write(Paths.get(selectedFile.toURI()), updatedCsv.toString().getBytes());
 
-	                // After saving, trigger the loadCharactersFromCSV method to reload the data
-	                characterInfo.loadCharactersFromCSV(selectedFile.getAbsolutePath()); // Load the updated data
+	                try {
+	                    Files.write(Paths.get(selectedFile.toURI()), updatedCsv.toString().getBytes());
+	                    characterInfo.loadCharactersFromCSV(selectedFile.getAbsolutePath());
+	                    refreshUI();
+	                    System.out.println("CSV file updated and UI refreshed successfully!");
+	                } catch (IOException ex) {
+	                    System.err.println("Error saving the file.");
+	                    ex.printStackTrace();
+	                }
 
-	                // After the CSV is loaded, refresh the ComboBox and character buttons
-	                refreshUI();  // Call this method to refresh the ComboBox and button containers
+	                // Remove the editing UI after confirming
+	                rootPane.getChildren().removeIf(node -> node instanceof VBox);
+	            });
+	            confirmButton.getStyleClass().add("pink");
+	            cancelButton.setOnAction(e -> {
+	            	appMethods.playButtonSFX();
+	                // Remove the editing UI without saving
+	                rootPane.getChildren().removeIf(node -> node instanceof VBox);
+	            });
 
-	                System.out.println("CSV file updated and UI refreshed successfully!");
-	            }
+	            cancelButton.getStyleClass().add("close");
+	            
+	            HBox buttonContainer = new HBox(10, confirmButton, cancelButton);
+	            buttonContainer.setAlignment(Pos.CENTER);
 
+	            VBox editContainer = new VBox(10,instructionLabel, newTableView, buttonContainer);
+	            editContainer.setAlignment(Pos.CENTER);
+	            editContainer.setPadding(new Insets(10));
+	            editContainer.setStyle("-fx-padding: 10; -fx-background-color: rgba(0, 0, 0, 0.7);");
+
+	            // Remove any previous table UI before adding a new one
+	            rootPane.getChildren().removeIf(node -> node instanceof VBox);
+	            rootPane.getChildren().add(editContainer);
+	            rootPane.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
 	        } catch (IOException e) {
-	            System.err.println("Error reading or saving the file.");
+	            System.err.println("Error reading the file.");
 	            e.printStackTrace();
 	        }
 	    }

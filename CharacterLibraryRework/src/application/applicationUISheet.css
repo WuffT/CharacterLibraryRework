@@ -15,16 +15,26 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 5); /* Darker shadow effect on hover */
     -fx-cursor: hand; /* Change cursor to indicate interactivity */
 }
+
+
 .table-view {
-    -fx-font-size: 20px; /* Adjust as needed */
- 	-fx-min-height: 500px;
+    -fx-font-size: 12px; /* Adjust as needed */
+ 	-fx-min-height: 300px;
+ 	-fx-min-width: 400px;
  	 -fx-border-color: black;
-    -fx-border-width: 3;
+    -fx-border-width: 6;
+   
  	
 }
+ .table-view .text-field {
+    -fx-font-size: 12px; /* Ensure the font size of the text field is 12px */
+}   
     
-    
-
+/* Center the text inside each table column */
+.table-view .table-column-header, 
+.table-view .table-cell {
+    -fx-alignment: center; /* Align the text in the header and cells */
+}
 
 
 .button.close {
@@ -88,6 +98,14 @@
       -fx-background-radius: 10;
      -fx-effect: dropshadow(gaussian, rgba(46, 97, 57, 1), 2, 3.54, 1.54, 5);
 }
+
+.imageWithBorder {
+    -fx-border-color: #000000;
+    -fx-border-width: 40px;
+    -fx-border-radius: 1px;
+    -fx-padding: 10px;
+}
+
 
 .label.barLabel { 
   

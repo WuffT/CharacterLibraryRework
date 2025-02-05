@@ -30,8 +30,8 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 4.0;
-	   static String applastUpdate = "1/27/2025";
+	   static double appVersion = 4.1;
+	   static String applastUpdate = "2/5/2025";
 	   
 	   
 	   static ProgressBar healthBar;
@@ -57,7 +57,7 @@ public class mainUI extends Application {
 	public void start(Stage primaryStage) {
 		  
 		   
-	        primaryStage.setTitle("Character Info Library V" + appVersion + " BETA");
+	        primaryStage.setTitle("Character Info Library V" + appVersion);
 	        Image appIcon = new Image(getClass().getResource("/icons/appIcon.png").toExternalForm());
 	      
 
@@ -115,7 +115,7 @@ public class mainUI extends Application {
 
 	            // Only show the render if a character has been selected
 	            if (selectedCharacterName != null) {
-	                appMethods.showCharacterRender(selectedCharacterName);  // Pass the selected characterName
+	                appMethods.showCharacterRender(selectedCharacterName, screenOverlay);  // Pass the selected characterName
 	            } else {
 	                System.out.println("No character selected.");
 	            }

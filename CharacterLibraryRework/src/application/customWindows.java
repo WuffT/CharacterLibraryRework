@@ -33,6 +33,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -80,17 +81,18 @@ public class customWindows extends mainUI{
 	        manageButton.getStyleClass().add("pink");
 	        manageButton.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5)); // 50% of the rootPane's width
 	        manageButton.setOnAction(e1 -> {
-	            appMethods.playButtonSFX(); // Play sound effect
-	            FileChooser fileChooser = new FileChooser();
-	            fileChooser.setTitle("Select New Character CSV File");
-	            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV File", "*.csv"));
-	            File selectedFile = fileChooser.showOpenDialog(rootPane.getScene().getWindow());
-	            if (selectedFile != null) {
-	                characterInfo.loadAndEditCSVFile(selectedFile);
-	                System.out.println("CSV file selected: " + selectedFile.getAbsolutePath());
-	            } else {
-	                System.out.println("No file selected");
-	            }
+	        	 appMethods.playButtonSFX();
+	        	    FileChooser fileChooser = new FileChooser();
+	        	    fileChooser.setTitle("Select New Character CSV File");
+	        	    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV File", "*.csv"));
+	        	    File selectedFile = fileChooser.showOpenDialog(rootPane.getScene().getWindow());
+	        	    
+	        	    if (selectedFile != null) {
+	        	        characterInfo.loadAndEditCSVFile(selectedFile, rootPane); // Pass the container where it should appear
+	        	        System.out.println("CSV file selected: " + selectedFile.getAbsolutePath());
+	        	    } else {
+	        	        System.out.println("No file selected");
+	        	    }
 	        });
 	        Button templateLink = new Button("Download CSV Template");
 	        templateLink.getStyleClass().add("pink");
@@ -156,7 +158,8 @@ public class customWindows extends mainUI{
 	        howToButton.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5));
 	        howToButton.setOnAction(e1 -> {
 	            appMethods.playButtonSFX();
-	            helpLabel.setText("Navigate each character with the top left bar. When each one is clicked, it will display information of said character.");
+	            helpLabel.setText("Select a category when clicking on the dropdown menu at the top left.\n"
+	            		+ "Buttons will appear with different characters and when each one is clicked it will display information of said character.");
 	        });
 
 	        Button updateNotesButton = new Button("Update Notes");
@@ -165,10 +168,10 @@ public class customWindows extends mainUI{
 	        updateNotesButton.setOnAction(e2 -> {
 	            appMethods.playButtonSFX();
 	            helpLabel.setText("Update Changes and Notes as of " + applastUpdate + "\n"
-	                    + "Version " + appVersion + " REWORKED:\n"
-	                    + "- Application is in its testing phase of development\n"
+	                    + "Version " + appVersion + "\n"
+	                    + "- Application has been released, Congratulations for being part of the early access users!\n"
 	                    + "- Small improvements made to the UI.\n"
-	                    + "- Custom characters can be made now, Tutorial on it coming soon");
+	                    + "- Changed and implemented many things to appear in the same window now");
 	        });
 
 	        Button appInfoButton = new Button("App Information");
@@ -211,47 +214,59 @@ public class customWindows extends mainUI{
 	    optionsLayout.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
 	}
 
-    
-    public static void showCharacterRender(String characterName) {
-        characterInfo character = characterInfo.characterMap.get(characterName);
-        
-        if (character != null) {
-            // Create a new window to display the character render
-            Stage renderStage = new Stage();
-            renderStage.setTitle(character.getName() + " - Character Render");
+	public static void showCharacterRender(String characterName, Pane rootPane) {
+	    characterInfo character = characterInfo.characterMap.get(characterName);
 
-            // Create an ImageView for the character's render
-            ImageView renderImageView = new ImageView();
-            renderImageView.setImage(new Image(character.getRenderPath()));
-            
-            // Set properties to maintain aspect ratio and fill the window
-            renderImageView.setPreserveRatio(true);  // Preserve the aspect ratio
-            renderImageView.setFitWidth(600);  // Set the width to fill the window
-            renderImageView.setFitHeight(600);  // Set the height to fill the window
+	    if (character != null) {
+	        // Create the overlay pane
+	        StackPane overlayPane = new StackPane();
+	        overlayPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");  // Semi-transparent black background
+	        overlayPane.setPrefSize(rootPane.getWidth(), rootPane.getHeight());
 
-            // Set up the layout for the render window
-            VBox renderLayout = new VBox(10);
-            renderLayout.setAlignment(Pos.CENTER);
-            renderLayout.getChildren().addAll(renderImageView);
+	        // Create the ImageView for the character's render
+	        ImageView renderImageView = new ImageView();
+	        renderImageView.setImage(new Image(character.getRenderPath()));
+	        renderImageView.setPreserveRatio(true);  // Maintain aspect ratio
+	        renderImageView.fitWidthProperty().bind(rootPane.widthProperty().multiply(0.8));  // Image width 80% of rootPane width
+	        renderImageView.fitHeightProperty().bind(rootPane.heightProperty().multiply(0.8));  // Image height 80% of rootPane height
 
-            // Set up the scene and show the render window
-            Scene renderScene = new Scene(renderLayout, 600, 600);
-            renderStage.setScene(renderScene);
-            renderStage.show();
-          
-            // Optionally, you can add an event listener to resize the image as the window size changes
-            renderStage.widthProperty().addListener((observable, oldWidth, newWidth) -> {
-                renderImageView.setFitWidth(newWidth.doubleValue());
-            });
-            
-            renderStage.heightProperty().addListener((observable, oldHeight, newHeight) -> {
-                renderImageView.setFitHeight(newHeight.doubleValue());
-            });
-        } else {
-            System.out.println("Character not found: " + characterName);
-        }
-    }
-    
+	        // Applied border only to the ImageView using the style class defined in CSS
+	        renderImageView.getStyleClass().add("imageWithBorder");
+
+	        // Created the close button
+	        Button closeButton = new Button("Close");
+	        closeButton.getStyleClass().add("close");
+	        closeButton.setOnAction(e -> rootPane.getChildren().remove(overlayPane)); // Close the overlay
+
+	        // Created a label with the character's name
+	        Label nameLabel = new Label(characterName);
+	        nameLabel.getStyleClass().add("menuLabel");  // Apply custom style class to the label
+
+	        // Created a HBox to hold the name label and the close button
+	        HBox headerHBox = new HBox(10);  // 10px spacing between the label and button
+	        headerHBox.setAlignment(Pos.CENTER);  // Center the contents
+	        headerHBox.getChildren().addAll(nameLabel, closeButton);  // Add the label first, then the button
+
+	        // Added some margin/padding to move the header (name + close) up a little
+	        headerHBox.setPadding(new Insets(10, 0, 10, 0));  // Top margin (10px), no margin for the sides, bottom margin (10px)
+
+	        // Created a VBox to hold the image and header
+	        VBox imageVBox = new VBox();
+	        imageVBox.setAlignment(Pos.CENTER);  // Center the contents (image + header)
+	        imageVBox.getChildren().addAll(headerHBox, renderImageView);
+
+	        // Added the VBox to the overlay pane
+	        overlayPane.getChildren().add(imageVBox);
+	        overlayPane.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
+
+	        // Added the overlay pane on top of the rootPane (your main UI)
+	        rootPane.getChildren().add(overlayPane);
+
+	    } else {
+	        System.out.println("Character not found: " + characterName);
+	    }
+	}
+
     
 
    
