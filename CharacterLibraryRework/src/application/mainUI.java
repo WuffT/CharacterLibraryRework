@@ -30,7 +30,7 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 4.1;
+	   static double appVersion = 4.2;
 	   static String applastUpdate = "2/5/2025";
 	   
 	   
@@ -128,7 +128,7 @@ public class mainUI extends Application {
 	      
 
 	        Button options = new Button("Options/Extras");
-	        options.getStyleClass().add("pink");
+	        options.getStyleClass().add("orange");
 	        options.setMaxWidth(Double.MAX_VALUE);
 	        options.setOnAction(e -> { appMethods.playButtonSFX(); customWindows.showOptions(primaryStage, screenOverlay);});
 	         
@@ -142,7 +142,7 @@ public class mainUI extends Application {
 	        scrollPaneForButtons.setFitToWidth(true); // Ensure scrollable content fits the width
 	        
 	        // Add buttons to the left panel
-	        leftPanel.getChildren().addAll(searchBar, characterComboBox, charScrollPane, characterRenderButton,options);
+	        leftPanel.getChildren().addAll(searchBar, characterComboBox, charScrollPane, characterRenderButton);
 	        root.setLeft(leftPanel);
 
 	        // Center Panel (Cyan) - Main Content Display
@@ -334,7 +334,7 @@ public class mainUI extends Application {
 	        });
 
 	        
-	        bottomPanel.getChildren().addAll(playAudioButton, resetAudioButton, audioComboBox, volumeSlider);
+	        bottomPanel.getChildren().addAll(options, playAudioButton, resetAudioButton, audioComboBox, volumeSlider);
 	        root.setBottom(bottomPanel);
 
 	        // Wrap the BorderPane in a ScrollPane

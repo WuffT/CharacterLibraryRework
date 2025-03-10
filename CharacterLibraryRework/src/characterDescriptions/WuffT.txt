@@ -1,6 +1,6 @@
 Age: ???
 Gender: Male
-Specimen: Canis Triglowsticus
+Specimen: Canine
 Weight: 110 pounds
 Height: 5 ft 3 in [Varies]
 Role: Main Character, Hero

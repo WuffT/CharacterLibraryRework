@@ -1,9 +1,9 @@
 Category,Name,Health,Strength,Speed,Defense,DescriptionPath,IconPath,RenderPath
-The Heroes,Wolftical Triglowsticus,80,40,61,80,/characterDescriptions/WuffT.txt,/icons/wuffpix.png,/CharacterRenders/WolfTicalT.png
-The Heroes,Viraxe Eleviac,75,65,70,60,/characterDescriptions/ViraxeEleviac.txt,/icons/birtpix.png,/CharacterRenders/ViraxeE.png
+The Heroes,Wolftical Triglostico,80,40,61,80,/characterDescriptions/WuffT.txt,/icons/Wolftical_Icon.png,/CharacterRenders/WolfTicalT.png
+The Heroes,Viraxe Eleviac,75,65,70,60,/characterDescriptions/ViraxeEleviac.txt,/icons/Viraxe_Icon.png,/CharacterRenders/ViraxeE.png
 The Heroes,Wren Ryzen,55,88,35,20,/characterDescriptions/WrenRyzen.txt,/icons/Wren_Icon.png,/CharacterRenders/WrenR.png
-The Heroes,Doxyn Larchiux,45,56,100,50,/characterDescriptions/DoxynLarchiux.txt,/icons/doxpix.png,/CharacterRenders/NoRender.png
-The Heroes,Archie Larchiux,63,20,72,5,/characterDescriptions/ArchieLarchiux.txt,/icons/archiepix.png,/CharacterRenders/NoRender.png
+The Heroes,Doxyn Larchiux,45,56,100,50,/characterDescriptions/DoxynLarchiux.txt,/icons/Doxyn_Icon.png,/CharacterRenders/DoxynL.png
+The Heroes,Archie Larchiux,63,20,72,5,/characterDescriptions/ArchieLarchiux.txt,/icons/Archie_Icon.png,/CharacterRenders/ArchieL.png
 The Heroes,Drex Dixton,100,89,20,100,/characterDescriptions/DrexDixton.txt,/icons/drexpix.png,/CharacterRenders/NoRender.png
 The Heroes,Drax Dixton,100,20,90,100,/characterDescriptions/DraxDixton.txt,/icons/draxpix.png,/CharacterRenders/NoRender.png
 The Antagonists,Dr. Stenfort,99,99,60,5,/characterDescriptions/BillStenfort.txt,/icons/Stenfort_Icon.png,/CharacterRenders/NoRender.png

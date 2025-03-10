@@ -196,6 +196,42 @@ public class customWindows extends mainUI{
 
 	        optionsLayout.getChildren().add(helpSection);
 	    });
+	    
+	    
+	    // Extras Category Button
+	    Button extraCategory = new Button("Extras");
+	    extraCategory.getStyleClass().add("close");
+	    extraCategory.setOnAction(e -> {
+	        appMethods.playButtonSFX(); // Play button sound
+	        optionsLayout.getChildren().clear();
+	        optionsLayout.getChildren().add(titleBar); // Re-add title bar
+	        optionsLayout.getChildren().add(helpLabel); // Add the Label for help content
+
+	        VBox extraButtons = new VBox(10); // VBox to hold buttons vertically
+	        extraButtons.setAlignment(Pos.CENTER); // Center the buttons within the VBox
+
+	        Button creditsButton = new Button("Credits");
+	        creditsButton.getStyleClass().add("pink");
+	        creditsButton.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5));
+	        creditsButton.setOnAction(e1 -> {
+	            appMethods.playButtonSFX();
+	            helpLabel.setText("CREDITS DISPLAYED");
+	            appMethods.showCredits(rootPane); // Call with custom title
+	        });
+
+	       
+	      
+
+	        extraButtons.getChildren().addAll(creditsButton);
+
+	        // Create a new VBox to stack buttons and the label
+	        VBox extraSection = new VBox(15);
+	        extraSection.setAlignment(Pos.TOP_CENTER); // Align to the top center
+	      
+	        extraSection.getChildren().addAll(extraButtons, helpLabel); // Add buttons and label to the section
+
+	        optionsLayout.getChildren().add(extraSection);
+	    });
 
 	    // Close Button
 	    Button closeButton = new Button("Close");
@@ -205,7 +241,7 @@ public class customWindows extends mainUI{
 	        rootPane.getChildren().remove(optionsLayout); // Remove the overlay
 	    });
 
-	    titleBar.getChildren().addAll(optionCategory, helpCategory, closeButton);
+	    titleBar.getChildren().addAll(optionCategory, helpCategory,extraCategory, closeButton);
 
 	    optionsLayout.getChildren().add(titleBar);
 
@@ -214,6 +250,11 @@ public class customWindows extends mainUI{
 	    optionsLayout.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
 	}
 
+	
+	
+	
+	
+	
 	public static void showCharacterRender(String characterName, Pane rootPane) {
 	    characterInfo character = characterInfo.characterMap.get(characterName);
 

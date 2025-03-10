@@ -271,7 +271,7 @@ public class characterInfo extends appMethods{
 	          
 	         // Create the label with the instructions
 	            Label instructionLabel = new Label("CSV loaded! Please edit the table as needed.\n"
-	                    + "Double-click on any column to edit and press Enter to confirm your changes.\n"
+	                    + "Double-click on any column to edit and press Enter to confirm your changes. (DO NOT TYPE ANY COMMAS, this will break the file)\n"
 	                    + "When you're ready, press the 'Confirm' button to save your customizations.\n"
 	                    + "NOTE: Ensure that your custom character files are correctly placed in their respective folders.\n"
 	                    + "Make sure the file name matches what you type in the columns. If your description file is named 'mycharacter.txt' then type that");

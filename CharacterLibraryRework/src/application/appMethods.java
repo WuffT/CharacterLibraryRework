@@ -2,23 +2,34 @@ package application;
 
 import javax.sound.sampled.*;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -179,10 +190,184 @@ public class appMethods extends customWindows {
             characterRenderButton.setText("Character Not Found");
         }
     }
-
-
-
     
+    
+    
+ // Method to handle the styling of each credit
+    private static String getStyledCredit(String credit) {
+    	  String boldText = "-fx-text-fill: white; -fx-font-size: 40px; -fx-font-weight: bold;";
+    	    String normalText = "-fx-text-fill: white; -fx-font-size: 30px;";
+
+    	    switch (credit) {
+    	        case "TESTERS":
+    	        case "PROJECT TOOLS USED:":
+    	        case "And a special thanks to...":
+    	        case "CHARACTER INFORMATION LIBRARY":
+    	        case  "CHARACTERS OWNED BY WOLFTICAL:":
+    	        case  "CHARACTERS OWNED BY MEGANEKAII:":
+    	            return boldText;
+    	        default:
+    	            return normalText; // Default style for all other labels
+    	    }
+    }
+    public static void showCredits(Pane rootPane) {
+        String[] credits = {
+            "CHARACTER INFORMATION LIBRARY",
+            "App Version: " + appVersion,  
+            "PROGRAMMER / DEVELOPER: WolfTical",  
+            "UI DESIGN: WolfTical",  
+            "ART / ASSETS: WolfTical",   
+            "IN COLLABORATION WITH: MEGANEKAII",   
+            "TESTERS",  
+            "NeoBoudiou",  
+            "DireKrow",  
+            "Pilbemen",
+            "Quoyi",  
+            " ",  
+            "PROJECT TOOLS USED:",
+            "ECLIPSE IDE (JavaFX Library Integration)",
+            "Launch4J (EXE app creator for Java)",
+            "GitHub (Version Control and Application Updates)",
+            "Krita (Drawing/Art Tool Programm)",
+            " ",  
+            "A special thanks to...",  
+            "YOU! The user!",  
+            " ",  
+            "Thank you for using the application!",  
+            " ",  
+            "CHARACTERS OWNED BY WOLFTICAL:",  
+            "Wolftical Triglowsticus",  
+            "Wren Ryzen",  
+            "Doxyn Larchiux",  
+            "Archie Larchiux",  
+            "Drex Dixton",  
+            "Drax Dixton",  
+            "Dr. Stenfort",  
+            "Zalfor Tylox",  
+            "Teforel Vaxin",  
+            "Incident K-5520",  
+            "Incident L-152012",  
+            "Incident P-51420",  
+            "Incident C-11514",  
+            "Incident N-1115",  
+            "Incident U-3114",  
+            "Incident Z-1184",  
+            "Incident P-201518",  
+            "Shark Workers",  
+            " ",  
+            "CHARACTERS OWNED BY MEGANEKAII:",  
+            "Viraxe Eleviac"  
+        };
+
+        // Create a semi-transparent black overlay background
+        Region blackOverlay = new Region();
+        blackOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 1);");
+        blackOverlay.prefWidthProperty().bind(rootPane.widthProperty());
+        blackOverlay.prefHeightProperty().bind(rootPane.heightProperty());
+
+        HBox header = new HBox(10);
+        header.setAlignment(Pos.TOP_RIGHT);
+        header.setSpacing(20);
+
+        Button closeButton = new Button("Close");
+        closeButton.getStyleClass().add("close");
+
+        final TranslateTransition[] scrollAnimation = new TranslateTransition[1];
+        final PauseTransition[] delayTask = new PauseTransition[1];
+
+        closeButton.setOnAction(e -> {
+            appMethods.playButtonSFX();
+
+            // Stop animations
+            if (scrollAnimation[0] != null) {
+                scrollAnimation[0].stop();
+            }
+            if (delayTask[0] != null) {
+                delayTask[0].stop();
+            }
+
+            // Remove UI elements
+            rootPane.getChildren().removeAll(blackOverlay, header);
+            rootPane.getChildren().removeIf(node -> node instanceof VBox);
+        });
+
+        header.getChildren().add(closeButton);
+        rootPane.getChildren().addAll(blackOverlay, header);
+
+        // VBox for the credits
+        VBox creditsText = new VBox(10);
+        creditsText.setAlignment(Pos.BOTTOM_CENTER);
+        creditsText.setSpacing(15);
+        creditsText.setStyle("-fx-background-color: transparent;");
+        creditsText.setMouseTransparent(true);  // Ensures credits don't block interactions
+
+        rootPane.getChildren().add(creditsText);
+
+        // Adding credit labels to the VBox
+        for (String credit : credits) {
+            Label creditLabel = new Label(credit);
+            creditLabel.setStyle(getStyledCredit(credit)); // Apply styles
+            creditsText.getChildren().add(creditLabel);
+        }
+
+        // Ensure credits are hidden before starting animation
+        creditsText.setOpacity(0);
+        creditsText.setTranslateY(rootPane.getHeight() + 100); // Position credits below the screen
+
+        // Delay before starting the animation (ensures UI has time to render)
+        delayTask[0] = new PauseTransition(Duration.seconds(0.1));
+        delayTask[0].setOnFinished(event -> {
+            // Calculate screen height and starting Y position
+            double screenHeight = rootPane.getHeight();
+            double creditsHeight = creditsText.getBoundsInParent().getHeight(); // Height of the credits text container
+
+            // Dynamically set the starting Y position to be just below the screen
+            double startYPosition = screenHeight + creditsHeight * 0.5; 
+
+            // Set the VBox translation to start below the screen
+            creditsText.setTranslateY(startYPosition);
+
+            // Get dynamic height based on text content
+            double totalScrollDistance = creditsHeight + screenHeight;
+
+            // Dynamically calculate scroll duration
+            int numLines = credits.length; 
+            double durationPerLine = 0.75; // Adjust as needed
+            double minScrollDuration = 10;
+            double scrollDuration = Math.max(minScrollDuration, numLines * durationPerLine);
+
+            // Start the scroll animation
+            scrollAnimation[0] = new TranslateTransition(Duration.seconds(scrollDuration), creditsText);
+            scrollAnimation[0].setToY(-totalScrollDistance); 
+            scrollAnimation[0].setInterpolator(Interpolator.LINEAR);
+
+            // Fade in the credits at the same time
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), creditsText);
+            fadeIn.setFromValue(0); // Start invisible
+            fadeIn.setToValue(1);   // Fade to visible
+
+            // Play both animations simultaneously
+            fadeIn.play();
+            scrollAnimation[0].play();
+
+            // Pause at the end before removing
+            scrollAnimation[0].setOnFinished(finishEvent -> {
+                PauseTransition finalPause = new PauseTransition(Duration.seconds(5));
+                finalPause.setOnFinished(p -> rootPane.getChildren().remove(creditsText));
+                finalPause.play();
+            });
+        });
+
+        delayTask[0].play();
+
+        rootPane.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
+    }
+
+
+
+
+
+
     
     public static Button createCharacterButton(String characterName, Button characterRenderButton) {
         Button button = new Button(characterName);
