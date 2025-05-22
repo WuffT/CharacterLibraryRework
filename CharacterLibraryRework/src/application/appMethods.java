@@ -48,7 +48,7 @@ import java.util.Optional;
 public class appMethods extends customWindows {
 	   public static Clip selectedClip;
 	   public static Clip buttonClick;
-	 
+	   static String quickNotice = "This is an important section filled with a lot of lore elements. Left behind are small entries of a characters past, present and sometimes future...";
 	   public static void playSelectedAudio(String audioPath) {
 		    try {
 		        // Stop and close the currently playing audio (if any)
@@ -425,6 +425,30 @@ public class appMethods extends customWindows {
     }
     
     
+    public static void changeToDarkTheme() {
+    	  leftPanel.setStyle("-fx-background-image: url('imageSamples/BorderPinkDARK.png'); " +
+                  "-fx-background-repeat: no-repeat; " +
+                  "-fx-background-size: 100% 100%; " +
+                  "-fx-border-width: 5; " +                   // Border width
+                  "-fx-border-color: #000000; "); 
+    	  centerPanel.setStyle("-fx-background-image: url('imageSamples/BorderCyanDARK.png'); " +
+                  "-fx-background-repeat: no-repeat; " +
+                  "-fx-background-size: 100% 100%; " +
+                  "-fx-border-width: 5; " +                   // Border width
+                  "-fx-border-color: #000000; ");        
+    	  
+    	  bottomPanel.setStyle("-fx-background-image: url('imageSamples/BorderOrangeDARK.png'); " +
+                  "-fx-background-repeat: no-repeat; " +
+                  "-fx-background-size: 100% 100%; " +
+                  "-fx-border-width: 5; " +                   // Border width
+                  "-fx-border-color: #000000; ");  
+    	  
+    	  infoTextArea.setStyle("-fx-control-inner-background: black;" + "-fx-text-fill: #66ff66;");// Text color and background color
+    	  nameTextField.setStyle("-fx-control-inner-background: black;" + "-fx-text-fill: #66ff66;");// Text color and background color
+    	  nameTextField.setText("WELCOME TO THE SPECIAL JOURNAL ENTRIES!");
+    	 
+    	  characterInfo.applyTypingEffect(infoTextArea, quickNotice ,Duration.millis(1));
+    }
     
    
 

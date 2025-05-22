@@ -482,7 +482,7 @@ public static void filterCharacterButtons(ComboBox<String> characterComboBox, VB
 	}
 	
 	
-	private static void applyTypingEffect(TextArea textArea, String fullText, Duration typingSpeed) {
+	 static void applyTypingEffect(TextArea textArea, String fullText, Duration typingSpeed) {
 	    if (currentTypingTimeline != null) {
 	        currentTypingTimeline.stop();
 	    }

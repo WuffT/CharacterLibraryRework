@@ -43,15 +43,17 @@ public class mainUI extends Application {
 	   static TextArea infoTextArea;
 	   
 	   static Image iconImage;
-	   static  ImageView iconImageView;
+	   static ImageView iconImageView;
 	   static Button characterRenderButton;
-	 
+	   static Button journalEntriesButton;
 	  
 	   static Slider volumeSlider;
 	   static   ComboBox<String> characterComboBox;
 	   
 	   static VBox buttonContainer;
-	   
+	   static VBox leftPanel;
+	   static VBox centerPanel;
+	   static HBox bottomPanel;
 	   static StackPane screenOverlay;
 	   @Override
 	public void start(Stage primaryStage) {
@@ -67,7 +69,7 @@ public class mainUI extends Application {
 	        BorderPane root = new BorderPane();
 
 	        // Left Panel (Pink) - Character Selection
-	        VBox leftPanel = new VBox(10);
+	        leftPanel = new VBox(10);
 	        leftPanel.setPadding(new Insets(20));
 	        leftPanel.setStyle("-fx-background-image: url('imageSamples/BorderPink.png'); " +
 	                           "-fx-background-repeat: no-repeat; " +
@@ -125,8 +127,18 @@ public class mainUI extends Application {
 	        characterRenderButton.setMaxWidth(Double.MAX_VALUE); // Ensure the button stretches horizontally
 	        characterRenderButton.setTooltip(renderTip);
 
+	        Tooltip journalTip = new Tooltip("View important journals made by certain characters..");
+	        journalEntriesButton = new Button("Journal Entries");
+	        journalEntriesButton.setOnAction(e -> {
+	            appMethods.playButtonSFX();
+	            appMethods.changeToDarkTheme();
+	        });
+	        journalEntriesButton.getStyleClass().add("pink");
+	        journalEntriesButton.setMaxWidth(Double.MAX_VALUE); // Ensure the button stretches horizontally
+	        journalEntriesButton.setTooltip(journalTip);
+	     
 	      
-
+	        
 	        Button options = new Button("Options/Extras");
 	        options.getStyleClass().add("orange");
 	        options.setMaxWidth(Double.MAX_VALUE);
@@ -142,11 +154,11 @@ public class mainUI extends Application {
 	        scrollPaneForButtons.setFitToWidth(true); // Ensure scrollable content fits the width
 	        
 	        // Add buttons to the left panel
-	        leftPanel.getChildren().addAll(searchBar, characterComboBox, charScrollPane, characterRenderButton);
+	        leftPanel.getChildren().addAll(searchBar, characterComboBox, charScrollPane, characterRenderButton, journalEntriesButton);
 	        root.setLeft(leftPanel);
 
 	        // Center Panel (Cyan) - Main Content Display
-	        VBox centerPanel = new VBox(20);
+	        centerPanel = new VBox(20);
 	        centerPanel.setPadding(new Insets(20));
 	        centerPanel.setStyle("-fx-background-image: url('imageSamples/BorderCyan.png'); " +
 	                             "-fx-background-repeat: no-repeat; " +
@@ -167,7 +179,8 @@ public class mainUI extends Application {
 	        infoTextArea = new TextArea("WELCOME TO THE CHARACTER INFORMATION LIBRARY: \r\nPlease start from the drop down menu at the top left to show different categories. Character buttons will be shown that can display information.");
 	        infoTextArea.setEditable(false);
 	        infoTextArea.setWrapText(true);
-
+	       
+	      
 	        VBox.setVgrow(infoTextArea, Priority.ALWAYS);
 
 	     // Create the icon image with specific size (200x200)
@@ -184,7 +197,7 @@ public class mainUI extends Application {
 
 	     // Create a StackPane to hold the ImageView
 	        StackPane imageContainer = new StackPane(iconImageView);
-	        imageContainer.setStyle("-fx-border-color: #4f95b8; -fx-border-width: 6px; -fx-border-radius: 1px;");
+	        imageContainer.setStyle("-fx-border-color: #000000; -fx-border-width: 6px; -fx-border-radius: 1px;");
 
 	    
 	        
@@ -288,7 +301,7 @@ public class mainUI extends Application {
 	        root.setCenter(centerPanel);
 
 	        // Bottom Panel (Orange) - Audio Controls
-	        HBox bottomPanel = new HBox(10);
+	        bottomPanel = new HBox(10);
 	        bottomPanel.setPadding(new Insets(20));
 	        bottomPanel.setStyle("-fx-background-image: url('imageSamples/BorderOrange.png'); " +
 	                             "-fx-background-repeat: no-repeat; " +
