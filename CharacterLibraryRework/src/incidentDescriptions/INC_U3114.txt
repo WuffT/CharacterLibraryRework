@@ -1,0 +1,13 @@
+Alias Name: Carter
+Age: ?
+Gender: Male
+Specimen: Toucan
+Weight: 76 pounds
+Height: 4 ft 2 in
+Mutation Classification: Level 2
+
+Description: Incident U-3114, also referred to as Incident Toucan, is a moderately fast and agile avian creature known for its enhanced reflexes and mid-range endurance. While not as quick as Incident C-11514 (Farlow), Carter compensates with a sturdier body structure, allowing it to withstand impacts that would otherwise incapacitate more fragile avian specimens.
+
+Carter is capable of quick flight bursts and agile gliding, especially in vertical environments. Its colorful appearance and erratic movement patterns often make it difficult to track. Despite this, Carter can still evade most basic containment measures if not closely monitored.
+
+It tends to remain calm under normal circumstances, often observing its surroundings from elevated areas. However, if approached too closely or startled, it will attempt to flee rather than engage. When cornered, Carter has been known to use its powerful beak defensively, though it rarely causes significant injury.

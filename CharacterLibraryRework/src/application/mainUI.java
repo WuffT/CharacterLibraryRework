@@ -30,8 +30,8 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 4.2;
-	   static String applastUpdate = "2/5/2025";
+	   static double appVersion = 4.3;
+	   static String applastUpdate = "5/27/2025";
 	   
 	   
 	   static ProgressBar healthBar;
@@ -154,7 +154,7 @@ public class mainUI extends Application {
 	        scrollPaneForButtons.setFitToWidth(true); // Ensure scrollable content fits the width
 	        
 	        // Add buttons to the left panel
-	        leftPanel.getChildren().addAll(searchBar, characterComboBox, charScrollPane, characterRenderButton, journalEntriesButton);
+	        leftPanel.getChildren().addAll(searchBar, characterComboBox, charScrollPane, characterRenderButton);
 	        root.setLeft(leftPanel);
 
 	        // Center Panel (Cyan) - Main Content Display
