@@ -31,7 +31,7 @@ public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
 	   static double appVersion = 4.3;
-	   static String applastUpdate = "5/27/2025";
+	   static String applastUpdate = "5/28/2025";
 	   
 	   
 	   static ProgressBar healthBar;
