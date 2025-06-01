@@ -340,7 +340,13 @@ public class customWindows extends mainUI{
         skipButton.setVisible(true);
         skipButton.getStyleClass().add("close");
         loadingScreen.getChildren().add(skipButton);
-
+        loadingScreen.setStyle("-fx-background-image: url('imageSamples/titleScreenV2.png'); " +
+        		"-fx-background-repeat: no-repeat;" +
+                "-fx-background-position: center center;" +
+                "-fx-background-size: cover;");
+        
+        
+        
         // Define the loading task
         Task<Void> loadingTask = new Task<Void>() {
             @Override

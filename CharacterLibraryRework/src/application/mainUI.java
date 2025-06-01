@@ -31,7 +31,7 @@ public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
 	   static double appVersion = 4.3;
-	   static String applastUpdate = "5/27/2025";
+	   static String applastUpdate = "6/1/2025";
 	   
 	   
 	   static ProgressBar healthBar;
@@ -315,7 +315,7 @@ public class mainUI extends Application {
 	        resetAudioButton.getStyleClass().add("orange");
 	        ComboBox<String> audioComboBox = new ComboBox<>();
 	        audioComboBox.getStyleClass().add("combo-box");
-	        audioComboBox.getItems().addAll("ThematicHeroes", "DranixionsRising", "COME BACK LATER :)");
+	        audioComboBox.getItems().addAll("ThematicHeroes", "DranixionsRising", "ThematicSlowDown");
 	        audioComboBox.setOnAction(e -> {appMethods.playButtonSFX();});
 	        audioComboBox.setValue("ThematicHeroes");
 	       // The event handler for Play Audio button
@@ -362,7 +362,7 @@ public class mainUI extends Application {
 	        loadingScreen.setAlignment(Pos.CENTER);
 	        loadingScreen.setStyle("-fx-background-color: rgba(0, 0, 0, 1);"); // Semi-transparent background
 	        Label loadingLabel = new Label("Character Library V" + appVersion);
-	        loadingLabel.setStyle("-fx-text-fill: white; -fx-font-size: 20px;");
+	        loadingLabel.setStyle("-fx-text-fill: white; -fx-font-size: 40px;");
 	        ProgressIndicator progressIndicator = new ProgressIndicator();
 	        loadingScreen.getChildren().addAll(progressIndicator, loadingLabel);
 	        loadingScreen.setVisible(false); // Initially hidden

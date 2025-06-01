@@ -17,6 +17,8 @@
 }
 
 
+
+
 .table-view {
     -fx-font-size: 12px; /* Adjust as needed */
  	-fx-min-height: 300px;
@@ -148,13 +150,16 @@
 .label.loading {
   
 	 -fx-text-fill: white; 
-	 -fx-pref-width: 800; /* Set preferred width */
+	 -fx-min-width: 300; /* Set preferred width */
     -fx-pref-height: 50; /* Set preferred height */
      -fx-font-size: 18px;
+      -fx-font-weight: bold; /* Make the text bold */
+      -fx-background-radius: 2;
+	    -fx-effect: dropshadow(gaussian, rgba(25, 35, 46, 1), 2, 3.54, 1.54, 5);
         -fx-wrap-text: true;   
           -fx-alignment: center;         
       -fx-background-radius: 2;
-   
+    -fx-background-color:#2c3e50;
 }
 
 .text-field {
