@@ -1,0 +1,12 @@
+Alias Name: Lawren
+Age: ?
+Gender: Unknown
+Specimen: Green Lizard
+Weight: 98 pounds
+Height: 3 ft 1 in (at shoulder)
+Mutation Classification: Level 3
+
+Description:
+Incident Z-1184, commonly referred to as Lawren, is a small, quadrupedal green lizard with limited but notable enhancements. Its primary enhancement is its ability to see clearly in total darkness, allowing it to navigate through unlit environments with ease.
+
+Lawren is otherwise a relatively unremarkable specimen, exhibiting no aggressive tendencies or heightened physical abilities. It moves low to the ground with a steady, cautious pace and prefers to remain in cool, shaded areas when not active.

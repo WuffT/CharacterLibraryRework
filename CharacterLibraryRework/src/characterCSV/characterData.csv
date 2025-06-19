@@ -6,48 +6,48 @@ The Heroes,Doxyn Larchiux,45,56,100,50,/characterDescriptions/DoxynLarchiux.txt,
 The Heroes,Archie Larchiux,0,0,0,0,/characterDescriptions/ArchieLarchiux.txt,/characterIcons/Archie_Icon.png,/CharacterRenders/ArchieL.png
 The Side Heroes,Drex Dixton,100,89,20,100,/characterDescriptions/DrexDixton.txt,/characterIcons/Drex_Icon.png,/CharacterRenders/DrexD.png
 The Side Heroes,Drax Dixton,100,20,90,100,/characterDescriptions/DraxDixton.txt,/characterIcons/Drax_Icon.png,/CharacterRenders/DraxD.png
-The Antagonists,Dr. Stenfort,99,99,60,5,/characterDescriptions/BillStenfort.txt,/characterIcons/Stenfort_Icon.png,/CharacterRenders/NoRender.png
+The Antagonists,Dr. Stenfort,99,99,60,5,/characterDescriptions/BillStenfort.txt,/characterIcons/Stenfort_Icon.png,/CharacterRenders/BillS.png
 The Side Heroes,Zalfor Tylox,95,85,36,27,/characterDescriptions/ZalforTylox.txt,/characterIcons/Zalfor_Icon.png,/CharacterRenders/ZalforT.png
 The Side Heroes,Teforel Vaxin,85,35,58,60,/characterDescriptions/TeforelVaxin.txt,/characterIcons/Teforel_Icon.png,/CharacterRenders/TeforelV.png
 The Workers,Shark Workers,85,78,81,32,/characterDescriptions/SharkWorkers.txt,/characterIcons/SharkWorkers_Icon.png,/CharacterRenders/SharkRenders.png
 The Workers,Chef Chompiere,45,13,12,11,/characterDescriptions/Chompiere.txt,/characterIcons/Chompiere_Icon.png,/CharacterRenders/ChefChompiere.png
-The Workers,Quaker Workers,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident K-5520,75,100,44,35,/incDescriptions/INC_K5520.txt,/incIcons/Parakeet_Icon.png,/incRenders/INC_K5520.png
-The Incidents,Incident L-152012,100,72,10,75,/incDescriptions/INC_L152012.txt,/incIcons/Axolotl_Icon.png,/incRenders/INC_L152012.png
-The Incidents,Incident P-51420,60,60,60,60,/incDescriptions/INC_P51420.txt,/incIcons/Serpent_Icon.png,/incRenders/INC_P51420.png
-The Incidents,Incident C-11514,10,22,100,8,/incDescriptions/INC_C11514.txt,/incIcons/Chicken_Icon.png,/incRenders/INC_C11514.png
-The Incidents,Incident N-1115,15,4,100,85,/incDescriptions/INC_N1115.txt,/incIcons/Snake_Icon.png,/incRenders/INC_N1115.png
-The Incidents,Incident U-3114,86,29,82,15,/incDescriptions/INC_U3114.txt,/incIcons/Toucan_Icon.png,/incRenders/INC_U3114.png
-The Incidents,Incident Z-1184,68,68,68,19,/incDescriptions/INC_Z1184.txt,/incIcons/Lizard_Icon.png,/incRenders/INC_Z1184.png
-The Incidents,Incident P-201518,15,22,100,9,/incDescriptions/INC_P201518.txt,/incIcons/Raptor_Icon.png,/incRenders/INC_P201518.png
-The Incidents,Incident H-1125,78,12,24,53,/incDescriptions/INC_H1125.txt,/incIcons/Whale_Icon.png,/incRenders/INC_H1125.png
-The Incidents,Incident WIP #10,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #11,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #12,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #13,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #14,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #15,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #16,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #17,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #18,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #19,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #20,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #21,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #22,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #23,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #24,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #25,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #26,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #27,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #28,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #29,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #30,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #31,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #32,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #33,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #34,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #35,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #36,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #37,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #38,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,Incident WIP #39,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
+The Workers,COMING SOON,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
+The Incidents,Incident K-5520,75,100,44,35,/incDescriptions/Parakeet.txt,/incIcons/Parakeet_Icon.png,/incRenders/INC_K5520.png
+The Incidents,Incident L-152012,100,72,10,75,/incDescriptions/Axolotl.txt,/incIcons/Axolotl_Icon.png,/incRenders/INC_L152012.png
+The Incidents,Incident P-51420,60,60,60,60,/incDescriptions/Serpent.txt,/incIcons/Serpent_Icon.png,/incRenders/INC_P51420.png
+The Incidents,Incident C-11514,10,22,100,8,/incDescriptions/Chicken.txt,/incIcons/Chicken_Icon.png,/incRenders/INC_C11514.png
+The Incidents,Incident N-1115,15,4,100,85,/incDescriptions/Snake.txt,/incIcons/Snake_Icon.png,/incRenders/INC_N1115.png
+The Incidents,Incident U-3114,86,29,82,15,/incDescriptions/Toucan.txt,/incIcons/Toucan_Icon.png,/incRenders/INC_U3114.png
+The Incidents,Incident Z-1184,68,68,68,19,/incDescriptions/Lizard.txt,/incIcons/Lizard_Icon.png,/incRenders/INC_Z1184.png
+The Incidents,Incident P-201518,15,22,100,9,/incDescriptions/Raptor.txt,/incIcons/Raptor_Icon.png,/incRenders/INC_P201518.png
+The Incidents,Incident H-1125,78,12,24,53,/incDescriptions/Whale.txt,/incIcons/Whale_Icon.png,/incRenders/INC_H1125.png
+The Incidents,Incident T-9512,10,1,19,5,/incDescriptions/Cockatiel.txt,/incIcons/Cockatiel_Icon.png,/incRenders/INC_T9512.png
+The Incidents,Incident G-121518,63,85,16,5,/incDescriptions/Angler.txt,/incIcons/Angler_Icon.png,/incRenders/INC_G12518_MALE.png
+The Incidents,Incident L-51514,11,23,82,43,/incDescriptions/Chamelon.txt,/incIcons/Chameleon_Icon.png,/incRenders/INC_L51514.png
+The Incidents,Incident B-91212,100,64,33,30,/incDescriptions/Shoebill.txt,/incIcons/Shoebill_Icon.png,/incRenders/INC_B91212.png
+The Incidents,Incident D-91415,100,2,3,1,/incDescriptions/Dino.txt,/incIcons/Dino_Icon.png,/incRenders/INC_D91415.png
+The Incidents,Incident M-15208,40,38,89,0,/incDescriptions/Moth.txt,/incIcons/Moth_Icon.png,/incRenders/INC_M15208.png
+The Incidents,Incident E-512,55,100,79,3,/incDescriptions/Eel.txt,/incIcons/Eel_Icon.png,/incRenders/INC_E512.png
+The Incidents,Incident C-202512,7,27,80,100,/incDescriptions/Pterodactyl.txt,/incIcons/Pterodactyl_Icon.png,/incRenders/INC_C202512.png
+The Incidents,Incident P-8914,55,27,78,1,/incDescriptions/Dolphin.txt,/incIcons/Dolphin_Icon.png,/incRenders/INC_P8914.png
+The Incidents,Incident R-18520,30,4,1,2,/incDescriptions/Ferret.txt,/incIcons/Ferret_Icon.png,/incRenders/INC_R18520.png
+The Incidents,Incident R-20125,81,36,2,83,/incDescriptions/Turtle.txt,/incIcons/Turtle_Icon.png,/incRenders/INC_R20125.png
+The Incidents,Incident H-5516,63,4,34,37,/incDescriptions/Sheep.txt,/incIcons/Sheep_Icon.png,/incRenders/INC_H5516.png
+The Incidents,Incident E-31115,37,34,82,2,/incDescriptions/Gecko.txt,/incIcons/Gecko_Icon.png,/incRenders/INC_E31115.png
+The Incidents,Incident S-12217,87,39,1,98,/incDescriptions/Slug.txt,/incIcons/Slug_Icon.png,/incRenders/INC_S12217.png
+The Incidents,Incident I-4518,34,57,59,40,/incDescriptions/Spider.txt,/incIcons/Spider_Icon.png,/incRenders/INC_I4518.png
+The Incidents,Incident A-71514,9,2,80,100,/incDescriptions/Dragon.txt,/incIcons/Dragon_icon.png,/incRenders/INC_A71514.png
+The Incidents,Incident I-14715,40,0,81,100,/incDescriptions/Flamingo.txt,/incIcons/Flamingo_Icon.png,/incRenders/INC_I14715.png
+The Incidents,Incident F-9198,1,2,62,42,/incDescriptions/Jellyfish.txt,/incIcons/Jellyfish_Icon.png,/incRenders/INC_F9198.png
+The Incidents,Incident B-55,43,64,43,3,/incDescriptions/Bee.txt,/incIcons/Bee_Icon.png,/incRenders/INC_B55.png
+The Incidents,Incident G-21914,66,1,84,1,/incDescriptions/Penguin.txt,/incIcons/Penguin_Icon.png,/incRenders/INC_G21914.png
+The Incidents,Incident G-18125,60,40,41,0,/incDescriptions/Stingray.txt,/incIcons/Stingray_Icon.png,/incRenders/INC_G18125.png
+The Incidents,Incident T-11825,7,85,99,0,/incDescriptions/Secretary.txt,/incIcons/Secretary_Icon.png,/incRenders/INC_T11825.png
+The Incidents,Incident R-152120,62,0,38,0,/incDescriptions/Fish.txt,/incIcons/Fish_Icon.png,/incRenders/INC_R152120.png
+The Incidents,Incident C-120,28,60,85,0,/incDescriptions/Cat.txt,/incIcons/Cat_Icon.png,/incRenders/INC_C120.png
+The Incidents,Incident W-151813,100,90,13,12,/incDescriptions/Worm.txt,/incIcons/Worm_Icon.png,/incRenders/INC_W151813.png
+The Incidents,Incident B-120,39,15,89,0,/incDescriptions/Bat.txt,/incIcons/Bat_Icon.png,/incRenders/INC_B120.png
+The Incidents,Incident F-18157,37,15,61,0,/incDescriptions/Frog.txt,/incIcons/Frog_Icon.png,/incRenders/INC_F18157.png
+The Incidents,Incident C-151514,67,0,88,0,/incDescriptions/Raccoon.txt,/incIcons/Raccoon_Icon.png,/incRenders/INC_C151514.png
+The Incidents,Incident O-2312,90,86,88,0,/incDescriptions/Owl.txt,/incIcons/Owl_Icon.png,/incRenders/INC_O2312.png
+The Incidents,Incident T-18524,0,0,100,0,/incDescriptions/Trex.txt,/incIcons/Trex_Icon.png,/incRenders/INC_T18524.png

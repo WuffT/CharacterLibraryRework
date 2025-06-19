@@ -1,0 +1,14 @@
+Alias Name: Shepern
+Age: Unknown
+Gender: Male
+Specimen: Sheep
+Weight: 120 pounds
+Height: 5 ft 10 in
+Mutation Classification: Level 4
+
+Description:
+Incident H-5516, referred and nicknamed Shepern, is a surprisingly protective and territorial sheep-like entity. Despite its seemingly docile appearance, Shepern exhibits strong defensive behaviors when its surroundings are threatened.
+
+One of its most notable abilities is generating a powerful shockwave by stomping its hooves firmly on the ground. This shockwave can knock back and destabilize anything within a moderate radius. Alongside this physical force, Shepern emits a loud, resonant "Baaaa!" — a piercing vocalization that causes disorientation and confusion in nearby subjects, impairing their coordination and focus temporarily.
+
+These abilities make Shepern effective at deterring intruders or potential threats within its containment zone, earning it a reputation as a "formidable protector despite its otherwise gentle demeanor".

@@ -1,0 +1,14 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Frog
+Weight: 160 pounds
+Height: 5 ft 8 in
+Mutation Classification: Level 2
+
+Description:
+Incident Frog is best known for its remarkably long and powerful tongue, which it uses with impressive precision and strength. This tongue can latch onto objects, allowing the creature to pull items closer or swing itself around poles and obstacles much like a grappling hook.
+
+This unique ability gives the frog exceptional mobility in its environment, enabling quick escapes or agile navigation through complex terrain. Its tongue also serves as an effective tool for grabbing distant objects or prey.
+
+Despite its relatively small size, Incident F-18157 demonstrates surprising physical prowess thanks to this remarkable adaptation, making it both an elusive and resourceful creature.

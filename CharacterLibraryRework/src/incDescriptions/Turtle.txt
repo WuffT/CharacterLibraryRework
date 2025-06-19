@@ -1,0 +1,12 @@
+Alias Name: Shellden
+Age: Unknown
+Gender: Male
+Specimen: Turtle
+Weight: 285 pounds
+Height: 6 ft 2 in
+Mutation Classification: Level 3
+
+Description:
+Incident R-20125, referred to as Shellden, is a sturdy turtle-like creature distinguished by its exceptionally tough, reinforced shell. This natural yet mutated armor grants Shellden to tank devastating attacks, allowing it to absorb physical impacts that would severely injure other incidents of similar classification.
+
+Shellden moves very slow because of the weight the shell carries, so it relies on its durable shell for defense rather than speed or aggression. It tends to withdraw into its shell when threatened, presenting an almost impenetrable barrier to potential attackers. This defensive trait makes Shellden a resilient entity in containment and during field operations.

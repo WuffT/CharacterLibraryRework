@@ -20,6 +20,7 @@ import javafx.animation.FadeTransition;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -77,7 +78,7 @@ public class customWindows extends mainUI{
 	        VBox optionsButtons = new VBox(10); // VBox to hold buttons vertically
 	        optionsButtons.setAlignment(Pos.CENTER); // Center the buttons within the VBox
 
-	        Button manageButton = new Button("Import CSV Data");
+	        Button manageButton = new Button("Import CSV Data (EXPERIMENTAL)");
 	        manageButton.getStyleClass().add("pink");
 	        manageButton.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5)); // 50% of the rootPane's width
 	        manageButton.setOnAction(e1 -> {
@@ -169,9 +170,9 @@ public class customWindows extends mainUI{
 	            appMethods.playButtonSFX();
 	            helpLabel.setText("Update Changes and Notes as of " + applastUpdate + "\n"
 	                    + "Version " + appVersion + "\n"
-	                    + "- Application has been released, Congratulations for being part of the early access users!\n"
-	                    + "- Small improvements made to the UI.\n"
-	                    + "- Changed and implemented many things to appear in the same window now");
+	                    + "- FINAL TEST BUILD!\n"
+	                    + "- Incident category has been updated.\n"
+	                    + "- Some minor performance fixes (still not perfect but its a little better)");
 	        });
 
 	        Button appInfoButton = new Button("App Information");
@@ -243,7 +244,21 @@ public class customWindows extends mainUI{
 
 	    titleBar.getChildren().addAll(optionCategory, helpCategory,extraCategory, closeButton);
 
-	    optionsLayout.getChildren().add(titleBar);
+	    StackPane centeredWrapper = new StackPane(titleBar);
+	    centeredWrapper.setAlignment(Pos.CENTER_LEFT); // Keep it left-aligned when scrolling starts
+	    
+	    ScrollPane titleScrollPane = new ScrollPane(centeredWrapper);
+	    titleScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Only scroll when needed
+	    titleScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+	    titleScrollPane.setFitToHeight(true);
+	    titleScrollPane.setFitToWidth(true); // Helps stretch the background
+	    titleScrollPane.setPannable(true);
+	    titleScrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+	  
+
+
+	    optionsLayout.getChildren().add(titleScrollPane);
+
 
 	    rootPane.getChildren().add(optionsLayout);
 
@@ -259,54 +274,55 @@ public class customWindows extends mainUI{
 	    characterInfo character = characterInfo.characterMap.get(characterName);
 
 	    if (character != null) {
+	        // Remove existing overlay if any
+	        Node existingOverlay = rootPane.lookup("#renderOverlay");
+	        if (existingOverlay != null) {
+	            rootPane.getChildren().remove(existingOverlay);
+	        }
+
 	        // Create the overlay pane
 	        StackPane overlayPane = new StackPane();
-	        overlayPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");  // Semi-transparent black background
+	        overlayPane.setId("renderOverlay"); // Set unique ID
+	        overlayPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
 	        overlayPane.setPrefSize(rootPane.getWidth(), rootPane.getHeight());
 
-	        // Create the ImageView for the character's render
-	        ImageView renderImageView = new ImageView();
-	        renderImageView.setImage(new Image(character.getRenderPath()));
-	        renderImageView.setPreserveRatio(true);  // Maintain aspect ratio
-	        renderImageView.fitWidthProperty().bind(rootPane.widthProperty().multiply(0.8));  // Image width 80% of rootPane width
-	        renderImageView.fitHeightProperty().bind(rootPane.heightProperty().multiply(0.8));  // Image height 80% of rootPane height
-
-	        // Applied border only to the ImageView using the style class defined in CSS
+	        // Create the ImageView
+	        ImageView renderImageView = new ImageView(new Image(character.getRenderPath()));
+	        renderImageView.setPreserveRatio(true);
+	        renderImageView.fitWidthProperty().bind(rootPane.widthProperty().multiply(0.8));
+	        renderImageView.fitHeightProperty().bind(rootPane.heightProperty().multiply(0.8));
 	        renderImageView.getStyleClass().add("imageWithBorder");
 
-	        // Created the close button
+	        // Close button
 	        Button closeButton = new Button("Close");
 	        closeButton.getStyleClass().add("close");
-	        closeButton.setOnAction(e -> rootPane.getChildren().remove(overlayPane)); // Close the overlay
+	        closeButton.setOnAction(e -> {
+	            appMethods.playButtonSFX();
+	            renderImageView.setImage(null); // Help GC
+	            rootPane.getChildren().remove(overlayPane);
+	        });
 
-	        // Created a label with the character's name
+	        // Header
 	        Label nameLabel = new Label(characterName);
-	        nameLabel.getStyleClass().add("menuLabel");  // Apply custom style class to the label
+	        nameLabel.getStyleClass().add("menuLabel");
 
-	        // Created a HBox to hold the name label and the close button
-	        HBox headerHBox = new HBox(10);  // 10px spacing between the label and button
-	        headerHBox.setAlignment(Pos.CENTER);  // Center the contents
-	        headerHBox.getChildren().addAll(nameLabel, closeButton);  // Add the label first, then the button
+	        HBox headerHBox = new HBox(10, nameLabel, closeButton);
+	        headerHBox.setAlignment(Pos.CENTER);
+	        headerHBox.setPadding(new Insets(10, 0, 10, 0));
 
-	        // Added some margin/padding to move the header (name + close) up a little
-	        headerHBox.setPadding(new Insets(10, 0, 10, 0));  // Top margin (10px), no margin for the sides, bottom margin (10px)
+	        // VBox for layout
+	        VBox imageVBox = new VBox(headerHBox, renderImageView);
+	        imageVBox.setAlignment(Pos.CENTER);
 
-	        // Created a VBox to hold the image and header
-	        VBox imageVBox = new VBox();
-	        imageVBox.setAlignment(Pos.CENTER);  // Center the contents (image + header)
-	        imageVBox.getChildren().addAll(headerHBox, renderImageView);
-
-	        // Added the VBox to the overlay pane
+	        // Final assembly
 	        overlayPane.getChildren().add(imageVBox);
 	        overlayPane.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
-
-	        // Added the overlay pane on top of the rootPane (your main UI)
 	        rootPane.getChildren().add(overlayPane);
-
 	    } else {
 	        System.out.println("Character not found: " + characterName);
 	    }
 	}
+
 
     
 

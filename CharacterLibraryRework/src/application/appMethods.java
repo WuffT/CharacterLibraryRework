@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -26,6 +27,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -211,6 +214,15 @@ public class appMethods extends customWindows {
     	    }
     }
     public static void showCredits(Pane rootPane) {
+        // Clean up existing credits UI if any
+        Node existingOverlay = rootPane.lookup("#creditsOverlay");
+        Node existingHeader = rootPane.lookup("#creditsHeader");
+        Node existingVBox = rootPane.lookup("#creditsVBox");
+
+        if (existingOverlay != null) rootPane.getChildren().remove(existingOverlay);
+        if (existingHeader != null) rootPane.getChildren().remove(existingHeader);
+        if (existingVBox != null) rootPane.getChildren().remove(existingVBox);
+
         String[] credits = {
             "CHARACTER INFORMATION LIBRARY",
             "App Version: " + appVersion,  
@@ -253,13 +265,16 @@ public class appMethods extends customWindows {
             "Viraxe Eleviac"  
         };
 
-        // Create a semi-transparent black overlay background
+        // Black overlay
         Region blackOverlay = new Region();
+        blackOverlay.setId("creditsOverlay");
         blackOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 1);");
         blackOverlay.prefWidthProperty().bind(rootPane.widthProperty());
         blackOverlay.prefHeightProperty().bind(rootPane.heightProperty());
 
+        // Header with close button
         HBox header = new HBox(10);
+        header.setId("creditsHeader");
         header.setAlignment(Pos.TOP_RIGHT);
         header.setSpacing(20);
 
@@ -272,79 +287,79 @@ public class appMethods extends customWindows {
         closeButton.setOnAction(e -> {
             appMethods.playButtonSFX();
 
-            // Stop animations
-            if (scrollAnimation[0] != null) {
-                scrollAnimation[0].stop();
-            }
-            if (delayTask[0] != null) {
-                delayTask[0].stop();
-            }
+            if (scrollAnimation[0] != null) scrollAnimation[0].stop();
+            if (delayTask[0] != null) delayTask[0].stop();
 
-            // Remove UI elements
             rootPane.getChildren().removeAll(blackOverlay, header);
-            rootPane.getChildren().removeIf(node -> node instanceof VBox);
+            rootPane.getChildren().removeIf(node -> "creditsVBox".equals(node.getId()));
         });
 
         header.getChildren().add(closeButton);
         rootPane.getChildren().addAll(blackOverlay, header);
 
-        // VBox for the credits
+        // VBox for credits
         VBox creditsText = new VBox(10);
+        creditsText.setId("creditsVBox");
         creditsText.setAlignment(Pos.BOTTOM_CENTER);
         creditsText.setSpacing(15);
         creditsText.setStyle("-fx-background-color: transparent;");
-        creditsText.setMouseTransparent(true);  // Ensures credits don't block interactions
-
+        creditsText.setMouseTransparent(true);
         rootPane.getChildren().add(creditsText);
 
-        // Adding credit labels to the VBox
+     // Top image row (character icons)
+        HBox imageRow = new HBox(15);
+        imageRow.setAlignment(Pos.CENTER);
+
+        // Load character images
+        ImageView img1 = new ImageView(new Image(mainUI.class.getResource("/icons/wuffsprite_front.png").toExternalForm()));
+        ImageView img2 = new ImageView(new Image(mainUI.class.getResource("/icons/viraxesprite_front.png").toExternalForm()));
+        ImageView img3 = new ImageView(new Image(mainUI.class.getResource("/icons/doxynsprite_front.png").toExternalForm()));
+        ImageView img4 = new ImageView(new Image(mainUI.class.getResource("/icons/archiesprite_front.png").toExternalForm()));
+        ImageView img5 = new ImageView(new Image(mainUI.class.getResource("/icons/wrensprite_front.png").toExternalForm()));
+        ImageView img6 = new ImageView(new Image(mainUI.class.getResource("/icons/stenfortsprite_front.png").toExternalForm()));
+
+        // Set consistent size for all
+        for (ImageView img : new ImageView[]{img1, img2, img3, img4, img5, img6}) {
+            img.setFitWidth(128);  // Adjust as needed
+            img.setPreserveRatio(true);
+        }
+
+        imageRow.getChildren().addAll(img1, img2, img3, img4, img5, img6);
+        creditsText.getChildren().add(imageRow);
+
+
+        // Now add all credit lines
         for (String credit : credits) {
             Label creditLabel = new Label(credit);
-            creditLabel.setStyle(getStyledCredit(credit)); // Apply styles
+            creditLabel.setStyle(getStyledCredit(credit));
             creditsText.getChildren().add(creditLabel);
         }
 
-        // Ensure credits are hidden before starting animation
         creditsText.setOpacity(0);
-        creditsText.setTranslateY(rootPane.getHeight() + 100); // Position credits below the screen
+        creditsText.setTranslateY(rootPane.getHeight() + 100);
 
-        // Delay before starting the animation (ensures UI has time to render)
         delayTask[0] = new PauseTransition(Duration.seconds(0.1));
         delayTask[0].setOnFinished(event -> {
-            // Calculate screen height and starting Y position
             double screenHeight = rootPane.getHeight();
-            double creditsHeight = creditsText.getBoundsInParent().getHeight(); // Height of the credits text container
-
-            // Dynamically set the starting Y position to be just below the screen
-            double startYPosition = screenHeight + creditsHeight * 0.5; 
-
-            // Set the VBox translation to start below the screen
+            double creditsHeight = creditsText.getBoundsInParent().getHeight();
+            double startYPosition = screenHeight + creditsHeight * 0.5;
             creditsText.setTranslateY(startYPosition);
 
-            // Get dynamic height based on text content
             double totalScrollDistance = creditsHeight + screenHeight;
+            int numLines = credits.length;
+            double scrollDuration = Math.max(10, numLines * 0.75);
 
-            // Dynamically calculate scroll duration
-            int numLines = credits.length; 
-            double durationPerLine = 0.75; // Adjust as needed
-            double minScrollDuration = 10;
-            double scrollDuration = Math.max(minScrollDuration, numLines * durationPerLine);
-
-            // Start the scroll animation
             scrollAnimation[0] = new TranslateTransition(Duration.seconds(scrollDuration), creditsText);
-            scrollAnimation[0].setToY(-totalScrollDistance); 
+            scrollAnimation[0].setToY(-totalScrollDistance);
             scrollAnimation[0].setInterpolator(Interpolator.LINEAR);
 
-            // Fade in the credits at the same time
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), creditsText);
-            fadeIn.setFromValue(0); // Start invisible
-            fadeIn.setToValue(1);   // Fade to visible
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
 
-            // Play both animations simultaneously
             fadeIn.play();
             scrollAnimation[0].play();
 
-            // Pause at the end before removing
             scrollAnimation[0].setOnFinished(finishEvent -> {
                 PauseTransition finalPause = new PauseTransition(Duration.seconds(5));
                 finalPause.setOnFinished(p -> rootPane.getChildren().remove(creditsText));
@@ -353,10 +368,8 @@ public class appMethods extends customWindows {
         });
 
         delayTask[0].play();
-
         rootPane.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
     }
-
 
 
 

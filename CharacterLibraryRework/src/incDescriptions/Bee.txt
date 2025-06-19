@@ -1,0 +1,12 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Bee
+Weight: 78 pounds
+Height: 4 ft 8 in
+Mutation Classification: level 2
+
+Description:
+Incident Bee is a creature intrinsically linked to plant life, thriving in environments rich with flowers. It produces a special kind of healing honey with remarkable medicinal properties, widely used by Dr. Stenfort’s workers within the facility.
+
+This honey can accelerate healing processes and treat various injuries, making the bee an invaluable asset for medical support and botanical health alike. Calm and diligent, Incident B-55 plays a crucial role in sustaining both natural ecosystems and human care within the research complex.

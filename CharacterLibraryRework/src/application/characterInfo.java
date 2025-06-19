@@ -437,11 +437,23 @@ public static void filterCharacterButtons(ComboBox<String> characterComboBox, VB
 
  
  
- public static void setCharacter(String name, double health, double strength, double speed, double defense, String description, String imagePath, String renderPath) {
+	public static void setCharacter(String name, double health, double strength, double speed, double defense, String description, String imagePath, String renderPath) {
 	    System.out.println("Setting character: " + name);
 	    System.out.println("Using image path: " + imagePath);
 	    System.out.println("Using render path: " + renderPath);
 	    
+	    // Clear previous image and references before loading new one
+	    iconImageView.setImage(null);
+	    nameTextField.setText("");
+	    infoTextArea.clear(); // Optional
+
+	    // Stop any typing animation before setting new one
+	    if (currentTypingTimeline != null) {
+	        currentTypingTimeline.stop();
+	        currentTypingTimeline.getKeyFrames().clear();
+	        currentTypingTimeline = null;
+	    }
+
 	    // Loading the image
 	    try {
 	        Image characterImage = new Image(characterInfo.class.getResource(imagePath).toExternalForm());
@@ -453,66 +465,80 @@ public static void filterCharacterButtons(ComboBox<String> characterComboBox, VB
 	    }
 
 	    // Animate the progress bars
-	    animateProgressBar(healthBar, health/100);
-	    animateProgressBar(strengthBar, strength/100);
-	    animateProgressBar(speedBar, speed/100);
-	    animateProgressBar(defenseBar, defense/100);
+	    animateProgressBar(healthBar, health / 100);
+	    animateProgressBar(strengthBar, strength / 100);
+	    animateProgressBar(speedBar, speed / 100);
+	    animateProgressBar(defenseBar, defense / 100);
 
 	    // Setting other character info
 	    nameTextField.setText(name);
 	    applyTypingEffect(infoTextArea, description, Duration.millis(1));
 	}
 
-	// method to animate the progress bars
+
+	private static final Map<ProgressBar, Timeline> activeTimelines = new HashMap<>();
+
 	private static void animateProgressBar(ProgressBar progressBar, double targetValue) {
-	    // Store the current value of the progress bar
+	    // Stop any existing animation for this progress bar
+	    if (activeTimelines.containsKey(progressBar)) {
+	        Timeline existing = activeTimelines.get(progressBar);
+	        existing.stop();
+	        activeTimelines.remove(progressBar);
+	    }
+
+	    // Create a new timeline for the animation
 	    double startValue = progressBar.getProgress();
+	    Duration duration = Duration.seconds(0.5);
 
-	    // Duration of the animation (in seconds)
-	    Duration duration = Duration.seconds(0.5);  // Animation Speed Value
-
-	    // Timeline to animate the progress bar
 	    Timeline timeline = new Timeline(
 	        new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), startValue)),
 	        new KeyFrame(duration, new KeyValue(progressBar.progressProperty(), targetValue))
 	    );
 
-	    // Play the animation
+	    // Store and play the timeline
+	    activeTimelines.put(progressBar, timeline);
+	    timeline.setOnFinished(e -> activeTimelines.remove(progressBar)); // Clean up after animation ends
 	    timeline.play();
 	}
+
 	
 	
-	 static void applyTypingEffect(TextArea textArea, String fullText, Duration typingSpeed) {
+	static void applyTypingEffect(TextArea textArea, String fullText, Duration typingSpeed) {
+	    // Stop and clear old timeline if exists
 	    if (currentTypingTimeline != null) {
 	        currentTypingTimeline.stop();
+	        currentTypingTimeline.getKeyFrames().clear();
 	    }
 
-	    textArea.clear(); // Clear the text area before typing starts
+	    textArea.clear();
 	    StringBuilder displayedText = new StringBuilder();
 
 	    currentTypingTimeline = new Timeline();
-	    int batchSize = 20; // Number of characters to show at once per update
+	    int batchSize = 20;
 	    for (int i = 0; i < fullText.length(); i += batchSize) {
 	        int end = Math.min(i + batchSize, fullText.length());
 	        String textBatch = fullText.substring(i, end);
-	        
-	        int index = i; // Use an effectively final variable for lambda
+
+	        int index = i;
 	        currentTypingTimeline.getKeyFrames().add(
 	            new KeyFrame(typingSpeed.multiply(index), event -> {
-	                displayedText.append(textBatch); // Add the next batch of characters
+	                displayedText.append(textBatch);
 	                textArea.setText(displayedText.toString());
 	            })
 	        );
 	    }
 
-	    // Action when typing is completed
-	    currentTypingTimeline.setOnFinished(event -> System.out.println("Typing animation completed!"));
+	    // Clear mouse handler when done
+	    currentTypingTimeline.setOnFinished(event -> {
+	        System.out.println("Typing animation completed!");
+	        textArea.setOnMouseClicked(null);
+	    });
 
-	    // Add event listener to skip the typing effect on click
 	    EventHandler<MouseEvent> skipTypingEffectHandler = event -> {
-	        if (event.getButton() == MouseButton.PRIMARY) { // Left click
+	        if (event.getButton() == MouseButton.PRIMARY) {
 	            currentTypingTimeline.stop();
-	            textArea.setText(fullText); // Set the full text immediately
+	            textArea.setText(fullText);
+	            textArea.setOnMouseClicked(null);
 	        }
 	    };
 

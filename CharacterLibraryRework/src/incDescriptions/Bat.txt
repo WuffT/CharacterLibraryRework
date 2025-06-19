@@ -1,0 +1,16 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Bat
+Weight: 60 pounds
+Height: 5 ft (wingspan approx. 3.5 ft)
+Mutation Classification: Level 1
+
+Description:
+One of the more straightforward creations in the facility, Incident B-120, or simply Bat, is known for its enhanced echolocation abilities. While the power itself isn’t anything groundbreaking, what sets this bat apart is the sheer precision it demonstrates. It can navigate tight, pitch-black areas with no light whatsoever and detect movement from extreme distances.
+
+It’s commonly used in scouting missions inside dimly lit or collapsed zones, where visibility is impossible for other units. It has also shown the ability to “see” through certain walls depending on thickness—mapping out movement and vibrations in real time.
+
+Not aggressive, but highly territorial, Bat prefers isolation and can become stressed when placed near too many other incidents.
+
+Simple, but effective.

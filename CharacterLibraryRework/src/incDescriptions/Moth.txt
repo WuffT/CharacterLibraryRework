@@ -1,0 +1,12 @@
+Alias Name: Melthorn
+Age: ?
+Gender: Unknown
+Specimen: Moth
+Weight: 45 pounds
+Height: 3 ft 9 in
+Mutation Classification: Level 2
+
+Description:
+Incident M-15208, designated Melthorn, is a small, delicate moth-like entity with no apparent defense mechanisms—making it the first recorded incident of its kind to exhibit zero natural aggression or protection response. Despite its vulnerability, Melthorn possesses a unique passive ability: it can absorb energy from light sources, sustaining itself entirely through exposure to various forms of illumination.
+
+Melthorn is extremely sensitive to light stimuli, and will immediately gravitate toward any available source—be it a flashlight, monitor, sunbeam, or even a faint glowstick. Once fixated, it enters a trance-like state and begins absorbing ambient energy, which appears to replenish its stamina and vitality. In brighter environments, Melthorn has shown brief bursts of erratic fluttering or gentle gliding, as though momentarily overcharged with energy. No high containment procedures are required but it is advised for Melthorn to be kept in a room with filled with a variety of lights.

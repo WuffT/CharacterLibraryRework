@@ -1,0 +1,16 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Trout
+Weight: 73 pounds
+Height: 5 ft 9 in
+Mutation Classification: Level 2
+
+Description:
+Incident R-152120, commonly referred to as the Trout, is not a physically powerful creature, but its utility makes it remarkably valuable. The trout possesses complete immunity to radiation exposure and all known diseases or toxins. Because of this, it has been cleared to operate (under monitored conditions) in environments that would be hazardous to any other lifeform.
+
+It has been observed calmly swimming through chemically tainted water or even making direct contact with hazardous waste—cleaning or neutralizing certain elements in the process. While it may not be suited for combat or containment breach scenarios, the trout plays a crucial support role in areas where environmental contamination is a concern.
+
+Researchers have noted its calm, almost meditative behavior, rarely reacting to external threats and showing no signs of stress or illness under conditions that would incapacitate most other creatures.
+
+A weak swimmer—but a strong survivor.

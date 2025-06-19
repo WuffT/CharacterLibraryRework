@@ -1,0 +1,17 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Male
+Specimen: Spider
+Weight: 132 pounds
+Height: 6 ft 1 in
+Mutation Classification: Level 3
+
+Description:
+Incident Spider, designated as Incident I-4518, is a skittering, wall-crawling entity with an unsettling ability—it can phase through solid matter at will. This makes it incredibly difficult to contain or evade once it has selected a target.
+
+One of its most notable traits is its close partnership with Incident G-12518 (The Angler). While the Angler can detect and track hidden targets, the Spider uses that information to ambush with ease, appearing through walls or ceilings with little to no warning. This synergy between the two makes them a dangerous duo in any escape or pursuit scenario.
+
+Despite its eerie capabilities, the Spider isn’t overtly aggressive. It is observant, stealthy, and tactical, often stalking or observing its environment before taking action. When calm, it simply crawls through walls at random, often appearing in strange corners or ceilings before vanishing again.
+
+Containment is considered moderate difficulty, requiring reinforced observation units and pairing restrictions. It’s advised not to allow it prolonged interaction with the Angler unless absolutely necessary for testing.
+

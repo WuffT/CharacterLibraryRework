@@ -1,0 +1,14 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Penguin
+Weight: 68 pounds
+Height: 5 ft 1 in
+Mutation Classification: Level 3
+
+Description:
+A penguin? Yeah.
+
+Incident G-21914 has the unique ability to launch ice cubes as projectiles. Upon impact, these cubes shatter and release a burst of chilling wind, gradually lowering the body temperature of anything caught in the blast. Prolonged exposure can cause shivering, slowed movement, and in extreme cases, a full freeze-up of motor functions (Easily treated by warmth).
+
+While not inherently hostile, the penguin tends to use its abilities when startled, annoyed, or just in a playful mood. Researchers are advised to keep a safe distance and wear thermal gear when interacting with it.

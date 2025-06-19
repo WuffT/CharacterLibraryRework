@@ -241,7 +241,7 @@
 }
 
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #cecece;
+    -fx-background-color: #363636;
     -fx-pref-width: 20px;
 }
 .scroll-bar:vertical {
@@ -250,8 +250,14 @@
 }
 
 .scroll-bar:horizontal .thumb {
-    -fx-background-color: #cecece;
+    -fx-background-color: #363636;
+    -fx-pref-height: 20px;
 }
+.scroll-bar:horizontal {
+    -fx-background-color: #cecece;
+    -fx-pref-height: 20px;
+}
+
 
 .scroll-bar:vertical .track,
 .scroll-bar:horizontal .track {
@@ -301,18 +307,7 @@
 }
 
 
-.vbox-background {
-    -fx-background-color: #F7F7F7;
-    -fx-padding: 10;
-    -fx-border-color: white;
-    -fx-border-width: 2;
-    -fx-background-radius: 1;
-    -fx-border-radius: 1;
-    /* Drop shadow effect rgba(18, 57, 42, 1)*/
-     
- 	   	   -fx-effect: dropshadow(gaussian, rgba(206,206, 206, 1), 2, 3.54, 3.54, 5);
-    
-}
+
 
 .combo-box {
     -fx-background-color: #f0f0f0;
@@ -332,12 +327,6 @@
 }
 
 
-.success-label {
-    -fx-background-color: #57c05d;
-    -fx-font-weight: bold;
-    -fx-font-size: 14px;
-     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 5);
-}
 
 /* progressBars.css */
 

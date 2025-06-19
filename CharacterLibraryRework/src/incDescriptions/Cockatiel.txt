@@ -1,0 +1,16 @@
+Alias Name: Loubert
+Age: ?
+Gender: Unknown
+Specimen: Cockatiel
+Weight: 34 pounds
+Height: 5 ft 1 in
+Mutation Classification: Level 2
+
+Description:
+Incident T-9512, more commonly referred to as Loubert, is a peaceful and non-hostile cockatiel with a profound connection to plant life. Unlike most other incidents, Loubert avoids conflict entirely and has shown no aggressive tendencies under any observed circumstance. Its presence is often accompanied by a calming aura, particularly in environments rich with vegetation.
+
+Loubert’s mutation grants it the remarkable ability to accelerate the growth of plants and heal damaged flora. This ability has made it especially valuable in agricultural zones, where it has significantly enhanced crop production and restored weakened plant life with minimal effort.
+
+While not fit for combat or defense, Loubert is considered an ecological asset.
+
+Containment is minimal and primarily consists of maintaining a stable, natural environment. Interaction with Loubert is permitted and generally safe, provided it is given flowers and fruits as a greeting.

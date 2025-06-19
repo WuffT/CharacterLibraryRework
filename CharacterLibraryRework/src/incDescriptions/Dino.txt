@@ -1,0 +1,14 @@
+Alias Name: Bladin
+Age: ?
+Gender: Male
+Specimen: Dinosaur-like Creature
+Weight: 72 pounds
+Height: 7 ft 1 in
+Mutation Classification: Level 1
+
+Description:
+Incident D-91415, Also referred to as Bladin, is a timid, dinosaur-like specimen with a naturally gentle disposition. Though its appearance may suggest prehistoric strength or aggression, Bladin is anything but combative—in fact, the creature exhibits high levels of nervousness and prefers to avoid confrontation altogether.
+
+Bladin’s mutation grants it healing capabilities towards injuries, specifically in the form of restorative contact. When near an injured lifeform, Bladin instinctively reaches its arms out or places itself nearby, slowly accelerating the recovery process of cuts, bruises, and mild internal damage. These abilities appear to work best when Bladin is calm and feels safe, which makes maintaining a stress-free environment crucial to its effectiveness.
+
+Despite its healing talents, Bladin is known to startle easily and will often flee or curl up when approached too quickly or exposed to loud noises. Interaction with Bladin requires patience and a soothing tone—otherwise, it attempts to hide in small corners or behind objects.

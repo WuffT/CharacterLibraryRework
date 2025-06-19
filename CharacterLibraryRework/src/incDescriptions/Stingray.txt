@@ -1,0 +1,17 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Stingray
+Weight: 34 Pounds
+Height: 3 ft
+Mutation Classification: Level 4
+
+Description:
+Designed to work in sync with Incident G-12518 (Angler) and Incident I-4518 (Spider), Incident Stingray is one of the more tactical creatures under Stenfort’s creation log. Despite being the smallest incident so far—standing at only 3 feet tall—this slippery unit makes up for its size with utility.
+
+Its core ability is a quick, paralyzing static shock that temporarily disables motor function. It's completely painless—those affected describe it as the strange “static” feeling you get when a limb falls asleep. While the effect doesn’t last long, it’s more than enough time for other incidents like the Spider or Angler to move in.
+
+Due to its light weight and silent movement, Stingray is difficult to detect, making it a perfect support unit. It doesn’t often engage on its own, preferring to lurk until backup arrives.
+
+Handle with care, and don’t underestimate it just because it’s small.
+

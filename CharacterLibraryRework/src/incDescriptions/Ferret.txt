@@ -1,0 +1,14 @@
+Alias Name: Furel
+Age: Unknown
+Gender: Male
+Specimen: Ferret
+Weight: 40 pounds
+Height: 5 ft 4 in
+Mutation Classification: Level 2
+
+Description:
+Incident R-18520, Also referred as Furel, is a gentle and passive creature resembling a standard ferret. Much like Incident T-9512 (Cockatiel/“Loubert”), Furel expresses a clear affinity for plant life and is most often found burrowed near or weaving through flora-rich environments.
+
+Unlike Loubert’s ability to heal and accelerate plant growth, **Furel’s anomalous trait enhances the longevity and nutritional value of any plant or crop it remains near for an extended period. Crops grown within Furel’s proximity have shown double the nutritional density, longer shelf life, and improved resistance to decay or rot.
+
+Furel displays no signs of aggression and avoids conflict altogether. It tends to remain in quiet spaces, preferring garden zones or greenhouses, where it burrows into soft soil and rests among vegetation. Having Loubert and the Furrel together in the same area proves to be an effective measure for plant growth, regeneration and nutrition.

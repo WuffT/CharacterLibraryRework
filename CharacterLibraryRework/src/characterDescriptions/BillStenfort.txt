@@ -1,4 +1,4 @@
-Age: 42 Years
+Age: 40 Years
 Gender: Male
 Specimen: Shoebill
 Weight: 150 pounds
@@ -6,7 +6,7 @@ Height: 9 ft 3 in
 Role: Main Villain, Rival
 
 Description:
-Highly intelligent, yet hard to communicate with due to his short temper. Dr. Stenfort owns a corporation called [S.R.A.M.M] (Scientific Research Of Animal Mutation & Modification), whose goal is to take over parts of the city and eventually the world, as a way to pay back what society has done to his parents.
+Highly intelligent, yet hard to communicate with due to his short temper. Dr. (Bill) Stenfort owns a corporation called [S.R.A.M.M] (Scientific Research Of Animal Mutation & Modification), whose goal is to take over parts of the city and eventually the world, as a way to pay back what society has done to his parents.
 
 Log History:
 Why is he the way he is? His parents owned a facility at the time they were alive, where they developed cures for diseases like cancer, some of which were previously thought to be incurable. They arranged appointments and events to provide these treatments free of charge, as they were not motivated by profit. However, some corporations took issue with this altruistic approach. Certain corporations devised a plan to infiltrate and steal the vaccines and formulas.

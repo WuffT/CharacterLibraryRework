@@ -30,8 +30,8 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 4.3;
-	   static String applastUpdate = "6/1/2025";
+	   static double appVersion = 4.5;
+	   static String applastUpdate = "6/18/2025";
 	   
 	   
 	   static ProgressBar healthBar;
@@ -59,7 +59,7 @@ public class mainUI extends Application {
 	public void start(Stage primaryStage) {
 		  
 		   
-	        primaryStage.setTitle("Character Info Library V" + appVersion);
+	        primaryStage.setTitle("Character Info Library V" + appVersion + " FINAL TEST BUILD");
 	        Image appIcon = new Image(getClass().getResource("/icons/appIcon.png").toExternalForm());
 	      
 
@@ -86,7 +86,7 @@ public class mainUI extends Application {
 	     // Create the search bar
 	        TextField searchBar = new TextField();
 	        searchBar.setPromptText("Search characters...");
-	        searchBar.setMinHeight(30);
+	        searchBar.setMinHeight(50);
 	        searchBar.setMaxWidth(200); // Adjust width if necessary
 
 	        // Listener to filter character buttons as the user types
@@ -98,7 +98,7 @@ public class mainUI extends Application {
 	        charScrollPane.setFitToWidth(true); // Ensures the VBox is resized to fit the ScrollPane width
 	        charScrollPane.setFitToHeight(false); // Ensures the ScrollPane adjusts to the VBox's height
 	        characterComboBox = new ComboBox<>();
-	        characterComboBox.getItems().add("-Click Me-"); // Default option
+	       
 
 	        // Load categories dynamically
 	        characterComboBox.getItems().addAll(characterInfo.getCharacterCategories().keySet());
@@ -107,7 +107,8 @@ public class mainUI extends Application {
 	            appMethods.playButtonSFX();
 	            characterInfo.updateCharacterButtons(characterComboBox, buttonContainer, characterRenderButton);
 	        });
-	        characterComboBox.setValue("-Click Me-");
+	        characterComboBox.setPromptText("Select Category");
+
 	      
 
 	        Tooltip renderTip = new Tooltip("Shows a full image of a character");
@@ -315,7 +316,7 @@ public class mainUI extends Application {
 	        resetAudioButton.getStyleClass().add("orange");
 	        ComboBox<String> audioComboBox = new ComboBox<>();
 	        audioComboBox.getStyleClass().add("combo-box");
-	        audioComboBox.getItems().addAll("ThematicHeroes", "DranixionsRising", "ThematicSlowDown");
+	        audioComboBox.getItems().addAll("ThematicHeroes");
 	        audioComboBox.setOnAction(e -> {appMethods.playButtonSFX();});
 	        audioComboBox.setValue("ThematicHeroes");
 	       // The event handler for Play Audio button
@@ -388,6 +389,10 @@ public class mainUI extends Application {
     public static void main(String[] args) {
     	
         System.out.println("Application starting...");
+        Runtime runtime = Runtime.getRuntime();
+        long usedMemory = (runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024);
+        System.out.println("Used Heap Memory: " + usedMemory + " MB");
+
         try {
         	  Thread.sleep(2000);
         	  characterInfo.loadCharactersFromCSV("/characterCSV/characterData.csv");
@@ -408,4 +413,6 @@ public class mainUI extends Application {
         System.out.println("Application ended.");
         
     }
+    
+    
 }

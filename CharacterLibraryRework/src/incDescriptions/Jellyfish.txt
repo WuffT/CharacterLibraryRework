@@ -1,0 +1,13 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Jellyfish
+Weight: 141 pounds
+Height: 6 ft
+Mutation Classification: Level 1
+
+Description:
+One of the strangest creations made by Dr. Stenfort, Incident Jellyfish possesses a unique defensive ability. When threatened, it can generate a protective bubble around itself that deflects all kinds of projectiles. Despite its fragile appearance, this bubble is surprisingly resilient and difficult to pop, providing the jellyfish with an effective shield against attacks.
+
+Though not aggressive by nature, Jellyfish relies heavily on this defensive mechanism to avoid harm, making it elusive and hard to capture when provoked.
+

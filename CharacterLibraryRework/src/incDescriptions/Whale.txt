@@ -1,0 +1,16 @@
+Alias Name: Walten
+Age: ?
+Gender: Unknown
+Specimen: Whale
+Weight: 260 pounds
+Height/Length: 12 ft
+Mutation Classification: Level 1
+
+Description:
+Incident H-1125, informally referred to as Walten, is a large aquatic specimen most commonly found near the back area of the facility with the shark workers. While generally docile, it has demonstrated a subtle but useful ability to influence water currents around it. This allows the creature to gently guide or push entities through water, whether for assistance or deterrence.
+
+H-1125 is an exceptional swimmer and often plays a passive role in aquatic operations, unintentionally assisting or redirecting shark units through controlled water movements. It is not known to be aggressive and poses no threat under standard observation. Its calm nature and massive size make it easy to trace.
+
+Due to its low threat level and cooperative tendencies, containment is considered non-critical as long as it remains within monitored aquatic boundaries. It shows signs of intelligence but has not responded to direct communication attempts.
+
+It is recommended to maintain a peaceful environment during interaction, as H-1125 appears to be sensitive to distress signals from nearby aquatic entities.

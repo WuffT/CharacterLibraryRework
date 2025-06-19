@@ -1,0 +1,14 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Gecko
+Weight: 122 pounds
+Height: 5 ft
+Mutation Classification: Level 1
+
+Description:
+Incident E-31115, also referred to as Incident Gecko, is a sleek, nimble reptilian entity known for its unmatched reaction speed. It is nearly impossible to land a hit on, no matter the method or angle—physical attacks, projectiles, and even advanced targeting systems have all failed. By the time a strike is made, Gecko has already repositioned, often unpredictably.
+
+Though it lacks offensive capabilities or elemental powers, its speed alone makes it an anomaly worth studying, especially in high-risk evasion scenarios. It has shown no signs of aggression and avoids confrontation whenever possible, slipping away with ease before things escalate.
+
+Due to its elusive behavior and lack of hostility, containment is minimal, requiring only motion-triggered perimeter systems to log movement data. The entity remains unnamed, though researchers have noted its almost playful tendency to dodge anything sent its way.

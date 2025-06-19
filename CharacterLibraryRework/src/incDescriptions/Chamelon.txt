@@ -1,0 +1,14 @@
+Alias Name: Leon
+Age: ?
+Gender: Male
+Specimen: Chameleon
+Weight: 100 pounds
+Height: 7 ft 1 in
+Mutation Classification: Level 4
+
+Description:
+Incident L-51514, better known as Leon, is an unusually mischievous chameleon known for its deceptively charming demeanor and unpredictable behavior. While its wide grin and bright, expressive face might give the impression of innocence, Leon is anything but ordinary.
+
+Its primary mutation allows it to turn completely invisible, leaving behind no visual trace whatsoever. This stealth ability makes Leon nearly impossible to track by conventional means. As of current observations, only Incident G-12518 (Aegler) or advanced thermal imaging equipment are capable of reliably detecting Leon’s presence when cloaked.
+
+Leon enjoys slipping away from containment to tamper with objects, explore restricted areas, or simply cause harmless chaos. Despite being harmless in intent, his disappearances often trigger unnecessary alarms and confusion, especially among new workers. His behavior is often described as cheeky, playful, and just a little too smart for everyone's comfort.

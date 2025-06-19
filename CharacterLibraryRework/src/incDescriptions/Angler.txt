@@ -1,0 +1,12 @@
+Alias Name: Aegler
+Age: ?
+Gender: Unknown
+Specimen: Angler Fish
+Weight: 58 pounds
+Height: 5 ft 9 in (body length), antenna adds ~1 ft
+Mutation Classification: Level 3
+
+Description:
+Incident G-12518, commonly referred to as Aegler, is a quiet and brooding aquatic entity resembling a deep-sea angler fish. It possesses a perpetually grumpy appearance and a blank, pupil-less stare, giving the false impression that it has poor or no vision.  Despite that, Aegler is equipped with a highly sensitive bio-luminescent antenna that extends from its head. This appendage acts as an advanced sensory tool, capable of detecting movement, vibrations, and heat signatures within its surrounding environment. Thanks to this mutation, Aegler can precisely locate others nearby, even through dense terrain or in complete darkness. In conclusion this makes it a difficult creature to evade or sneak past once it becomes alert.
+
+Aegler is not inherently aggressive and it generally keeps to itself unless threatened or provoked. Containment protocols for Aegler involve a quiet, dimly lit aquatic environment to match its natural habitat. Direct interaction is not recommended unless necessary, as Aegler tends to become irritated by excessive noise or rapid movements.
