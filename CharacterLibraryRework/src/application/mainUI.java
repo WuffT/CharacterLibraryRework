@@ -30,8 +30,8 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 4.5;
-	   static String applastUpdate = "6/18/2025";
+	   static double appVersion = 4.6;
+	   static String applastUpdate = "6/22/2025";
 	   
 	   
 	   static ProgressBar healthBar;
@@ -355,8 +355,7 @@ public class mainUI extends Application {
 	        ScrollPane scrollPane = new ScrollPane(root);
 	        scrollPane.setFitToWidth(true);
 	        scrollPane.setFitToHeight(true);
-	        scrollPane.getStylesheets().add(getClass().getResource("applicationUISheet.css").toExternalForm());
-
+	      
 	        
 	        // Create a loading screen
 	        VBox loadingScreen = new VBox(10);
@@ -372,8 +371,13 @@ public class mainUI extends Application {
 	        screenOverlay = new StackPane();
 	        screenOverlay.getChildren().addAll(scrollPane, loadingScreen);
 	        
-	        // Set the scene with the ScrollPane
-	        primaryStage.setScene(new Scene(screenOverlay, 1200, 900));
+	        
+	        
+	        
+	        Scene scene = new Scene(screenOverlay, 1200, 900);
+	        scene.getStylesheets().add(getClass().getResource("applicationUISheet.css").toExternalForm());
+	        primaryStage.setScene(scene);
+
 
 	        // Show the stage
 	        primaryStage.show();

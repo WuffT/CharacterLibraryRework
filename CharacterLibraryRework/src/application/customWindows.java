@@ -216,7 +216,7 @@ public class customWindows extends mainUI{
 	        creditsButton.prefWidthProperty().bind(rootPane.widthProperty().multiply(0.5));
 	        creditsButton.setOnAction(e1 -> {
 	            appMethods.playButtonSFX();
-	            helpLabel.setText("CREDITS DISPLAYED");
+	            helpLabel.setText("");
 	            appMethods.showCredits(rootPane); // Call with custom title
 	        });
 
@@ -262,7 +262,7 @@ public class customWindows extends mainUI{
 
 	    rootPane.getChildren().add(optionsLayout);
 
-	    optionsLayout.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
+	 
 	}
 
 	
@@ -316,7 +316,7 @@ public class customWindows extends mainUI{
 
 	        // Final assembly
 	        overlayPane.getChildren().add(imageVBox);
-	        overlayPane.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
+	    
 	        rootPane.getChildren().add(overlayPane);
 	    } else {
 	        System.out.println("Character not found: " + characterName);
@@ -331,8 +331,7 @@ public class customWindows extends mainUI{
     public static Task<Void> simulateLoading(VBox loadingScreen, Stage stage) {
         // Set up the loading screen
         loadingScreen.setVisible(true);
-        loadingScreen.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
-
+     
         ProgressBar progressBar = new ProgressBar(0);
         Label loadingLabel = new Label("");
         loadingLabel.getStyleClass().add("loading");

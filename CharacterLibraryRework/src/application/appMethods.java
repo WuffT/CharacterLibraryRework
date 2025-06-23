@@ -34,6 +34,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -49,63 +51,58 @@ import java.util.Map;
 import java.util.Optional;
 
 public class appMethods extends customWindows {
-	   public static Clip selectedClip;
+	 
 	   public static Clip buttonClick;
 	   static String quickNotice = "This is an important section filled with a lot of lore elements. Left behind are small entries of a characters past, present and sometimes future...";
+	   private static MediaPlayer selectedPlayer;
+
 	   public static void playSelectedAudio(String audioPath) {
-		    try {
-		        // Stop and close the currently playing audio (if any)
-		        if (selectedClip != null && selectedClip.isRunning()) {
-		            selectedClip.stop();
-		            selectedClip.close();
-		        }
+	       try {
+	           // Stop and dispose previous player
+	           if (selectedPlayer != null) {
+	               selectedPlayer.stop();
+	               selectedPlayer.dispose();
+	           }
 
-		        // Load the selected audio file THIS part loads the file by the song name only since its concatenated
-		        URL audioURL = mainUI.class.getResource("/audioSamples/" + audioPath + ".wav"); 
-		        if (audioURL == null) {
-		            System.out.println("Audio file not found: " + audioPath);
-		            return;
-		        }
+	           // Build path and check for null
+	           String fullPath = "/audioSamples/" + audioPath + ".mp3"; // Use .wav if that's your format
+	           URL audioURL = mainUI.class.getResource(fullPath);
+	           if (audioURL == null) {
+	               System.out.println("Audio file not found: " + fullPath);
+	               return;
+	           }
 
-		        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioURL);
-		        selectedClip = AudioSystem.getClip();
-		        selectedClip.open(audioInputStream);
+	           // Create and play new MediaPlayer
+	           Media media = new Media(audioURL.toExternalForm());
+	           selectedPlayer = new MediaPlayer(media);
+	           selectedPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop audio
+	           selectedPlayer.setVolume(currentVolume); // Apply current volume (0.0 to 1.0)
+	           selectedPlayer.play();
 
-		        // Start playing the audio
-		        selectedClip.start();
-		        selectedClip.loop(Clip.LOOP_CONTINUOUSLY); 
-		        System.out.println("Playing audio: " + audioPath);
+	           System.out.println("Playing audio: " + audioPath);
 
-		    } catch (Exception e) {
-		        e.printStackTrace();
+	       } catch (Exception e) {
+	           e.printStackTrace();
+	       }
+	   }
+
+
+	   public static void stopMusic() {
+		    if (selectedPlayer != null) {
+		        selectedPlayer.stop();
 		    }
 		}
 
-    // Method to stop the music
-    public static void stopMusic() {
-        if (selectedClip != null && selectedClip.isRunning()) {
-        	selectedClip.stop();
-        }
-    }
     
-    public static void setVolume(double percentage) {
-        try {
-            if (selectedClip != null && selectedClip.isOpen()) {
-                FloatControl volumeControl = (FloatControl) selectedClip.getControl(FloatControl.Type.MASTER_GAIN);
+	   private static double currentVolume = 0.5; // Default to 50%
 
-                // THIS CONVERTS percentage (0-100) to decibels (-80 to 0)
-                float dB = (float) ((Math.log10(percentage / 100.0) * 20));
-                if (percentage == 0) {
-                    dB = -80; // Set to minimum when at 0% to mute completely
-                }
-                volumeControl.setValue(dB);
-                //System.out.println("Volume set to: " + percentage + "% (" + dB + " dB)");
-            }
-        } catch (Exception e) {
-            System.out.println("Unable to set volume.");
-            e.printStackTrace();
-        }
-    }
+	   public static void setVolume(double percentage) {
+	       currentVolume = percentage / 100.0;
+	       if (selectedPlayer != null) {
+	           selectedPlayer.setVolume(currentVolume);
+	       }
+	   }
+
 
     
     public static void playButtonSFX() {
@@ -235,6 +232,7 @@ public class appMethods extends customWindows {
             "DireKrow",  
             "Pilbemen",
             "Quoyi",  
+            "Brinsar The Kenku",
             " ",  
             "PROJECT TOOLS USED:",
             "ECLIPSE IDE (JavaFX Library Integration)",
@@ -368,7 +366,7 @@ public class appMethods extends customWindows {
         });
 
         delayTask[0].play();
-        rootPane.getStylesheets().add(mainUI.class.getResource("applicationUISheet.css").toExternalForm());
+      
     }
 
 
