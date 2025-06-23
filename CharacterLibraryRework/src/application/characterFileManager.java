@@ -10,7 +10,7 @@ public class characterFileManager {
     // Directory where the custom character data will be stored
     private static final String CHARACTER_DIRECTORY = getAppDirectory() + "/customCharacterDirectory/";
 
-    // Get the directory where the executable or JAR file is located
+    // Gets the directory where the executable or JAR file is located
     private static String getAppDirectory() {
         try {
             // For JAR application
@@ -29,10 +29,10 @@ public class characterFileManager {
         return System.getProperty("user.dir");
     }
 
-    // Copy resources from JAR to the custom character directory
+    // Copies resources from JAR to the custom character directory
     public static void copyResourcesFromJarToCharacterDirectory() {
         try {
-            // Get the path where the EXE or JAR is launched from
+            // Gets the path where the EXE or JAR is launched from
             String appDirectory = getAppDirectory();
             File customCharacterDir = new File(appDirectory, "customCharacterDirectory");
 
@@ -59,7 +59,7 @@ public class characterFileManager {
                 }
             }
 
-            String folderPathInJar = "/customCharacterDescription/"; // Modify to match your folder structure
+            String folderPathInJar = "/customCharacterDescription/"; // Modifies to match the folder structure
             URL url = characterFileManager.class.getResource(folderPathInJar);
             if (url == null) {
                 System.err.println("Folder not found in JAR: " + folderPathInJar);
