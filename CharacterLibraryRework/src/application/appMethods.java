@@ -518,7 +518,7 @@ public class appMethods extends customWindows {
     	    case "Incident K-5520":
 	            dialogueToShow = new String[] {
 	                "The first incident Dr. Stenfort made! He does not talk much but I guess thats no surprise. I see him spending most of his time punching rocks and stuff.",
-	                "It is quite interesting thought to see his early creation... I feel lucky to even be the 8th incident he created ^-^"
+	                "It is quite interesting though... to see his early creation... I feel lucky to even be the 8th incident he created ^-^"
 	            };
 	            break;
     	        case "Incident N-1115":
