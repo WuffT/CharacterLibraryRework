@@ -49,6 +49,7 @@ public class mainUI extends Application {
 	  
 	   static Slider volumeSlider;
 	   static   ComboBox<String> characterComboBox;
+	   static Button nixanButton;
 	   
 	   static VBox buttonContainer;
 	   static VBox leftPanel;
@@ -138,7 +139,7 @@ public class mainUI extends Application {
 	        journalEntriesButton.setMaxWidth(Double.MAX_VALUE); // Ensure the button stretches horizontally
 	        journalEntriesButton.setTooltip(journalTip);
 	     
-	        Button nixanButton = new Button("?");
+	        nixanButton = new Button("?");
 	        nixanButton.getStyleClass().add("pink");
 	        nixanButton.setMaxWidth(Double.MAX_VALUE);
 	        nixanButton.setTooltip(new Tooltip("Get tips from Nixan!"));

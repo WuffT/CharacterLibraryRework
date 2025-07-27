@@ -471,10 +471,11 @@ public class appMethods extends customWindows {
     // Tutorial lines (first time only)
     private static final String[] tutorialLines = {
         "Hey! I'm Nixan, one of the incidents™ created by Dr. Stenfort and your friendly guide!",
-        "First time using this app? How about a little help! You see that box at the top left? Click that, lots of categories will display along with some of my favorite... the incidents!",
+        "First time using this app? How about a little help! You see that box at the top left? Click that, lots of categories will display!",
         "Once you do that just click around some of the character buttons, read some info, and you’ll be just fine.",
         "Oh, and if something explodes, it wasn’t me. It was probably your computer being overwhelmingly happy from my existence!",
-        "Now go on! There's a lot of information waiting to be read! If you need me to talk again you can interact with the '?' Button!"
+        "Now go on! There's a lot of information waiting to be read!",
+        "If you need me to talk again you can interact with the '?' Button! I like to share my own thoughts on certain characters!"
     };
 
     //quotes for later interactions
@@ -489,13 +490,7 @@ public class appMethods extends customWindows {
         },
         {
             "Dr. Stenfort is always busy with his experiments, but I swear, he secretly enjoys my company.",
-            "I caught him writing into my case log file the other day about being 'very friendly and hard to be mad at' or somethinmg like that. Don't tell him I told you!"
-        },
-        {
-            "You know, Stenfort… he’s not just some villain.",
-            "He lost a lot growing up... his parents, his hope, his views. That day changed everything.",
-            "I think, deep down, he just wants someone to understand him.",
-            "It’s hard watching someone so brilliant become so... cold."
+            "I caught him writing into my case log file the other day about being 'very friendly and hard to be mad at' or something like that. Don't tell him I told you!"
         },
         {
             "Sombryl, Gavrin, and I are kind of like a silly group of friends.",
@@ -506,12 +501,6 @@ public class appMethods extends customWindows {
         	"Dranixions are pretty cool",
         	"From my understanding they don't seem to have a life expectancy as they don't die from aging."
         },
-        {
-        	"Tyerux and I have a rather weird friendship... Are we related?... yeah we are.",
-        	"He's the other half of my mind, or at least the negative thoughts that manifested into a living creature",
-        	"I vividly remember getting my mind split in half of sorts...",
-        	"What? You didn't know that? Ah... well I might've said too much >.>"
-        }
     };
 
     // Generate random post-tutorial dialogue
@@ -521,10 +510,17 @@ public class appMethods extends customWindows {
 
     // MAIN METHOD
     static void showNixanDialogue() {
+    	nixanButton.setDisable(true);
     	  String characterName = nameTextField.getText();
     	    String[] dialogueToShow;
 
     	    switch (characterName) {
+    	    case "Incident K-5520":
+	            dialogueToShow = new String[] {
+	                "The first incident Dr. Stenfort made! He does not talk much but I guess thats no surprise. I see him spending most of his time punching rocks and stuff.",
+	                "It is quite interesting thought to see his early creation... I feel lucky to even be the 8th incident he created ^-^"
+	            };
+	            break;
     	        case "Incident N-1115":
     	            dialogueToShow = new String[] {
     	                "Oh..! You're reading my log! Please don't think of me any differently... I promise you I'm really friendly!",
@@ -541,6 +537,22 @@ public class appMethods extends customWindows {
     	            dialogueToShow = new String[] {
     	                "Gavrin...Hes pretty angry most of the time but he’s one of my best buds!",
     	                "We always bring Sombryl along with us too, just the 3 of us having fun."
+    	            };
+    	            break;
+    	        case "Dr. Stenfort":
+    	            dialogueToShow = new String[] {
+    	            	"Ahh.. Dr. Stenfort! Or as I like to call him 'Bill' You know… he’s is not just some villain. Despite what a lot of people think about him",
+    	            	"In his own words... 'Villians are not created or born, they were made by society'. He lost a lot growing up... his parents, his hope, his views",
+    	                "I think, deep down, he just wants someone to understand him.",
+    	                "It’s hard watching someone so brilliant become so... cold."
+    	            };
+    	            break;
+    	        case "Incident T-18524":
+    	            dialogueToShow = new String[] {
+    	            	"Tyerux and I have a rather weird friendship... Are we related?... yeah we are.",
+    	                "He's the other half of my mind, or at least the negative thoughts that manifested into a living creature",
+    	                "I vividly remember getting my mind split in half of sorts...",
+    	                "What? You didn't know that? Ah... well I might've said too much >.>"
     	            };
     	            break;
     	        //more cases here for other characters later on until I think of them lmao
@@ -593,10 +605,19 @@ public class appMethods extends customWindows {
                 } else {
                     screenOverlay.getChildren().remove(dialogueBox);
                     dialogueIndex = 0;
+                    nixanButton.setDisable(false);
                 }
             }
         });
 
+        dialogueBox.setOnMouseClicked(e -> {
+            if (dialogueTimeline != null && dialogueTimeline.getStatus() == Animation.Status.RUNNING) {
+                dialogueTimeline.stop();
+                dialogueLabel.setText(currentDialogue[dialogueIndex]);
+                nextButton.setVisible(true);
+            }
+        });
+        
         VBox textContainer = new VBox(10, dialogueLabel, nextButton);
         textContainer.setAlignment(Pos.CENTER_LEFT);
 
