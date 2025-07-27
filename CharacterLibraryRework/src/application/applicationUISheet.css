@@ -96,6 +96,17 @@
     -fx-cursor: hand; /* Change cursor to indicate interactivity */
 }
 
+.button.pink:focused {
+    -fx-border-color: white;
+    -fx-border-width: 2;
+    -fx-border-radius: 1;
+
+    /* Optional: remove default blue glow */
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+
 .button-Confirm {
 	 -fx-background-color:#437d50;
 	 -fx-text-fill: white; 

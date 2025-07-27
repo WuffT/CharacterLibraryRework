@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -171,8 +172,8 @@ public class customWindows extends mainUI{
 	            helpLabel.setText("Update Changes and Notes as of " + applastUpdate + "\n"
 	                    + "Version " + appVersion + "\n"
 	                    + "- FINAL TEST BUILD!\n"
-	                    + "- Incident category has been updated.\n"
-	                    + "- Some minor performance fixes (still not perfect but its a little better)");
+	                    + "- Nixan was added as a guide for the app, he's relatively new and doesnt have much but there are some things he says!.\n"
+	                    + "- Some minor performance again.");
 	        });
 
 	        Button appInfoButton = new Button("App Information");
@@ -342,13 +343,24 @@ public class customWindows extends mainUI{
         enterDatabaseButton.getStyleClass().add("close");
         enterDatabaseButton.setOnAction(event -> {
             appMethods.playButtonSFX();
+
             FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), loadingScreen);
             fadeOut.setFromValue(1.0);
             fadeOut.setToValue(0.0);
-            fadeOut.setOnFinished(e -> loadingScreen.setVisible(false));
+
+            fadeOut.setOnFinished(e -> {
+                loadingScreen.setVisible(false);
+                appMethods.playSelectedAudio("ThematicHeroes");
+
+                // Wait 1 second AFTER fade-out
+                PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                pause.setOnFinished(ev -> appMethods.showNixanDialogue());
+                pause.play();
+            });
+
             fadeOut.play();
-            appMethods.playSelectedAudio("ThematicHeroes");
         });
+
         loadingScreen.getChildren().add(enterDatabaseButton);
 
         Button skipButton = new Button("Skip");
@@ -407,17 +419,27 @@ public class customWindows extends mainUI{
         // Bind progress and message properties
         progressBar.progressProperty().bind(loadingTask.progressProperty());
         loadingLabel.textProperty().bind(loadingTask.messageProperty());
-
-        // Define the skip button behavior
+        
+        
         skipButton.setOnAction(event -> {
             loadingTask.cancel();
             appMethods.playButtonSFX();
+
             FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), loadingScreen);
             fadeOut.setFromValue(1.0);
             fadeOut.setToValue(0.0);
-            fadeOut.setOnFinished(e -> loadingScreen.setVisible(false));
+
+            fadeOut.setOnFinished(e -> {
+                loadingScreen.setVisible(false);
+                appMethods.playSelectedAudio("ThematicHeroes");
+
+                // Now wait 1 second AFTER the fade-out ends
+                PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                pause.setOnFinished(ev -> appMethods.showNixanDialogue());
+                pause.play();
+            });
+
             fadeOut.play();
-            appMethods.playSelectedAudio("ThematicHeroes");
         });
 
         // Start the loading task in a new thread

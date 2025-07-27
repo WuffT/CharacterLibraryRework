@@ -2,7 +2,7 @@ Age: 40 Years
 Gender: Male
 Specimen: Shoebill
 Weight: 150 pounds
-Height: 9 ft 3 in
+Height: 7 ft 3 in
 Role: Main Villain, Rival
 
 Description:

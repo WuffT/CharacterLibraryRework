@@ -30,8 +30,8 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 4.6;
-	   static String applastUpdate = "6/22/2025";
+	   static double appVersion = 4.7;
+	   static String applastUpdate = "7/27/2025";
 	   
 	   
 	   static ProgressBar healthBar;
@@ -138,7 +138,18 @@ public class mainUI extends Application {
 	        journalEntriesButton.setMaxWidth(Double.MAX_VALUE); // Ensure the button stretches horizontally
 	        journalEntriesButton.setTooltip(journalTip);
 	     
-	      
+	        Button nixanButton = new Button("?");
+	        nixanButton.getStyleClass().add("pink");
+	        nixanButton.setMaxWidth(Double.MAX_VALUE);
+	        nixanButton.setTooltip(new Tooltip("Get tips from Nixan!"));
+
+	        nixanButton.setOnAction(e -> {
+	            appMethods.playButtonSFX(); //  SFX
+	            appMethods.showNixanDialogue();        // Call method below
+	        });
+
+	       
+
 	        
 	        Button options = new Button("Options/Extras");
 	        options.getStyleClass().add("orange");
@@ -154,10 +165,15 @@ public class mainUI extends Application {
 	        ScrollPane scrollPaneForButtons = new ScrollPane(dynamicButtonsBox);
 	        scrollPaneForButtons.setFitToWidth(true); // Ensure scrollable content fits the width
 	        
+	        
+	        
+	        
 	        // Add buttons to the left panel
-	        leftPanel.getChildren().addAll(searchBar, characterComboBox, charScrollPane, characterRenderButton);
+	        leftPanel.getChildren().addAll(searchBar, characterComboBox, charScrollPane, characterRenderButton,nixanButton);
 	        root.setLeft(leftPanel);
 
+	        
+	        
 	        // Center Panel (Cyan) - Main Content Display
 	        centerPanel = new VBox(20);
 	        centerPanel.setPadding(new Insets(20));
