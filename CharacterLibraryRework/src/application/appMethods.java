@@ -477,7 +477,7 @@ public class appMethods extends customWindows {
         "Now go on! There's a lot of information waiting to be read! If you need me to talk again you can interact with the '?' Button!"
     };
 
-    // Example: quotes for later interactions
+    //quotes for later interactions
     private static final String[][] randomDialogues = {
         {
             "Did you know that the incidents are a special type of organism that gained a certain ability or power?",
@@ -509,7 +509,7 @@ public class appMethods extends customWindows {
         {
         	"Tyerux and I have a rather weird friendship... Are we related?... yeah we are.",
         	"He's the other half of my mind, or at least the negative thoughts that manifested into a living creature",
-        	"I only remember having my mind split in half of sorts...",
+        	"I vividly remember getting my mind split in half of sorts...",
         	"What? You didn't know that? Ah... well I might've said too much >.>"
         }
     };
@@ -539,8 +539,8 @@ public class appMethods extends customWindows {
     	            break;
     	        case "Incident W-151813":
     	            dialogueToShow = new String[] {
-    	                "Gavrin...Hes pretty angry sometimes but he’s one of my best buds!",
-    	                "We always bring Sombryl along with us too, just the 3 of us being curious"
+    	                "Gavrin...Hes pretty angry most of the time but he’s one of my best buds!",
+    	                "We always bring Sombryl along with us too, just the 3 of us having fun."
     	            };
     	            break;
     	        //more cases here for other characters later on until I think of them lmao
