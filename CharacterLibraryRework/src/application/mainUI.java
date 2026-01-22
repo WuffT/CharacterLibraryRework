@@ -30,7 +30,7 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 5;
+	   static double appVersion = 5.1;
 	   static String applastUpdate = "8/28/2025";
 	   
 	   static String CSV_DATA_FILE = "/characterCSV/characterDataV5.1.csv";
