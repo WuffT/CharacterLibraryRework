@@ -40,10 +40,16 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import javafx.scene.media.AudioClip;  // Add this import
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -258,12 +264,73 @@ public class appMethods extends customWindows {
             "Dr. Stenfort",  
             "Zalfor Tylox",  
             "Teforel Vaxin",  
-            "The (39) Incidents",
+            "The (43) Incidents",
             "Shark Workers",
             "Chef Chompiere",
             " ",  
             "CHARACTERS OWNED BY MEGANEKAII:",  
-            "Viraxe Eleviac"  
+            "Viraxe Eleviac"
+          /* "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Sometimes the answers appear when you simply type them in...",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "??? THESTARSEARCHERS ???", */
         };
 
         // Black overlay
@@ -454,59 +521,106 @@ public class appMethods extends customWindows {
     	  infoTextArea.setStyle("-fx-control-inner-background: black;" + "-fx-text-fill: #66ff66;");// Text color and background color
     	  nameTextField.setStyle("-fx-control-inner-background: black;" + "-fx-text-fill: #66ff66;");// Text color and background color
     	  nameTextField.setText("WELCOME TO THE SPECIAL JOURNAL ENTRIES!");
-    	 
+    	  characterComboBox.setVisible(false);
+    	  characterComboBox.setManaged(false); // removes its space
+
     	  characterInfo.applyTypingEffect(infoTextArea, quickNotice ,Duration.millis(1));
     }
+    
+    
+  //dialogue code below
+    
+    public static String[] loadDialogue(String filename) {
+        String resourcePath = "/dialogueFiles/" + filename;
+        try (InputStream is = mainUI.class.getResourceAsStream(resourcePath)) {
+            if (is == null) {
+                System.err.println("Dialogue not found: " + resourcePath);
+                return new String[] { "Ah...! I couldn't find my script anywhere! Sorry!." };
+            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            List<String> lines = new ArrayList<>();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+            return lines.toArray(new String[0]);
+        } catch (IOException e) {
+            System.err.println("Failed to load dialogue: " + resourcePath);
+            e.printStackTrace();
+            return new String[] { "Sorry I couldn't read the script I was given heheh..!" };
+        }
+    }
+
+ 
     
     private static boolean tutorialShown = false;
     private static int dialogueIndex = 0;
     private static Timeline dialogueTimeline;
     private static String[] currentDialogue;
+    private static Label dialogueLabel;
+    private static Button nextButton;
 
+    
     // Audio Beep defined so it doesnt reload the sound
     private static final AudioClip beepSound = new AudioClip(
         mainUI.class.getResource("/audioSamples/beepType.mp3").toExternalForm()
     );
-
-    // Tutorial lines (first time only)
-    private static final String[] tutorialLines = {
-        "Hey! I'm Nixan, one of the incidents™ created by Dr. Stenfort and your friendly guide!",
-        "First time using this app? How about a little help! You see that box at the top left? Click that, lots of categories will display!",
-        "Once you do that just click around some of the character buttons, read some info, and you’ll be just fine.",
-        "Oh, and if something explodes, it wasn’t me. It was probably your computer being overwhelmingly happy from my existence!",
-        "Now go on! There's a lot of information waiting to be read!",
-        "If you need me to talk again you can interact with the '?' Button! I like to share my own thoughts on certain characters!"
-    };
-
-    //quotes for later interactions
-    private static final String[][] randomDialogues = {
-        {
-            "Did you know that the incidents are a special type of organism that gained a certain ability or power?",
-            "Interesting right? Don't worry though, mine isn't very dangerous I just love making people smile. People like you ^-^"
-        },
-        {
-            "If you press buttons long enough, something is bound to happen.",
-            "Unless it crashes. That happens too. Not my fault! (Don't tell Dr. Stenfort)"
-        },
-        {
-            "Dr. Stenfort is always busy with his experiments, but I swear, he secretly enjoys my company.",
-            "I caught him writing into my case log file the other day about being 'very friendly and hard to be mad at' or something like that. Don't tell him I told you!"
-        },
-        {
-            "Sombryl, Gavrin, and I are kind of like a silly group of friends.",
-            "We hang out, share our dumbest experience and overall just have fun in the facility.",
-            "In short, I like hanging out with them."
-        },
-        {
-        	"Dranixions are pretty cool",
-        	"From my understanding they don't seem to have a life expectancy as they don't die from aging."
-        },
-    };
-
+   
     // Generate random post-tutorial dialogue
+    private static final int NUM_RANDOM_DIALOGUES = 1; // number of your randomDialogue files
+
     private static String[] getRandomDialogue() {
-        return randomDialogues[(int)(Math.random() * randomDialogues.length)];
+        int randomIndex = (int)(Math.random() * NUM_RANDOM_DIALOGUES) + 1; // from 1 to NUM_RANDOM_DIALOGUES
+        String filename = "randomFact" + randomIndex + ".txt";
+        return loadDialogue(filename);
     }
+
+    private static final Map<String, Image> expressionImages = new HashMap<>();
+
+    static {
+        expressionImages.put("happy",   new Image(mainUI.class.getResource("/icons/NixanHappy.png").toExternalForm()));
+        expressionImages.put("sad",     new Image(mainUI.class.getResource("/icons/NixanSad.png").toExternalForm()));
+        expressionImages.put("shocked",   new Image(mainUI.class.getResource("/icons/NixanShocked.png").toExternalForm()));
+        expressionImages.put("shy",     new Image(mainUI.class.getResource("/icons/NixanShy.png").toExternalForm()));
+        expressionImages.put("neutral", new Image(mainUI.class.getResource("/icons/NixanNeutral.png").toExternalForm())); // default
+    }
+    
+ // Helper to extract expression and remove tag from the line
+    private static String parseExpressionFromLine(String line, ImageView faceImage) {
+        String expr = "neutral"; // default
+        if (line.startsWith("[") && line.contains("]")) {
+            int end = line.indexOf(']');
+            expr = line.substring(1, end).toLowerCase();
+            line = line.substring(end + 1).trim(); // remove tag from line
+        }
+
+        // Update face image based on expression
+        Image img = expressionImages.getOrDefault(expr, expressionImages.get("neutral"));
+        faceImage.setImage(img);
+
+        return line; // return cleaned line
+    }
+
+    
+    private static void showDialogueLine(String line, ImageView faceImage, Label label, Button nextButton) {
+        String expression = "neutral"; // default
+        // Check if line starts with [expression]
+        if (line.startsWith("[") && line.contains("]")) {
+            int endIdx = line.indexOf("]");
+            String exprKey = line.substring(1, endIdx).toLowerCase();
+            if (expressionImages.containsKey(exprKey)) {
+                expression = exprKey;
+                line = line.substring(endIdx + 1).trim(); // remove the tag from text
+            }
+        }
+        // Set face image
+        faceImage.setImage(expressionImages.get(expression));
+
+        // Animate the line
+        animateText(label, line, nextButton);
+    }
+
+    
 
     // MAIN METHOD
     static void showNixanDialogue() {
@@ -515,50 +629,61 @@ public class appMethods extends customWindows {
     	    String[] dialogueToShow;
 
     	    switch (characterName) {
-    	    case "Incident K-5520":
-	            dialogueToShow = new String[] {
-	                "The first incident Dr. Stenfort made! He does not talk much but I guess thats no surprise. I see him spending most of his time punching rocks and stuff.",
-	                "It is quite interesting though... to see his early creation... I feel lucky to even be the 8th incident he created ^-^"
-	            };
+    	    case "Dr. Stenfort":
+	            dialogueToShow = loadDialogue("stenfortThoughts.txt");
 	            break;
-    	        case "Incident N-1115":
-    	            dialogueToShow = new String[] {
-    	                "Oh..! You're reading my log! Please don't think of me any differently... I promise you I'm really friendly!",
-    	                "I'm sorry if your view of me changes though..."
-    	            };
-    	            break;
-    	        case "Incident A-71514":
-    	            dialogueToShow = new String[] {
-    	                "Sombryl, the saddened dragon... he carries a lot of heavy memories. I'm not sure why but I don't want to bother him about it",
-    	                "The least I can do is make him happy and sometimes I see him smile from time to time."
-    	            };
-    	            break;
-    	        case "Incident W-151813":
-    	            dialogueToShow = new String[] {
-    	                "Gavrin...Hes pretty angry most of the time but he’s one of my best buds!",
-    	                "We always bring Sombryl along with us too, just the 3 of us having fun."
-    	            };
-    	            break;
-    	        case "Dr. Stenfort":
-    	            dialogueToShow = new String[] {
-    	            	"Ahh.. Dr. Stenfort! Or as I like to call him 'Bill' You know… he’s is not just some villain. Despite what a lot of people think about him",
-    	            	"In his own words... 'Villians are not created or born, they were made by society'. He lost a lot growing up... his parents, his hope, his views",
-    	                "I think, deep down, he just wants someone to understand him.",
-    	                "It’s hard watching someone so brilliant become so... cold."
-    	            };
-    	            break;
-    	        case "Incident T-18524":
-    	            dialogueToShow = new String[] {
-    	            	"Tyerux and I have a rather weird friendship... Are we related?... yeah we are.",
-    	                "He's the other half of my mind, or at least the negative thoughts that manifested into a living creature",
-    	                "I vividly remember getting my mind split in half of sorts...",
-    	                "What? You didn't know that? Ah... well I might've said too much >.>"
-    	            };
-    	            break;
+	        case "Chef Chompiere":
+	            dialogueToShow = loadDialogue("chefThoughts.txt");
+	            break;
+	        case "Shark Workers":
+	            dialogueToShow = loadDialogue("sharkThoughts.txt");
+	            break;
+	        case "Wolftical Triglostico":
+	        	dialogueToShow = loadDialogue("wuffThoughts.txt");
+	            break;
+	        case "Viraxe Eleviac":
+	        	dialogueToShow = loadDialogue("viraxeThoughts.txt");
+	            break;
+	        case "Wren Ryzen":
+	        	dialogueToShow = loadDialogue("wrenThoughts.txt");
+	            break;
+	        case "Doxyn Larchiux":
+	        	dialogueToShow = loadDialogue("doxynThoughts.txt");
+	            break;
+	        case "Archie Larchiux":
+	        	dialogueToShow = loadDialogue("archieThoughts.txt");
+	            break;
+	        case "Drex Dixton":
+	        	dialogueToShow = loadDialogue("drexThoughts.txt");
+	            break;
+	        case "Drax Dixton":
+	        	dialogueToShow = loadDialogue("draxThoughts.txt");
+	            break;
+	        case "Zalfor Tylox":
+	        	dialogueToShow = loadDialogue("zalforThoughts.txt");
+	            break;
+	        case "Teforel Vaxin":
+	        	dialogueToShow = loadDialogue("teforelThoughts.txt");
+	            break;
+    	    case "Incident K-5520":
+    	    	dialogueToShow = loadDialogue("parakeetThoughts.txt");
+	            break;
+    	    case "Incident N-1115":
+    	        dialogueToShow = loadDialogue("ownThoughts.txt");
+    	        break;
+    	    case "Incident A-71514":
+    	        dialogueToShow = loadDialogue("dragonThoughts.txt");
+    	        break;
+    	    case "Incident W-151813":
+    	        dialogueToShow = loadDialogue("wormThoughts.txt");
+    	        break;
+    	    case "Incident T-18524":
+    	        dialogueToShow = loadDialogue("trexThoughts.txt");
+    	        break;
     	        //more cases here for other characters later on until I think of them lmao
     	        default:
     	            if (!tutorialShown) {
-    	                dialogueToShow = tutorialLines;
+    	            	dialogueToShow = loadDialogue("tutorial.txt");
     	                tutorialShown = true;
     	            } else {
     	                dialogueToShow = getRandomDialogue();
@@ -569,82 +694,94 @@ public class appMethods extends customWindows {
         // Set currentDialogue to dialogueToShow
         currentDialogue = dialogueToShow;
         dialogueIndex = 0;
-
-        // Dialogue box UI
-        VBox dialogueBox = new VBox(10);
-        dialogueBox.setPadding(new Insets(15));
-        dialogueBox.setStyle("-fx-background-color: rgba(0, 0, 0, 0.85); -fx-border-color: #cb5090; -fx-border-width: 4;");
-        dialogueBox.setMaxWidth(800);
-        dialogueBox.setMaxHeight(250);
-        dialogueBox.setAlignment(Pos.CENTER_LEFT);
-
-        Image face = new Image(mainUI.class.getResource("/icons/NixanSpeechIcon.png").toExternalForm());
-        ImageView faceImage = new ImageView(face);
-        faceImage.setFitWidth(200);
-        faceImage.setFitHeight(200);
-
-        Label dialogueLabel = new Label();
-        dialogueLabel.setWrapText(true);
-        dialogueLabel.setMaxWidth(600);
-        dialogueLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
-
-        Button nextButton = new Button(">");
-        nextButton.getStyleClass().add("pink");
-        nextButton.setVisible(false); // Hidden until line finishes animating
-
-        nextButton.setOnAction(e -> {
-            appMethods.playButtonSFX();
-            if (dialogueTimeline != null && dialogueTimeline.getStatus() == Animation.Status.RUNNING) {
-                dialogueTimeline.stop();
-                dialogueLabel.setText(currentDialogue[dialogueIndex]);
-                nextButton.setVisible(true);
-            } else {
-                dialogueIndex++;
-                if (dialogueIndex < currentDialogue.length) {
-                    animateText(dialogueLabel, currentDialogue[dialogueIndex], nextButton);
-                } else {
-                    screenOverlay.getChildren().remove(dialogueBox);
-                    dialogueIndex = 0;
-                    nixanButton.setDisable(false);
-                }
-            }
-        });
-
-        dialogueBox.setOnMouseClicked(e -> {
-            if (dialogueTimeline != null && dialogueTimeline.getStatus() == Animation.Status.RUNNING) {
-                dialogueTimeline.stop();
-                dialogueLabel.setText(currentDialogue[dialogueIndex]);
-                nextButton.setVisible(true);
-            }
-        });
-        
-        VBox textContainer = new VBox(10, dialogueLabel, nextButton);
-        textContainer.setAlignment(Pos.CENTER_LEFT);
-
-        HBox contentBox = new HBox(20, faceImage, textContainer);
-        contentBox.setAlignment(Pos.CENTER_LEFT);
-
-        dialogueBox.getChildren().add(contentBox);
-        StackPane.setAlignment(dialogueBox, Pos.BOTTOM_CENTER);
-        StackPane.setMargin(dialogueBox, new Insets(20));
-        screenOverlay.getChildren().add(dialogueBox);
-
-        // Start first line
-        animateText(dialogueLabel, currentDialogue[dialogueIndex], nextButton);
+        showDialogueSequence();
     }
 
+    private static void showDialogueSequence() {
+    // Dialogue box UI
+    VBox dialogueBox = new VBox(10);
+    dialogueBox.setPadding(new Insets(15));
+    dialogueBox.setStyle("-fx-background-color: rgba(0, 0, 0, 0.85); -fx-border-color: #cb5090; -fx-border-width: 4;");
+    dialogueBox.setMaxWidth(800);
+    dialogueBox.setMaxHeight(250);
+    dialogueBox.setAlignment(Pos.CENTER_LEFT);
 
-    // TEXT ANIMATION
+    Image face = new Image(mainUI.class.getResource("/icons/NixanNeutral.png").toExternalForm());
+    ImageView faceImage = new ImageView(face);
+    faceImage.setFitWidth(200);
+    faceImage.setFitHeight(200);
+
+    dialogueLabel = new Label();
+    dialogueLabel.setWrapText(true);
+    dialogueLabel.setMaxWidth(600);
+    dialogueLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+
+    nextButton = new Button(">");
+    nextButton.getStyleClass().add("pink");
+    nextButton.setVisible(false); // Hidden until line finishes animating
+
+    nextButton.setOnAction(e -> {
+        appMethods.playButtonSFX();
+        if (dialogueTimeline != null && dialogueTimeline.getStatus() == Animation.Status.RUNNING) {
+            dialogueTimeline.stop();
+            // Parse expression and remove tag before showing text
+            String cleanLine = parseExpressionFromLine(currentDialogue[dialogueIndex], faceImage);
+            dialogueLabel.setText(cleanLine);
+            nextButton.setVisible(true);
+        } else {
+            dialogueIndex++;
+            if (dialogueIndex < currentDialogue.length) {
+                showDialogueLine(currentDialogue[dialogueIndex], faceImage, dialogueLabel, nextButton);
+            } else {
+                screenOverlay.getChildren().remove(dialogueBox);
+                dialogueIndex = 0;
+                nixanButton.setDisable(false);
+            }
+        }
+    });
+
+    dialogueBox.setOnMouseClicked(e -> {
+        if (dialogueTimeline != null && dialogueTimeline.getStatus() == Animation.Status.RUNNING) {
+            dialogueTimeline.stop();
+            // Parse expression and remove tag here too
+            String cleanLine = parseExpressionFromLine(currentDialogue[dialogueIndex], faceImage);
+            dialogueLabel.setText(cleanLine);
+            nextButton.setVisible(true);
+        }
+    });
+
+    
+    VBox textContainer = new VBox(10, dialogueLabel, nextButton);
+    textContainer.setAlignment(Pos.CENTER_LEFT);
+
+    HBox contentBox = new HBox(20, faceImage, textContainer);
+    contentBox.setAlignment(Pos.CENTER_LEFT);
+
+    dialogueBox.getChildren().add(contentBox);
+    StackPane.setAlignment(dialogueBox, Pos.BOTTOM_CENTER);
+    StackPane.setMargin(dialogueBox, new Insets(20));
+    screenOverlay.getChildren().add(dialogueBox);
+
+    // Start first line
+    showDialogueLine(currentDialogue[dialogueIndex], faceImage, dialogueLabel, nextButton);
+
+  }
+    
+ // TEXT ANIMATION
     static void animateText(Label label, String text, Button nextButton) {
         label.setText("");
         nextButton.setVisible(false); // Hide until done
-        beepSound.setRate(0.90);
         final int[] charIndex = {0};
+
         dialogueTimeline = new Timeline(new KeyFrame(Duration.millis(50), event -> {
             if (charIndex[0] < text.length()) {
                 label.setText(label.getText() + text.charAt(charIndex[0]++));
-                
+
+                // Randomize pitch slightly each time
+                double randomPitch = 0.85 + Math.random() * 0.20; // range 0.85–1.05
+                beepSound.setRate(randomPitch);
                 beepSound.play();
+
             } else {
                 dialogueTimeline.stop();
                 nextButton.setVisible(true); // Reveal after animation is done
@@ -655,6 +792,5 @@ public class appMethods extends customWindows {
     }
 
 
-
-
 }
+

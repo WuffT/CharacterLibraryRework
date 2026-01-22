@@ -383,7 +383,7 @@ public class customWindows extends mainUI{
                 // Count the number of rows (excluding the header) in the CSV file
                 int totalItems = 0;
                 try (BufferedReader br = new BufferedReader(
-                        new InputStreamReader(mainUI.class.getResourceAsStream("/characterCSV/characterData.csv")))) {
+                        new InputStreamReader(mainUI.class.getResourceAsStream(CSV_DATA_FILE)))) {
                     String line;
                     boolean isFirstLine = true;
                     while ((line = br.readLine()) != null) {
@@ -424,7 +424,7 @@ public class customWindows extends mainUI{
         skipButton.setOnAction(event -> {
             loadingTask.cancel();
             appMethods.playButtonSFX();
-
+            skipButton.setDisable(true);
             FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), loadingScreen);
             fadeOut.setFromValue(1.0);
             fadeOut.setToValue(0.0);

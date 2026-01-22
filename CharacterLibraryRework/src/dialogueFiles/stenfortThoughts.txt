@@ -1,0 +1,5 @@
+[neutral] Ahh.. Dr. Stenfort! Or as I like to call him 'Bill' You know... he is not just some villain. Despite what a lot of people think about him.
+[sad] In his own words... 'Villains are not created or born, they were made by society'.
+[sad] He lost a lot growing up... his parents, his hope, his views.
+[sad] I think, deep down, he just wants someone to understand him.
+[sad] It's hard watching someone so brilliant become so... cold.

@@ -1,0 +1,3 @@
+A chart showing which incidents are grouped with one another.
+
+To view it, click on the render button.

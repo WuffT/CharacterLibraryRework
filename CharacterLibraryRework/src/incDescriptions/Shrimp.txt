@@ -1,0 +1,10 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Shrimp
+Weight: 124 pounds
+Height: 6 ft 2 in
+Mutation Classification: Level 4
+
+Description:
+Incident Shrimp appears to be an ordinary specimen at first glance, with no immediate traits separating it from common crustaceans. However, prolonged observation has revealed an extraordinary regenerative ability. Unlike typical shrimp, which possess limited regenerative capacity, this organism can fully restore lost limbs with remarkable speed and efficiency. This adaptation makes it deceptively resilient despite its fragile appearance, ensuring survival even after severe physical damage.

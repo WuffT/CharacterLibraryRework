@@ -12,6 +12,7 @@ The Side Heroes,Teforel Vaxin,85,35,58,60,/characterDescriptions/TeforelVaxin.tx
 The Workers,Shark Workers,85,78,81,32,/characterDescriptions/SharkWorkers.txt,/characterIcons/SharkWorkers_Icon.png,/CharacterRenders/SharkRenders.png
 The Workers,Chef Chompiere,45,13,12,11,/characterDescriptions/Chompiere.txt,/characterIcons/Chompiere_Icon.png,/CharacterRenders/ChefChompiere.png
 The Workers,COMING SOON,0,0,0,0,/characterDescriptions/WIPCharacter.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
+The Incidents,THE CHART,0,0,0,0,/incDescriptions/TheChart.txt,/icons/WIPIcon.png,/incRenders/INC_OfficialGroupChart.png
 The Incidents,Incident K-5520,75,100,44,35,/incDescriptions/Parakeet.txt,/incIcons/Parakeet_Icon.png,/incRenders/INC_K5520.png
 The Incidents,Incident L-152012,100,72,10,75,/incDescriptions/Axolotl.txt,/incIcons/Axolotl_Icon.png,/incRenders/INC_L152012.png
 The Incidents,Incident P-51420,60,60,60,60,/incDescriptions/Serpent.txt,/incIcons/Serpent_Icon.png,/incRenders/INC_P51420.png
@@ -51,7 +52,11 @@ The Incidents,Incident F-18157,37,15,61,0,/incDescriptions/Frog.txt,/incIcons/Fr
 The Incidents,Incident C-151514,67,0,88,0,/incDescriptions/Raccoon.txt,/incIcons/Raccoon_Icon.png,/incRenders/INC_C151514.png
 The Incidents,Incident O-2312,90,86,88,0,/incDescriptions/Owl.txt,/incIcons/Owl_Icon.png,/incRenders/INC_O2312.png
 The Incidents,Incident T-18524,0,0,100,0,/incDescriptions/Trex.txt,/incIcons/Trex_Icon.png,/incRenders/INC_T18524.png
-The Incidents,INC #40,0,0,0,0,/characterDescriptions/ComingSoon.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,INC #41,0,0,0,0,/characterDescriptions/ComingSoon.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,INC #42,0,0,0,0,/characterDescriptions/ComingSoon.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
-The Incidents,INC #43,0,0,0,0,/characterDescriptions/ComingSoon.txt,/icons/WIPIcon.png,/CharacterRenders/NoRender.png
+The Incidents,Incident A-1420,42,66,38,8,/incDescriptions/Ant.txt,/incIcons/Ant_Icon.png,/incRenders/INC_A1420.png
+The Incidents,Incident O-12914,37,16,98,100,/incDescriptions/Pangolin.txt,/incIcons/Pangolin_Icon.png,/incRenders/INC_O12914.png
+The Incidents,Incident O-162119,68,11,41,6,/incDescriptions/Octopus.txt,/incIcons/Octopus_Icon.png,/incRenders/INC_O162119.png
+The Incidents,Incident R-91316,85,4,66,4,/incDescriptions/Shrimp.txt,/incIcons/Shrimp_Icon.png,/incRenders/INC_R91316.png
+The Incidents,Incident B-15124,56,100,35,35,/characterDescriptions/WIPCharacter.txt,/incIcons/Kobold_Icon.png,/incRenders/INC_B15124.png
+The Incidents,Incident G-211212,60,34,59,12,/characterDescriptions/WIPCharacter.txt,/incIcons/Seagull_Icon.png,/incRenders/INC_G211212.png
+The Incidents,Incident N-1912,43,33,4,66,/characterDescriptions/WIPCharacter.txt,/incIcons/Snail_Icon.png,/incRenders/INC_N1912.png
+The Incidents,Incident S-5112,60,60,40,40,/characterDescriptions/WIPCharacter.txt,/incIcons/Seal_Icon.png,/incRenders/INC_S5112.png

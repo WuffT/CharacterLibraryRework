@@ -1,0 +1,10 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Octopus
+Weight: 111 pounds
+Height: 6 ft 2 in
+Mutation Classification: Level 3
+
+Description:
+Incident Octopus is a delicate organism contained within a specialized underwater tank, similar to the measures used for the red serpent (Marlow). At first glance, it appears to be a normal cephalopod, yet research has revealed that its ink functions in a far more unusual way than that of an ordinary octopus. Upon release, the ink rapidly solidifies when exposed to oxygen, forming a hardened substance that can slow down or even trap rather than dispersing into the water. This adaptation proves highly effective as both a defensive mechanism and a method of evasion, allowing the creature to quickly obscure itself or deter perceived threats.

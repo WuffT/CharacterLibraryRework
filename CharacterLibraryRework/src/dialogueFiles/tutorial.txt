@@ -1,0 +1,6 @@
+[neutral] Hey! I'm Nixan, one of the incidents created by Dr. Stenfort and your friendly guide!
+[happy] First time using this app? How about a little help! You see that box at the top left? Click that, lots of categories will display!
+[neutral] Once you do that just click around some of the character buttons, read some info, and you'll be just fine.
+[neutral] Oh, and if something explodes, it wasn't me. It was probably your computer being overwhelmingly happy from my existence!
+[happy] Now go on! There's a lot of information waiting to be read!
+[happy] If you need me to talk again you can interact with the '?' Button! I like to share my own thoughts on certain characters!

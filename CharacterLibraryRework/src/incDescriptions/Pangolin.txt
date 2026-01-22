@@ -1,0 +1,10 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Pangolin
+Weight: 99 pounds
+Height: 5 ft 5 in
+Mutation Classification: Level 2
+
+Description:
+Incident Pangolin is a creature known for its tough scales and fluffy body. Its tail is shielded with hard plates that can be used to like a whip dealing devastating blows to anything coming in contact. Its scales are strong enough to deflect bullets and pierce through metal. Containment procedures require minimal monitoring as it is quite willing to stay in its own living containment cell as long as it is supplied with its daily dietary needs.

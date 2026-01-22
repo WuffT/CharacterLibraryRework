@@ -1,0 +1,6 @@
+Category,Name,Health,Strength,Speed,Defense,DescriptionPath,IconPath,RenderPath
+The Stars,Orieon,80,40,61,80,/characterDescriptions/WuffT.txt,/characterIcons/Wolftical_Icon.png,/CharacterRenders/WolfTicalT.png
+The Stars,Syrius,75,65,70,60,/characterDescriptions/ViraxeEleviac.txt,/characterIcons/Viraxe_Icon.png,/CharacterRenders/ViraxeE.png
+The Stars,Gausar,55,88,35,20,/characterDescriptions/WrenRyzen.txt,/characterIcons/Wren_Icon.png,/CharacterRenders/WrenR.png
+The Stars,Ferlix,45,56,100,50,/characterDescriptions/DoxynLarchiux.txt,/characterIcons/Doxyn_Icon.png,/CharacterRenders/DoxynL.png
+The Stars,Fernos,0,0,0,0,/characterDescriptions/ArchieLarchiux.txt,/characterIcons/Archie_Icon.png,/CharacterRenders/ArchieL.png

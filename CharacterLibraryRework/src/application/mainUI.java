@@ -30,10 +30,11 @@ import javafx.scene.layout.*;
 public class mainUI extends Application {
 	   public static String selectedCharacterName = null;  // CharacterName Variable, it's accessible across all methods
 	   
-	   static double appVersion = 4.7;
-	   static String applastUpdate = "7/27/2025";
+	   static double appVersion = 5;
+	   static String applastUpdate = "8/28/2025";
 	   
-	   
+	   static String CSV_DATA_FILE = "/characterCSV/characterDataV5.1.csv";
+			   
 	   static ProgressBar healthBar;
 	   static ProgressBar strengthBar;
 	   static ProgressBar speedBar;
@@ -60,7 +61,7 @@ public class mainUI extends Application {
 	public void start(Stage primaryStage) {
 		  
 		   
-	        primaryStage.setTitle("Character Info Library V" + appVersion + " FINAL TEST BUILD");
+	        primaryStage.setTitle("Character Info Library V" + appVersion);
 	        Image appIcon = new Image(getClass().getResource("/icons/appIcon.png").toExternalForm());
 	      
 
@@ -126,7 +127,7 @@ public class mainUI extends Application {
 	        });
 
 	        characterRenderButton.getStyleClass().add("pink");
-	        characterRenderButton.setMaxWidth(Double.MAX_VALUE); // Ensure the button stretches horizontally
+	        characterRenderButton.setMaxWidth(Double.MAX_VALUE); // Ensures the button stretches horizontally
 	        characterRenderButton.setTooltip(renderTip);
 
 	        Tooltip journalTip = new Tooltip("View important journals made by certain characters..");
@@ -136,21 +137,33 @@ public class mainUI extends Application {
 	            appMethods.changeToDarkTheme();
 	        });
 	        journalEntriesButton.getStyleClass().add("pink");
-	        journalEntriesButton.setMaxWidth(Double.MAX_VALUE); // Ensure the button stretches horizontally
+	        journalEntriesButton.setMaxWidth(Double.MAX_VALUE); // Ensures the button stretches horizontally
 	        journalEntriesButton.setTooltip(journalTip);
 	     
-	        nixanButton = new Button("?");
+	        nixanButton = new Button("???");
 	        nixanButton.getStyleClass().add("pink");
 	        nixanButton.setMaxWidth(Double.MAX_VALUE);
-	        nixanButton.setTooltip(new Tooltip("Get tips from Nixan!"));
-
+	        nixanButton.setTooltip(new Tooltip("Get thoughts from Nixan!"));
+	        nixanButton.setDisable(true);
 	        nixanButton.setOnAction(e -> {
-	            appMethods.playButtonSFX(); //  SFX
-	            appMethods.showNixanDialogue();        // Call method below
+	            appMethods.playButtonSFX(); // SFX
+	            appMethods.showNixanDialogue();
 	        });
 
-	       
-
+	        /* easter egg code, just hidding it for now until i need to use it
+	        String searchText = searchBar.getText();
+            if (searchText != null && searchText.equals("THESTARSEARCHERS")) {
+                // Easter Egg: load special CSV
+                System.out.println("Easter Egg unlocked! Loaded THE STAR SEARCHERS.");
+                characterInfo.characterCategories.clear(); // Clear the old categories
+	            buttonContainer.getChildren().clear(); // Clear any existing buttons
+	            characterInfo.loadCharactersFromCSV("/characterCSV/theStars.csv");
+                characterInfo.refreshUI();
+            } else {
+                // Normal behavior
+                appMethods.showNixanDialogue();
+            }
+	        */
 	        
 	        Button options = new Button("Options/Extras");
 	        options.getStyleClass().add("orange");
@@ -416,13 +429,13 @@ public class mainUI extends Application {
 
         try {
         	  Thread.sleep(2000);
-        	  characterInfo.loadCharactersFromCSV("/characterCSV/characterData.csv");
+        	  characterInfo.loadCharactersFromCSV(CSV_DATA_FILE);
         	  characterFileManager.copyResourcesFromJarToCharacterDirectory();
         	   // Start the file watching in a separate thread
               Thread fileWatchThread = new Thread(() -> {
                   characterFileManager.watchForFileChanges();
               });
-              fileWatchThread.setDaemon(true); // Allow thread to exit when the app closes
+              fileWatchThread.setDaemon(true); // Allow thread to exit when the window closes
               fileWatchThread.start();
               
               

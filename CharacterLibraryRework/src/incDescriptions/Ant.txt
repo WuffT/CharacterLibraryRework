@@ -1,0 +1,12 @@
+Alias Name: Unknown
+Age: Unknown
+Gender: Unknown
+Specimen: Ant
+Weight: 102 pounds
+Height: 4 ft 2 in
+Mutation Classification: Level 1
+
+Description:
+Incident A-1420, unofficially referred to as the Ant, is a curious and quiet anomaly that demonstrates traits of enhanced intelligence and mental synchronization. While it typically moves alone, it behaves as though it's part of a larger hive, executing tasks with uncanny coordination—as if responding to silent commands. Again it is nothing out of the ordinary for an ant...
+
+Its primary ability is to be able communicate through telepathy. A-1420 can transmit thoughts directly into the minds of others in its vicinity, though its communication tends to be minimal, efficient, and emotionless—almost like a shared signal or command. Most interactions are simple impulses or short words, often related to direction, structure, or purpose. It’s been noted that extended contact with the ant can cause brief but harmless instances of mental echoing (i.e., hearing fragments of your own thoughts returned to you).
